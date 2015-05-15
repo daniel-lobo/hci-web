@@ -1,3 +1,12 @@
+
+ROOT="http://eiffel.itba.edu.ar"
+
+urls = {
+  categories: {
+    all: ROOT + '/hci/service3/Catalog.groovy?method=GetAllCategories'
+  }
+}
+
 function attributesToObject(attributes) {
   object = {};
 
@@ -25,15 +34,11 @@ function resToCategories(body, headers) {
 
 
 app.factory('Categories', [ '$resource', function($resource) {
-  Url = {
-    ALL: 'http://eiffel.itba.edu.ar/hci/service3/Catalog.groovy?method=GetAllCategories'
-  }
-
   return {
 
     all: $resource(
-      Url.ALL, { callback: 'JSON_CALLBACK' }, {
-        get: { method: 'JSONP', transformResponse: resToCategories }
+      urls.categories.all, {}, {
+        get: { method: 'GET', transformResponse: resToCategories }
       }
     )
 
