@@ -1,0 +1,24 @@
+{
+  "name": "hci-web",
+  "version": "0.0.0",
+  "homepage": "https://github.com/daniel-lobo/hci-web",
+  "authors": [
+    "Daniel Lobo",
+    "Santiago Lezica",
+    "Tomas de Lucca"
+  ],
+  "description": "Last sprint for HCI web project",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-less": "~3.3.4",
+    "angular": "~1.3.15",
+    "angular-resource": "~1.3.15"
+  }
+}
