@@ -1,0 +1,17 @@
+<div class="col-md-7">
+<!-- a new row is instantiated every three items there -->
+  <div class="row">
+    <!-- three of the following per row -->
+    <article class="product-mini">
+      <div class="thumbnail">
+        <a href="product{{ id }}.html">
+          <img src="img/product_{{ id }}.jpg" alt="{{ desc }}" />
+        </a>
+        <div class="caption">
+          <a href="product{{ id }}.html" class="desc">{{ desc }}</a>
+          <a href="product{{ id }}.html" class="price">${{ price }}</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
