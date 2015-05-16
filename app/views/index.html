@@ -1,61 +1,131 @@
-<html lang="en">
+<div class="container">
+  <div class="row">
+  <article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
 
-	<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article>
+  <article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
 
-    <title>Neon Store</title>
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article>
+  <article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="style/style.css">
-    <!-- DC Social Icons CSS -->
-    <link rel="stylesheet" type="text/css" href="dreamcodes/social_icons/tsc_social_icons.css" />
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
- 	</head>
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article>
+  <article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
 
-<!-- <body ng-controller="PhoneListCtrl">
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article><article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
 
-  <ul>
-    <li ng-repeat="phone in phones">
-      <span>{{phone.name}}</span>
-      <p>{{phone.snippet}}</p>
-    </li>
-  </ul>
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article><article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
 
-</body> -->
-<!-- Adding the ng-app directive tells Angular to kick in its magic. -->
-	<body ng-app="neonApp" class="container" ng-controller="mainController as main">
-	  <p>This is your first angular expression: {{ 1 + 2 }}</p>
-	  Enter your name: <input type="text" ng-model="name"></input>
-		<p>Hello {{name}}!</p>
-		<h2>This is my message</h2>
-		{{main.message}}
-		<div class="jumbotron">
-			<h2>demo message</h2>
-			{{main.message}}
-		</div>
-		<tr ng-repeat="computer in main.computers">
-			<td>{{ computer.name }}</td>
-			<td>{{ computer.color }}</td>
-			<td>{{ computer.nerdness }}</td>
-		</tr>
-		<div class="form-group">
-				<label>Message</label>
-				<input type="text" class="form-control" ng-model="main.message">
-		</div>
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article><article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
 
-		<form action="form-inline" ng-submit="main.addComputer()">
-			<input type="text" class="form-control" placeholder="Macbook" ng-model="main.computerData.name">
-			<input type="text" class="form-control" placeholder="Silver" ng-model="main.computerData.color">
-			<input type="text" class="form-control" placeholder="8" ng-model="main.computerData.nerdness">
-			<button type="submit" class="btn btn-success">Add</button>
-		</form>
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article><article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
 
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article><article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script>
-		<script src="js/app.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-	</body>
-</html>
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article><article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
+
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article><article class="product-mini">
+    <div class="thumbnail">
+      <a href="product1.html">
+        <img src="img/product1.jpg" alt="Zapato de Cuero Copado" />
+      </a>
+
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">Zapato de Cuero Copado</a>
+        <a href="product{{ id }}.html" class="price">$940</a>
+      </div>
+    </div>
+  </article>
+  </div>
+  <div class="row">
+  </div>
+</div>

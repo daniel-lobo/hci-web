@@ -1,0 +1,86 @@
+<div id="product-detail" class="container">
+  <div class="images col-md-4 col-md-offset-2">
+    <div class="main-container">
+      <img class="main" src="img/product_{{ id }}.jpg" alt="{{ desc }}">
+    </div>
+    <div class="clearfix"></div>
+    <img class="mini" src="img/product_{{ id }}.jpg" alt="{{ desc }}">
+    <img class="mini" src="img/product_{{ id }}.jpg" alt="{{ desc }}">
+    <img class="mini" src="img/product_{{ id }}.jpg" alt="{{ desc }}">
+  </div>
+  <div class="description col-md-4">
+    <h1 class="desc">{{ desc }}</h1>
+    <table class="table">
+      <caption>Detalles del Producto</caption>
+      <tr>
+        <td>Marca</td> <td>{{ brand }}</td>
+      </tr>
+      <tr>
+        <td>Talles</td> <td>{{ sizes | join(' - ') }}</td>
+      </tr>
+      <tr>
+        <td>Color</td> <td>{{ color }}</td>
+      </tr>
+      <tr>
+        <td>Material</td> <td>{{ material }}</td>
+      </tr>
+    </table>
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="price">${{ price }}</h2>
+      </div>
+      <div class="col-md-6">
+        <a href="cart.html" class="buy btn btn-success">Añadir al Carrito</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div id="related" class="row">
+    <div class="row">
+      <h1 class="col-md-offset-2">Relacionados</h1>
+    </div>
+    <div class="col-md-2"></div>
+    <article class="product-mini">
+      <div class="thumbnail">
+        <a href="product{{ id }}.html">
+          <img src="img/product_{{ id }}.jpg" alt="{{ desc }}" />
+        </a>
+        <div class="caption">
+          <a href="product{{ id }}.html" class="desc">{{ desc }}</a>
+          <a href="product{{ id }}.html" class="price">${{ price }}</a>
+        </div>
+      </div>
+    </article> <article class="product-mini">
+    <div class="thumbnail">
+      <a href="product{{ id }}.html">
+        <img src="img/product_{{ id }}.jpg" alt="{{ desc }}" />
+      </a>
+      <div class="caption">
+        <a href="product{{ id }}.html" class="desc">{{ desc }}</a>
+        <a href="product{{ id }}.html" class="price">${{ price }}</a>
+      </div>
+    </div>
+  </article> <article class="product-mini">
+  <div class="thumbnail">
+    <a href="product{{ id }}.html">
+      <img src="img/product_{{ id }}.jpg" alt="{{ desc }}" />
+    </a>
+    <div class="caption">
+      <a href="product{{ id }}.html" class="desc">{{ desc }}</a>
+      <a href="product{{ id }}.html" class="price">${{ price }}</a>
+    </div>
+  </div>
+</article> <article class="product-mini">
+<div class="thumbnail">
+  <a href="product{{ id }}.html">
+    <img src="img/product_{{ id }}.jpg" alt="{{ desc }}" />
+  </a>
+  <div class="caption">
+    <a href="product{{ id }}.html" class="desc">{{ desc }}</a>
+    <a href="product{{ id }}.html" class="price">${{ price }}</a>
+  </div>
+</div>
+</article>
+</div>
+</div>

@@ -1,0 +1,8 @@
+<div class="breadcrumbs">
+	<h2 class="section_title">{{ current }}</h2>
+	{% for name, link in path %}
+		<a class="crumb" href="{{ link }}">{{ name }}</a>
+		<span> &gt; </span>
+	{% endfor %}
+	<span class="crumb">{{ current }}</span>
+</div>
