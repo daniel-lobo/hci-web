@@ -74,14 +74,10 @@ function createEndpoint($resource, options) {
     transformRequest: before,
 
     transformResponse: function(body, headers) {
-      try {
-        var data = JSON.parse(body);
+      var data = JSON.parse(body);
 
-      } catch (e) {
-        console.error(e, body);
-      }
-
-      // TODO check error attribute
+      if (data.error)
+        raise(data.error);
 
       return after(data);
     }
@@ -125,6 +121,10 @@ app.factory('api', function($resource, $rootScope, $http) {
   var e_signup = endpoint({
     url  : ROOT + '/Account.groovy?method=CreateAccount',
     after: buildSession
+  })
+
+  var e_update = endpoint({
+    url: '/Account.groovy?method=UpdateAccount'
   })
 
   // Service object:
@@ -174,8 +174,6 @@ app.factory('api', function($resource, $rootScope, $http) {
 
       signup: function(profile) {
         e_signup({ account: profile }).$promise.then(function(account) {
-          angular.extend(api.session, account);
-
           return e_login({
             username: profile.username,
             password: profile.password
@@ -183,16 +181,22 @@ app.factory('api', function($resource, $rootScope, $http) {
 
         }).then(function(account) {
             angular.extend(api.session, account);
+
+        }).catch (function (error) {
+
         });
 
         return api.session
+      },
+
+      update: function(profile) {
+
       }
     }
   }
 });
 
-app.controller('testCtrl', ['$scope', 'api',
-  function($scope, api) {
+app.controller('testCtrl', function($scope, api) {
     // $scope.api.user.login({ username: 'a', password: 'b' }).$promise
     // $scope.categories = api.products.find({ category: 2 });
 
@@ -209,4 +213,4 @@ app.controller('testCtrl', ['$scope', 'api',
       "birthDate": "1980-01-01"
     });
   }
-]);
+);
