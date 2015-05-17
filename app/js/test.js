@@ -21,7 +21,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
             }).
 
         when('/user',
-        	{templateUrl: '/views/partials/user.html', controller: 'PlayersCtrl'}).
+        	{templateUrl: '/views/partials/user.html', controller: 'UserCtrl'}).
 
         when('/liked',
             {templateUrl: 'views/partials/underconstruction.html', controller: 'MainCtrl'}).

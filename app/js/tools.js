@@ -40,8 +40,9 @@ angular.module('promises', [])
     var promise   = $delegate(function() {});
     var prototype = Object.getPrototypeOf(promise);
 
-    prototype.thenSet = function(object, prop) {
+    prototype.thenSet = function(object, prop, overrideResult) {
       return this.then(function(result) {
+        if (overrideResult) result = overrideResult;
         object[prop] = result;
         return result;
       })
@@ -57,6 +58,12 @@ angular.module('promises', [])
 
     prototype.mapGet = function() {
       return this.then(mapper(getter.apply(null, arguments)));
+    }
+
+    prototype.spread = function(f) {
+      return this.then(function() {
+        f.apply(null, arguments);
+      })
     }
 
     prototype.thenExtend = function thenExtend(object, overrideResult) {

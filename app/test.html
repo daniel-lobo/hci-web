@@ -5,7 +5,7 @@
 		<script src="public/assets/libs/angular-route/angular-route.js"></script>
 		<script src="public/assets/libs/angular-bootstrap/ui-bootstrap.min.js"></script>
 		<script src="public/assets/libs/angular-messages/angular-messages.js"></script>
-		
+
     <script src="js/tools.js"></script>
 
 		<script src="js/test.js"></script>
@@ -22,19 +22,31 @@
 	</body> -->
 
   <body ng-controller="testCtrl">
-			<!-- <h1>Categories</h1>
+			<!-- <h3>Categories</h3>
       <span>{{ categories }}</span> -->
 
-			<!-- <h1>Products</h1>
-      <span>{{ products }}</span> -->
+			<h3>Products</h3>
+      <span>{{ products }}</span>
 
-			<h1>Session</h1>
+			<h3>Session</h3>
       <span>{{ session }}</span>
 
-			<h1>Addresses</h1>
+			<h3>Addresses</h3>
+			<ul>
+				<li ng-repeat="address in addresses">
+					[<strong>{{ address.id }}</strong>] {{ address.name }}
+				</li>
+			</ul>
       <span>{{ addresses }}</span>
+
+			<h3>Cards</h3>
+      <span>{{ cards }}</span>
+
+			<h3>Order</h3>
+      <span>{{ order }}</span> -->
+
 <!--
-			<h1>Preferences</h1>
+			<h3>Preferences</h3>
       <span>{{ preferences }}</span> -->
   </body>
 </html>
