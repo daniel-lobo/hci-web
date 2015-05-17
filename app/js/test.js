@@ -1,6 +1,6 @@
 var app = angular.module('neonApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'promises']);
 
-app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
+app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.
 
         when('/',
@@ -37,7 +37,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
         otherwise({redirectTo: '/'});
 
          // use the HTML5 History API
-        // $locationProvider.html5Mode(true);
+         //$locationProvider.html5Mode(true);
 }]);
 
 
@@ -110,10 +110,17 @@ app.directive('breadcrumbs', function(){
 
 
 /* CONTROLLERS */
-app.controller('MainCtrl', function(){
+app.controller('MainCtrl', function($scope){
     this.products = [
-        {description: 'hola1', price: '123'},
-        {description: 'chau1', price: '312'}
+        {description: 'prod1', price: '123'},
+        {description: 'prod2', price: '456'},
+        {description: 'prod3', price: '789'},
+        {description: 'prod4', price: '101112'}
+    ];
+
+    $scope.carrouselSlides = [
+        {title:"", image:"/assets/img1.jpg", link:"", active:"true"},
+        {title:"", image:"/assets/img2.jpg", link:"", active:"false"}
     ];
 });
 
@@ -135,7 +142,46 @@ app.controller('FaqCtrl', function($scope){
    ];
 });
 
-app.controller('CheckoutCtrl', function($scope){
+app.controller('CheckoutCtrl', function($scope, api){
+  $scope.newAddressInputField = "";
   $scope.addressSelection = 'address-existing';
   $scope.cardSelection = 'card-existing';
+
+  $scope.alertMessagesForLogIn = [
+    {type:"", message:"Debe iniciar sesión para realizar la compra."}
+  ];
+
+  $scope.closeAlert = function(index) {
+    $scope.alertMessagesForLogIn.splice(index, 1);
+  };
+
+  $scope.existingAddresses = [
+    'Carlos Gardel 3523, Olivos',
+    'Eduardo Madero 399, Capital Federal'
+  ];
+
+  $scope.existingCreditCards = [
+    'AMEX ************3766',
+    'VISA ***********2345'
+  ];
+
+  $scope.onAddAddressClick = function() {
+    console.log("hola");
+
+    var address = $scope.newAddressInputField;
+
+    $scope.isUserLoggedIn = api.user.is_logged_in();
+
+    api.address.add(address).then(function() {
+      $scope.existingAddresses.push(address);
+      $scope.addressSelection = 'address-existing';
+
+    }).catchSet($scope, 'error').catch(function(error) {
+
+    });
+
+    api.address.add(address).thenSet($scope, 'lastAdddedAddress');
+    api.address.add(address)
+  }
+
 });

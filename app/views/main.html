@@ -1,6 +1,13 @@
 <div class="container">
-  <div class="row">
-    
+  <div class="row" style="height:350px">
+    <carousel interval="myInterval">
+      <slide ng-repeat="slide in carrouselSlides" active="slide.active">
+        <img ng-src="{{slide.image}}" style="margin:auto; height:305px;">
+        <div class="carousel-caption">
+          <p>{{slide.title}}</p>
+        </div>
+      </slide>
+    </carousel>
   </div>
   <div class="row">
     <article ng-repeat="product in mainC.products" class="product-mini">
@@ -16,4 +23,3 @@
     </article>
   </div>
 </div>
-

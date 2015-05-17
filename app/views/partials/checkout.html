@@ -29,8 +29,12 @@
           <button class="btn-primary">Registrarme</button>
           <button class="btn-primary">Ingresar</button>
         </div>
+        <div class="row col-md-8 col-md-offset-2">
+          <br/>
+          <alert ng-repeat="alert in alertMessagesForLogIn" type="{{alert.type}}" close="closeAlert($index)">{{alert.message}}</alert>
+        </div>
       </accordion-group>
-      <accordion-group heading="2. Datos de envío">
+      <accordion-group heading="2. Datos de envío" is-disabled="!isUserLoggedIn">
         <div class="selection-area">
           <div class="btn-group">
             <label class="btn btn-primary" ng-model="addressSelection" btn-radio="'address-existing'">Dirección Existente</label>
@@ -41,24 +45,21 @@
           <div ng-if="addressSelection == 'address-existing'">
             <div class="col-md-5 amount">
               <select class="form-control">
-                <option>Av. Eduardo Madero 399</option>
-                <option>Av. Cabildo 401</option>
-                <option>Av. Santa Fe 399</option>
-                <option>Av. Callao 399</option>
+                <option ng-repeat="address in existingAddresses">{{address}}</option>
               </select>
             </div>
           </div>
           <div ng-if="addressSelection == 'address-new'">
             <div class="col-md-6">
               <br/>
-              <input type="text" class="form-control" placeholder="Ingrese dirección">
+              <input type="text" class="form-control" ng-model="newAddressInputField" placeholder="Ingrese dirección">
               <br/>
-              <button class="btn-primary">Añadir</button>
+              <button class="btn-primary" ng-click="onAddAddressClick()">Añadir</button>
             </div>
           </div>
       </div>
       </accordion-group>
-      <accordion-group heading="3. Método de pago">
+      <accordion-group heading="3. Método de pago" is-disabled="!isUserLoggedIn">
         <div class="selection-area">
           <div class="btn-group">
             <label class="btn btn-primary" ng-model="cardSelection" btn-radio="'card-existing'">Tarjeta Existente</label>
@@ -69,9 +70,7 @@
           <div ng-if="cardSelection == 'card-existing'">
             <div class="col-md-5 amount">
               <select class="form-control">
-                <option>Amex *********5444</option>
-                <option>Visa *********1414</option>
-                <option>Amex *********0709</option>
+                <option ng-repeat="creditCard in existingCreditCards">{{creditCard}}</option>
               </select>
             </div>
           </div>
@@ -123,7 +122,7 @@
           </div>
         </div>
       </accordion-group>
-      <accordion-group heading="4. Resumen">
+      <accordion-group heading="4. Resumen" is-disabled="!isUserLoggedIn">
         <div class="product row">
           <div class="col-md-2 image">
             <img src="img/product_{{ image }}.jpg" alt="{{ desc }}">

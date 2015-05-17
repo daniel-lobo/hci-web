@@ -343,7 +343,7 @@ app.factory('api', function($http, $rootScope, $q) {
           });
         }
       },
-      // 
+      //
       // cards: {
       //   add: function(card) {
       //     return e_create_card({ credit_card: card });
