@@ -1,4 +1,4 @@
-var app = angular.module('neonApp', ['ngResource', 'ngRoute']);
+var app = angular.module('neonApp', ['ngResource', 'ngRoute', 'ui.bootstrap']);
 
 app.config(['$resourceProvider', function($resourceProvider) {
   $resourceProvider.defaults.stripTrailingSlashes = false;
@@ -9,25 +9,33 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
     $routeProvider.
 
         when('/',
-        	{templateUrl: 'views/partials/checkout.html', controller: 'MainCtrl'}).
+        	{templateUrl: 'views/main.html',
+             controller: 'MainCtrl',
+             controllerAs: 'mainC'
+            }).
 
         when('/index',
-            {templateUrl: 'views/partials/user.html', controller: 'MainCtrl'}).
+            {templateUrl: 'views/partials/user.html',
+             controller: 'MainCtrl',
+            }).
 
         when('/faq',
-        	{templateUrl: 'views/faq.html', controller: 'FaqCtrl'}).
+        	{templateUrl: 'views/partials/faq.html',
+             controller: 'FaqCtrl',
+             controllerAs: 'faqC'
+            }).
 
         when('/user',
-        	{templateUrl: '/views/players.html', controller: 'PlayersCtrl'}).
+        	{templateUrl: '/views/partials/user.html', controller: 'PlayersCtrl'}).
 
         when('/liked',
-            {templateUrl: 'views/partials/user.html', controller: 'MainCtrl'}).
+            {templateUrl: 'views/partials/underconstruction.html', controller: 'MainCtrl'}).
 
         when('/cart',
-            {templateUrl: 'views/partials/user.html', controller: 'MainCtrl'}).
+            {templateUrl: 'views/partials/cart.html', controller: 'MainCtrl'}).
 
         when('/checkout',
-            {templateUrl: 'views/partials/user.html', controller: 'MainCtrl'}).
+            {templateUrl: 'views/partials/checkout.html', controller: 'MainCtrl'}).
         
         
         otherwise({redirectTo: '/'});
@@ -41,7 +49,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
 
 app.directive('head', function(){
     return {
-        restrict: 'A', //This means that it will be used as an attribute and NOT as an element. 
+        restrict: 'A', // This means that it will be used as an attribute and NOT as an element. 
         replace: true,
         templateUrl: '/views/partials/head.html',
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -52,7 +60,7 @@ app.directive('head', function(){
 
 app.directive('footer', function () {
     return {
-        restrict: 'A', //This means that it will be used as an attribute and NOT as an element. 
+        restrict: 'A', // This means that it will be used as an attribute and NOT as an element. 
         replace: true,
         templateUrl: '/views/partials/footer.html',
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -105,6 +113,18 @@ app.directive('breadcrumbs', function(){
 
 
 /* CONTROLLERS */
-/*app.controller('CategoriesCtrl', ['', function(){
-    this.
-}]);*/
+app.controller('MainCtrl', function(){
+    this.products = [
+        {description: 'hola1', price: '123'},
+        {description: 'chau1', price: '312'}
+    ];
+});
+
+app.controller('FaqCtrl', function(){
+   this.questions = [
+        {question: "¿Como comprar?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
+        {question: "Plazos de Entrega", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
+        {question: "Politica de cambios", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
+        {question: "Terminos y condiciones", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." }
+   ]; 
+});

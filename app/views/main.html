@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    
+  </div>
+  <div class="row">
+    <article ng-repeat="product in mainC.products" class="product-mini">
+      <div class="thumbnail">
+        <a href="product1.html">
+          <img src="img/product1.jpg" alt="{{product.description}}" />
+        </a>
+        <div class="caption">
+          <a href="product{{ id }}.html" class="desc">{{product.description}}</a>
+          <a href="product{{ id }}.html" class="price">{{product.price}}</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+
