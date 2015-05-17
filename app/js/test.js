@@ -16,7 +16,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
       templateUrl : 'views/partials/faq.html',
       controller  : 'FaqCtrl',
       controllerAs: 'faqC'
-    }).
+    })
 
     .when('/user', {
       templateUrl: '/views/partials/user.html', controller: 'UserCtrl'

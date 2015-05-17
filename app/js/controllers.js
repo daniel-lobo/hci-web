@@ -1,6 +1,12 @@
 
 app.controller('MainCtrl', function($scope, api) {
     api.product.find({ is_new: true, page_size: 8 }).thenSet($scope, 'products');
+
+    $scope.carrouselSlides = [
+      {title:"", image:"assets/img1.jpg", link:"", active:"true"},
+      {title:"", image:"assets/img2.jpg", link:"", active:"false"}
+    ];
+
 });
 
 
