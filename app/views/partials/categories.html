@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+        <div breadcrumbs></div>
+        <br>
+    </div>
+    <div class="col-md-3">
+      <div class="col-md-4">
+        <button class="btn btn-xs btn-default glyphicon glyphicon-th-large"></button>
+        <button class="btn btn-xs btn-default glyphicon glyphicon-th-list"></button>
+      </div>
+      <div class="col-md-8 dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+          Ordenar por...
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Mayor precio</a></li>
+          <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Menor precio</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+  <div class="row">
+    <div class="col-md-4">
+      <!-- wolf inserted a sidebar directive here -->
+      <div sidebar></div>
+      <!-- Instead of using this: {% include './_sidebar.html' %} -->
+    </div>
+    <div products-display></div>
+  </div>
+</div>
+</div>

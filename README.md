@@ -1,4 +1,4 @@
-This is a new beginning.
+Last iteration of a web project presented @ ITBA for the subject Human Computer Interaction. May 2015.
 
 # Dependencies
 
@@ -15,3 +15,6 @@ policy):
     google-chrome --disable-web-security
 
 Don't use this instance for anything else.
+
+# Side Notes
+		This is not a responsive website.
