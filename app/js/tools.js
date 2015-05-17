@@ -26,8 +26,9 @@ angular.module('promises', [])
       })
     }
 
-    prototype.thenExtend = function thenExtend(object) {
+    prototype.thenExtend = function thenExtend(object, overrideResult) {
       return this.then(function(result) {
+        if (overrideResult) result = overrideResult;
         angular.extend(object, result);
         return result;
       })

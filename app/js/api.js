@@ -35,21 +35,28 @@ function buildProductList(data) {
 
 
 function buildCategory(data) {
+  if (! data.id)
+    data = data.category // hack alert
+
   var attrs = attributesToObject(data.attributes);
 
   return {
-    id    : data.id,
-    name  : data.name,
-    genres: attrs.Genero,
-    ages  : attrs.Edad
+    id     : data.id,
+    name   : data.name,
+    genders: attrs.Genero,
+    ages   : attrs.Edad
   }
 }
 
 
-function buildCategoryList(data, headers) {
-  return { categories: data.categories.map(buildCategory) };
+function buildCategoryList(data) {
+  return data.categories.map(buildCategory);
 }
 
+function buildSubcategoryList(data) {
+  console.log(data);
+  return data.subcategories.map(buildCategory);
+}
 
 function buildSession(data) {
   var account = data.account || {};
@@ -58,15 +65,29 @@ function buildSession(data) {
   return account;
 }
 
+function buildPreferences(data) {
+  return data.preferences || {};
+}
 
-app.factory('api', function($http, $rootScope, $http) {
+
+app.factory('api', function($http, $rootScope, $q) {
+  var api;
+
   // Endpoints:
   function endpoint(options) {
-    var url    = options.url
+    var url    = ROOT + options.url;
     var after  = options.after || function(data) { return data };
     var params = options.params || {};
+    var auth   = options.auth;
 
     return function(params) {
+      if (auth) {
+        params = angular.merge({}, params, {
+          username: api.session.username,
+          authentication_token: api.session.token
+        })
+      }
+
       return $http.get(url, { params: params })
         .then(function(response) {
           if (response.data.error)
@@ -81,37 +102,61 @@ app.factory('api', function($http, $rootScope, $http) {
     }
   }
 
+  var e_category = endpoint({
+      url  : '/Catalog.groovy?method=GetCategoryById',
+      after: buildCategory
+  })
+
+
   var e_categories = endpoint({
-    url  : ROOT + '/Catalog.groovy?method=GetAllCategories',
+    url  : '/Catalog.groovy?method=GetAllCategories',
     after: buildCategoryList
   })
 
+  var e_subcategories = endpoint({
+    url  : '/Catalog.groovy?method=GetAllSubcategories',
+    after: buildSubcategoryList
+  });
+
   var e_products_by_category = endpoint({
-    url  : ROOT + '/Catalog.groovy?method=GetProductsByCategoryId',
+    url  : '/Catalog.groovy?method=GetProductsByCategoryId',
     after: buildProductList
   })
 
   var e_products = endpoint({
-    url  : ROOT + '/Catalog.groovy?method=GetAllProducts',
+    url  : '/Catalog.groovy?method=GetAllProducts',
     after: buildProductList
   })
 
+  var e_signup = endpoint({
+    url  : '/Account.groovy?method=CreateAccount',
+    after: buildSession
+  })
+
   var e_login = endpoint({
-    url  : ROOT + '/Account.groovy?method=SignIn',
+    url  : '/Account.groovy?method=SignIn',
     after: buildSession
   })
 
   var e_logout = endpoint({
-    url: ROOT + '/Account.groovy?method=SignOut',
-  })
-
-  var e_signup = endpoint({
-    url  : ROOT + '/Account.groovy?method=CreateAccount',
-    after: buildSession
+    url : '/Account.groovy?method=SignOut',
+    auth: true
   })
 
   var e_update = endpoint({
-    url: '/Account.groovy?method=UpdateAccount'
+    url : '/Account.groovy?method=UpdateAccount',
+    auth: true
+  })
+
+  var e_get_preferences = endpoint({
+    url  : '/Account.groovy?method=GetPreferences',
+    auth : true,
+    after: buildPreferences
+  })
+
+  var e_set_preferences = endpoint({
+    url : '/Account.groovy?method=UpdatePreferences',
+    auth: true
   })
 
   // Service object:
@@ -119,15 +164,47 @@ app.factory('api', function($http, $rootScope, $http) {
     session: {},
 
     categories: {
-      all: e_categories
+      all: function() {
+        var categories;
+
+        return e_categories().then(function(result) {
+          categories = result;
+
+          promises = result.map(function(category) {
+            return e_subcategories({ id: category.id });
+          })
+
+          return $q.all(promises);
+
+        }).then(function(result) {
+          result.map(function(subcategories, index) {
+            categories[index].subcategories = subcategories;
+          })
+
+          return categories;
+        })
+      },
+
+      get: function(id) {
+        var category;
+
+        return e_category({ id: id }).then(function(result) {
+          category = result;
+          return e_subcategories({ id: id });
+
+        }).then(function(result) {
+          category.subcategories = result;
+          return category;
+        });
+      }
     },
 
     products: {
       find: function(criteria) {
         var filters = [];
 
-        if (criteria.genre)
-          filters.push({ id: 1, value: criteria.genre });
+        if (criteria.gender)
+          filters.push({ id: 1, value: criteria.gender });
 
         if (criteria.age)
           filters.push({ id: 2, value: criteria.age });
@@ -137,6 +214,12 @@ app.factory('api', function($http, $rootScope, $http) {
 
         if (criteria.brand)
           filters.push({ id: 9, value: criteria.brand });
+
+        if (criteria.is_new)
+          filters.push({ id: 6, value: 'Nuevo' })
+
+        if (criteria.is_offer)
+          filters.push({ id: 5, value: 'Oferta' })
 
         var sfilters = JSON.stringify(filters);
 
@@ -153,42 +236,67 @@ app.factory('api', function($http, $rootScope, $http) {
       },
 
       logout: function() {
-        return e_logout({
-          username: api.session.username,
-          authentication_token: api.session.token
-
-        }).thenClear(api.session);
+        return e_logout().thenClear(api.session);
       },
 
       signup: function(profile) {
-        return e_signup({ account: profile }).then(function(account) {
-          return e_login({
+        return e_signup({ account: profile }).then(function() {
+          return api.user.login({
             username: profile.username,
             password: profile.password
           })
-
-        }).thenExtend(api.session);
+        });
       },
+
+      update: function(changes) {
+        var account = angular.merge({}, api.session, changes);
+        return e_update({ account: account}).thenExtend(api.session, account);
+      },
+
+      preferences: {
+        get: e_get_preferences,
+
+        set: function(prefs) {
+          return e_set_preferences({ value: prefs });
+        },
+
+        change: function(makeChanges) {
+          return e_get_preferences.then(function(prefs) {
+            changed = makeChanges(prefs);
+            return e_set_preferences(changed).then(changed);
+          })
+        }
+      }
     }
   }
 });
 
-app.controller('testCtrl', function($scope, api, $q) {
-    // $scope.categories = api.products.find({ category: 2 });
+app.controller('testCtrl', function($scope, api) {
 
+    // $scope.categories = api.products.find({ category: 2 });
     $scope.session = api.session;
 
-    console.log('before login', api.session)
     api.user.login({ username: 'testuser3', password: 'asdf1234' })
-    .then(function(x) {
-      console.log('before logout', api.session)
-      return api.user.logout();
-    })
-    .then(function(x) {
-      console.log('after logout', api.session)
-    })
+    .then(function() {
+      // return api.user.logout();
+      // api.user.update({
+      //   gender: 'F'
+      // })
+      // api.user.preferences.set({});
+      // api.user.preferences.set(
+      //   {
+      //     "meta":{"uuid":"99c71c58-a4e9-489e-ba2f-3e5e827fd178","time":"153.266ms"},"product":{"id":1,"name":"Pancha Coral","price":458,"imageUrl":["http://eiffel.itba.edu.ar/hci/service3/images/levis-9623-26963-1-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9627-26963-3-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9632-26963-6-product.jpg"],"category":{"id":1,"name":"Calzado"},"subcategory":{"id":1,"name":"Alpargatas"},"attributes":[{"id":4,"name":"Color","values":["Coral"]},{"id":2,"name":"Edad","values":["Adulto"]},{"id":1,"name":"Genero","values":["Femenino"]},{"id":9,"name":"Marca","values":["Levi's"]},{"id":8,"name":"Material-Calzado","values":["Lona"]},{"id":6,"name":"Nuevo","values":["Nuevo"]},{"id":3,"name":"Ocasion","values":["Casual"]},{"id":5,"name":"Oferta","values":["Oferta"]},{"id":7,"name":"Talle-Calzado","values":["35","37","39","40"]}]},
+      //     "meta2":{"uuid":"99c71c58-a4e9-489e-ba2f-3e5e827fd178","time":"153.266ms"},"product2":{"id":1,"name":"Pancha Coral","price":458,"imageUrl":["http://eiffel.itba.edu.ar/hci/service3/images/levis-9623-26963-1-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9627-26963-3-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9632-26963-6-product.jpg"],"category":{"id":1,"name":"Calzado"},"subcategory":{"id":1,"name":"Alpargatas"},"attributes":[{"id":4,"name":"Color","values":["Coral"]},{"id":2,"name":"Edad","values":["Adulto"]},{"id":1,"name":"Genero","values":["Femenino"]},{"id":9,"name":"Marca","values":["Levi's"]},{"id":8,"name":"Material-Calzado","values":["Lona"]},{"id":6,"name":"Nuevo","values":["Nuevo"]},{"id":3,"name":"Ocasion","values":["Casual"]},{"id":5,"name":"Oferta","values":["Oferta"]},{"id":7,"name":"Talle-Calzado","values":["35","37","39","40"]}]},
+      //     "meta3":{"uuid":"99c71c58-a4e9-489e-ba2f-3e5e827fd178","time":"153.266ms"},"product3":{"id":1,"name":"Pancha Coral","price":458,"imageUrl":["http://eiffel.itba.edu.ar/hci/service3/images/levis-9623-26963-1-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9627-26963-3-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9632-26963-6-product.jpg"],"category":{"id":1,"name":"Calzado"},"subcategory":{"id":1,"name":"Alpargatas"},"attributes":[{"id":4,"name":"Color","values":["Coral"]},{"id":2,"name":"Edad","values":["Adulto"]},{"id":1,"name":"Genero","values":["Femenino"]},{"id":9,"name":"Marca","values":["Levi's"]},{"id":8,"name":"Material-Calzado","values":["Lona"]},{"id":6,"name":"Nuevo","values":["Nuevo"]},{"id":3,"name":"Ocasion","values":["Casual"]},{"id":5,"name":"Oferta","values":["Oferta"]},{"id":7,"name":"Talle-Calzado","values":["35","37","39","40"]}]},
+      //     "meta4":{"uuid":"99c71c58-a4e9-489e-ba2f-3e5e827fd178","time":"153.266ms"},"product4":{"id":1,"name":"Pancha Coral","price":458,"imageUrl":["http://eiffel.itba.edu.ar/hci/service3/images/levis-9623-26963-1-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9627-26963-3-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9632-26963-6-product.jpg"],"category":{"id":1,"name":"Calzado"},"subcategory":{"id":1,"name":"Alpargatas"},"attributes":[{"id":4,"name":"Color","values":["Coral"]},{"id":2,"name":"Edad","values":["Adulto"]},{"id":1,"name":"Genero","values":["Femenino"]},{"id":9,"name":"Marca","values":["Levi's"]},{"id":8,"name":"Material-Calzado","values":["Lona"]},{"id":6,"name":"Nuevo","values":["Nuevo"]},{"id":3,"name":"Ocasion","values":["Casual"]},{"id":5,"name":"Oferta","values":["Oferta"]},{"id":7,"name":"Talle-Calzado","values":["35","37","39","40"]}]},
+      //     "meta5":{"uuid":"99c71c58-a4e9-489e-ba2f-3e5e827fd178","time":"153.266ms"},"product5":{"id":1,"name":"Pancha Coral","price":458,"imageUrl":["http://eiffel.itba.edu.ar/hci/service3/images/levis-9623-26963-1-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9627-26963-3-product.jpg","http://eiffel.itba.edu.ar/hci/service3/images/levis-9632-26963-6-product.jpg"],"category":{"id":1,"name":"Calzado"},"subcategory":{"id":1,"name":"Alpargatas"},"attributes":[{"id":4,"name":"Color","values":["Coral"]},{"id":2,"name":"Edad","values":["Adulto"]},{"id":1,"name":"Genero","values":["Femenino"]},{"id":9,"name":"Marca","values":["Levi's"]},{"id":8,"name":"Material-Calzado","values":["Lona"]},{"id":6,"name":"Nuevo","values":["Nuevo"]},{"id":3,"name":"Ocasion","values":["Casual"]},{"id":5,"name":"Oferta","values":["Oferta"]},{"id":7,"name":"Talle-Calzado","values":["35","37","39","40"]}]},
+      //   }
+      // );
 
-    // api.products.find({ category: 1 }).thenSet($scope, 'products');
+      // api.user.preferences.change(function(prefs) {})
+    });
+    // api.products.find({ category: 1, is_offer: true, is_new: true }).thenSet($scope, 'products');
+    // api.categories.all().thenSet($scope, 'categories');
     api.categories.all().thenSet($scope, 'categories');
 
     // api.user.signup({
