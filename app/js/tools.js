@@ -11,6 +11,14 @@ function raise(message) {
   throw error
 }
 
+function getter(prop) {
+  return function(x) { return x[prop] };
+}
+
+function mapper(f) {
+  return function(l) { return l.map(f) };
+}
+
 angular.module('promises', [])
 .config(function ($provide) {
   $provide.decorator('$q', function ($delegate, $location) {
@@ -24,6 +32,18 @@ angular.module('promises', [])
         object[prop] = result;
         return result;
       })
+    }
+
+    prototype.get = function(prop) {
+      return this.then(getter(prop));
+    }
+
+    prototype.map = function(f) {
+      return this.then(mapper(f));
+    }
+
+    prototype.mapGet = function(prop) {
+      return this.then(mapper(getter(prop)));
     }
 
     prototype.thenExtend = function thenExtend(object, overrideResult) {
