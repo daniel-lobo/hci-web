@@ -30,15 +30,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
             {templateUrl: 'views/partials/cart.html', controller: 'MainCtrl'}).
 
         when('/checkout',
-<<<<<<< HEAD
             {templateUrl: 'views/partials/checkout.html', controller: 'MainCtrl'}).
-        
-        
-=======
-            {templateUrl: 'views/partials/user.html', controller: 'MainCtrl'}).
-
-
->>>>>>> b56fb2c43235e39d0a7f616681332f7a863bfd8d
         otherwise({redirectTo: '/'});
 
          // use the HTML5 History API
@@ -50,11 +42,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
 
 app.directive('head', function(){
     return {
-<<<<<<< HEAD
         restrict: 'A', // This means that it will be used as an attribute and NOT as an element. 
-=======
-        restrict: 'A', //This means that it will be used as an attribute and NOT as an element.
->>>>>>> b56fb2c43235e39d0a7f616681332f7a863bfd8d
         replace: true,
         templateUrl: '/views/partials/head.html',
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -65,11 +53,7 @@ app.directive('head', function(){
 
 app.directive('footer', function () {
     return {
-<<<<<<< HEAD
         restrict: 'A', // This means that it will be used as an attribute and NOT as an element. 
-=======
-        restrict: 'A', //This means that it will be used as an attribute and NOT as an element.
->>>>>>> b56fb2c43235e39d0a7f616681332f7a863bfd8d
         replace: true,
         templateUrl: '/views/partials/footer.html',
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -122,7 +106,6 @@ app.directive('breadcrumbs', function(){
 
 
 /* CONTROLLERS */
-<<<<<<< HEAD
 app.controller('MainCtrl', function(){
     this.products = [
         {description: 'hola1', price: '123'},
@@ -138,8 +121,3 @@ app.controller('FaqCtrl', function(){
         {question: "Terminos y condiciones", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." }
    ]; 
 });
-=======
-/*app.controller('CategoriesCtrl', ['', function(){
-    this.
-}]);*/
->>>>>>> b56fb2c43235e39d0a7f616681332f7a863bfd8d
