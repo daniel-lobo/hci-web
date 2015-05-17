@@ -1,4 +1,4 @@
-var app = angular.module('neonApp', ['ngRoute', 'ui.bootstrap', 'promises']);
+var app = angular.module('neonApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'promises']);
 
 app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
     $routeProvider.
@@ -34,6 +34,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
 
         when('/checkout',
             {templateUrl: 'views/partials/checkout.html', controller: 'MainCtrl'}).
+
         otherwise({redirectTo: '/'});
 
          // use the HTML5 History API
@@ -53,6 +54,7 @@ app.directive('head', function(){
         }]
     }
 });
+
 
 app.directive('footer', function () {
     return {
