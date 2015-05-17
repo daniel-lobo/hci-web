@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-6">
       <div breadcrumbs></div>
-      <!-- Using the above instead of this: 
+      <!-- Using the above instead of this:
 
       {{ location('Confirmación de compra', [
       ['Home', 'index.html']
@@ -11,133 +11,150 @@
     </div>
   </div>
   <div class="summary">
-    <div class="header row">
-      <div class="col-md-6">1. Informacion Personal</div>
-    </div>
-    <div class="discount row">
-      <div class="col-md-6"><h2>Email</h2></div>
-      <div class="col-md-2">
-        <input type="email" class="form-control" placeholder="Ingresar email">
-      </div>
-    </div>
-    <div class="discount row">
-      <div class="col-md-6"><h2>Contraseña</h2></div>
-      <div class="col-md-2">
-        <input type="text" class="form-control" placeholder="Ingresar contraseña">
-      </div>
-    </div>
-    <div class="selection-area">
-      <button class="btn-primary">Registrarme</button>
-      <button class="btn-primary">Ingresar</button>
-    </div>
-    <div class="selection-area">
-      Necesitas estar registrado para comprar
-    </div>
-    <div class="header row">
-      <div class="col-md-6">2. Envio</div>
-    </div>
-    
-    <div class="selection-area">
-      <button class="btn-primary">Dirección Existente</button>
-      <button class="btn-primary">Dirección Nueva</button>
-    </div>
-    <div class="discount row">
-      <div class="col-md-5 amount">
-        <select class="form-control">
-          <option>Av. Eduardo Madero 399</option>
-          <option>Av. Cabildo 401</option>
-          <option>Av. Santa Fe 399</option>
-          <option>Av. Callao 399</option>
-        </select>
-      </div>
-    </div>
-    <div class="selection-area">
-      <button class="btn-primary">Siguiente</button>
-    </div>
-    <div class="header row">
-      <div class="col-md-6">3. Método de Pago</div>
-    </div>
-    <div class="selection-area">
-      <button class="btn-primary">Tarjeta Existente</button>
-      <button class="btn-primary">Tarjeta Nueva</button>
-    </div>
-    <div class="discount row">
-      <div class="col-md-6">
-        <div id="discount-text">Datos de facturacion: </div>
-        <div class="first-row-third-step">
-          <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Nombre">
-          </div>
-          <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="Apellido">
+    <accordion close-others="false">
+      <accordion-group heading="1. Información Personal" is-open="true">
+        <div class="discount row">
+          <div class="col-md-6"><h2>Email</h2></div>
+          <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Ingresar email">
           </div>
         </div>
-        <br/>
-        <input type="text" class="form-control" placeholder="Telefono">
-        <br/>
-        <input type="text" class="form-control" placeholder="Direccion">
-        <br/>
-        <input type="text" class="form-control" placeholder="Codigo Postal">
-      </div>
-      <div class="col-md-6">
-        <div id="discount-text">Datos de tarjeta de credito: </div>
-        <div class="first-row-third-step-2">
-          <div class="col-md-8">
-            <input type="text" class="form-control" placeholder="Numero de tarjeta">
-          </div>
-          <div class="col-md-4">
-            <input type="text" class="form-control" placeholder="Cod. Seguridad">
+        <div class="discount row">
+          <div class="col-md-6"><h2>Contraseña</h2></div>
+          <div class="col-md-2">
+            <input type="text" class="form-control" placeholder="Ingresar contraseña">
           </div>
         </div>
-        <div class="col-md-2">Vencimiento:</div>
-        <div class="col-md-5 amount">
-          <select class="form-control">
-            <option>Mes</option>
-          </select>
+        <div class="selection-area">
+          <button class="btn-primary">Registrarme</button>
+          <button class="btn-primary">Ingresar</button>
         </div>
-        <div class="col-md-5 amount">
-          <select class="form-control">
-            <option>Año</option>
-          </select>
+      </accordion-group>
+      <accordion-group heading="2. Datos de envío">
+        <div class="selection-area">
+          <div class="btn-group">
+            <label class="btn btn-primary" ng-model="addressSelection" btn-radio="'address-existing'">Dirección Existente</label>
+            <label class="btn btn-primary" ng-model="addressSelection" btn-radio="'address-new'">Nueva Dirección</label>
+          </div>
         </div>
+        <div class="discount row">
+          <div ng-if="addressSelection == 'address-existing'">
+            <div class="col-md-5 amount">
+              <select class="form-control">
+                <option>Av. Eduardo Madero 399</option>
+                <option>Av. Cabildo 401</option>
+                <option>Av. Santa Fe 399</option>
+                <option>Av. Callao 399</option>
+              </select>
+            </div>
+          </div>
+          <div ng-if="addressSelection == 'address-new'">
+            <div class="col-md-6">
+              <br/>
+              <input type="text" class="form-control" placeholder="Ingrese dirección">
+              <br/>
+              <button class="btn-primary">Añadir</button>
+            </div>
+          </div>
       </div>
-    </div>
-    <div class="selection-area">
-      <button class="btn-primary">Siguiente</button>
-    </div>
-    <div class="header row">
-      <div class="col-md-6">4. Resumen</div>
-    </div>
-    
-    <div class="product row">
-      <div class="col-md-2 image">
-        <img src="img/product_{{ image }}.jpg" alt="{{ desc }}">
-        <button class="btn-primary">Modificar</button>
-        <button class="btn-danger">Quitar</button>
-      </div>
-      <div class="col-md-4 desc">
-        <h3>{{ desc }}</h3>
-        <h4>Color {{ color }}</h4>
-        <h4>Talle {{ size }}</h4>
-      </div>
-      <div class="col-md-2 amount">
-        <select class="form-control">
-          <option>1</option>
-        </select>
-      </div>
-      <div class="col-md-2 price">${{ price }}</div>
-      <div class="col-md-2 total">${{ price }}</div>
-    </div>
-    <div class="total row">
-      <div class="col-md-2 col-md-offset-8"><h2>Total</h2></div>
-      <div class="col-md-2 total">$601</div>
-    </div>
-    <div class="action row">
-      <div class="col-md-12">
-        <div class="pull-right">
-          <button class="btn-danger">Vaciar Carrito</button>
-          <button class="btn-success">Finalizar Compra</button>
+      </accordion-group>
+      <accordion-group heading="3. Método de pago">
+        <div class="selection-area">
+          <div class="btn-group">
+            <label class="btn btn-primary" ng-model="cardSelection" btn-radio="'card-existing'">Tarjeta Existente</label>
+            <label class="btn btn-primary" ng-model="cardSelection" btn-radio="'card-new'">Nueva Tarjeta</label>
+          </div>
         </div>
-      </div>
+        <div class="discount row">
+          <div ng-if="cardSelection == 'card-existing'">
+            <div class="col-md-5 amount">
+              <select class="form-control">
+                <option>Amex *********5444</option>
+                <option>Visa *********1414</option>
+                <option>Amex *********0709</option>
+              </select>
+            </div>
+          </div>
+          <div ng-if="cardSelection == 'card-new'">
+            <br/>
+            <div class="col-md-6">
+              <div id="discount-text">Datos de facturacion: </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text" class="form-control" placeholder="Nombre">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="form-control" placeholder="Apellido">
+                </div>
+              </div>
+              <br/>
+              <input type="text" class="form-control" placeholder="Telefono">
+              <br/>
+              <input type="text" class="form-control" placeholder="Direccion">
+              <br/>
+              <input type="text" class="form-control" placeholder="Codigo Postal">
+            </div>
+            <div class="col-md-6">
+              <div id="discount-text">Datos de tarjeta de credito: </div>
+              <div class="first-row-third-step-2">
+                <div class="col-md-8">
+                  <input type="text" class="form-control" placeholder="Numero de tarjeta">
+                </div>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" placeholder="Cod. Seguridad">
+                </div>
+              </div>
+              <div class="col-md-2">Vencimiento:</div>
+              <div class="col-md-5 amount">
+                <select class="form-control">
+                  <option>Mes</option>
+                </select>
+              </div>
+              <div class="col-md-5 amount">
+                <select class="form-control">
+                  <option>Año</option>
+                </select>
+              </div>
+              <h1>&nbsp;</h1>
+              <div class="control-group col-md-offset-5">
+              <button class="btn-primary">Añadir</button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </accordion-group>
+      <accordion-group heading="4. Resumen">
+        <div class="product row">
+          <div class="col-md-2 image">
+            <img src="img/product_{{ image }}.jpg" alt="{{ desc }}">
+            <button class="btn-primary">Modificar</button>
+            <button class="btn-danger">Quitar</button>
+          </div>
+          <div class="col-md-4 desc">
+            <h3>{{ desc }}</h3>
+            <h4>Color {{ color }}</h4>
+            <h4>Talle {{ size }}</h4>
+          </div>
+          <div class="col-md-2 amount">
+            <select class="form-control">
+              <option>1</option>
+            </select>
+          </div>
+          <div class="col-md-2 price">${{ price }}</div>
+          <div class="col-md-2 total">${{ price }}</div>
+        </div>
+        <div class="total row">
+          <div class="col-md-2 col-md-offset-8"><h2>Total</h2></div>
+          <div class="col-md-2 total">$601</div>
+        </div>
+        <div class="action row">
+          <div class="col-md-12">
+            <div class="pull-right">
+              <button class="btn-danger">Vaciar Carrito</button>
+              <button class="btn-success">Finalizar Compra</button>
+            </div>
+          </div>
+        </div>
+      </accordion-group>
     </div>
   </div>
