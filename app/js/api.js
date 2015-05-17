@@ -59,39 +59,26 @@ function buildSession(data) {
 }
 
 
-function createEndpoint($resource, options) {
-  var url     = options.url || ''
-  var method  = options.method || 'get';
-  var after   = options.after || function(body) { return body };
-  var before  = options.before || function(body) { return body };
-  var params  = options.params || {};
-
-  var actions = {};
-
-  actions[method] = {
-    method: method,
-
-    transformRequest: before,
-
-    transformResponse: function(body, headers) {
-      var data = JSON.parse(body);
-
-      if (data.error)
-        raise(data.error);
-
-      return after(data);
-    }
-  }
-
-  var resource = $resource(url, params, actions);
-  return resource[method].bind(resource);
-}
-
-
-app.factory('api', function($resource, $rootScope, $http) {
+app.factory('api', function($http, $rootScope, $http) {
   // Endpoints:
-  function endpoint(method, url, transform) {
-    return createEndpoint($resource, method, url, transform)
+  function endpoint(options) {
+    var url    = options.url
+    var after  = options.after || function(data) { return data };
+    var params = options.params || {};
+
+    return function(params) {
+      return $http.get(url, { params: params })
+        .then(function(response) {
+          if (response.data.error)
+            raise(response.data.error);
+
+          return after(response.data);
+        })
+
+        .catch(function(response) {
+          raise({ code: -response.status, reason: "HTTP Error" });
+        });
+    }
   }
 
   var e_categories = endpoint({
@@ -162,55 +149,57 @@ app.factory('api', function($resource, $rootScope, $http) {
 
     user: {
       login: function(credentials) {
-        return api.session = e_login(credentials);
+        return e_login(credentials).thenExtend(api.session);
       },
 
       logout: function() {
         return e_logout({
           username: api.session.username,
-          authentication_token: api.sesssion.authenticationToken
-        });
+          authentication_token: api.session.token
+
+        }).thenClear(api.session);
       },
 
       signup: function(profile) {
-        e_signup({ account: profile }).$promise.then(function(account) {
+        return e_signup({ account: profile }).then(function(account) {
           return e_login({
             username: profile.username,
             password: profile.password
-          }).$promise
+          })
 
-        }).then(function(account) {
-            angular.extend(api.session, account);
-
-        }).catch (function (error) {
-
-        });
-
-        return api.session
+        }).thenExtend(api.session);
       },
-
-      update: function(profile) {
-
-      }
     }
   }
 });
 
-app.controller('testCtrl', function($scope, api) {
-    // $scope.api.user.login({ username: 'a', password: 'b' }).$promise
+app.controller('testCtrl', function($scope, api, $q) {
     // $scope.categories = api.products.find({ category: 2 });
 
     $scope.session = api.session;
 
-    api.user.signup({
-      "username": "testuser3",
-      "password": "asdf1234",
-      "firstName": "jane",
-      "lastName": "doe",
-      "gender": "F",
-      "identityCard": "22222337",
-      "email": "jane@doe.com",
-      "birthDate": "1980-01-01"
-    });
+    console.log('before login', api.session)
+    api.user.login({ username: 'testuser3', password: 'asdf1234' })
+    .then(function(x) {
+      console.log('before logout', api.session)
+      return api.user.logout();
+    })
+    .then(function(x) {
+      console.log('after logout', api.session)
+    })
+
+    // api.products.find({ category: 1 }).thenSet($scope, 'products');
+    api.categories.all().thenSet($scope, 'categories');
+
+    // api.user.signup({
+    //   "username": "testuser3",
+    //   "password": "asdf1234",
+    //   "firstName": "jane",
+    //   "lastName": "doe",
+    //   "gender": "F",
+    //   "identityCard": "22222337",
+    //   "email": "jane@doe.com",
+    //   "birthDate": "1980-01-01"
+    // });
   }
 );
