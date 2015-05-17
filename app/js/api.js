@@ -76,8 +76,12 @@ function buildAddressList(data) {
   return data.addresses;
 }
 
-function buildCreditCard() {
+function buildCreditCard(data) {
   return data.creditCard;
+}
+
+function buildCreditCardList(data) {
+  return data.creditCards;
 }
 
 
@@ -195,6 +199,18 @@ app.factory('api', function($http, $rootScope, $q) {
     url  : '/Account.groovy?method=CreateCreditCard',
     auth : true,
     after: buildCreditCard
+  })
+
+  var e_cards = endpoint({
+    url     : '/Account.groovy?method=GetAllCreditCards',
+    auth    : true,
+    after   : buildCreditCardList,
+    defaults: { page_size: 1000 }
+  })
+
+  var e_delete_card = endpoint({
+    url  : '/Account.groovy?method=DeleteCreditCard',
+    auth : true
   })
 
   var e_create_order = endpoint({
@@ -319,9 +335,9 @@ app.factory('api', function($http, $rootScope, $q) {
       },
 
       address: {
-        add: function(address) {
+        add: function(name) {
           address = {
-            name       : address,
+            name       : name,
             street     : "aaaaaaaaaa",
             number     : "1111",
             province   : "C",
@@ -329,26 +345,29 @@ app.factory('api', function($http, $rootScope, $q) {
             phoneNumber: "p123123"
           }
 
-          return e_create_address({ address: address }).get('name');
+          return e_create_address({ address: address }).get('id', 'name');
         },
 
         all: function() {
-          return e_addresses().mapGet('name')
+          return e_addresses().mapGet('id', 'name')
         },
 
         remove: function(address) {
-          return e_addresses().map(function(other) {
-            if (address === other.name)
-              return e_delete_address({ id: other.id });
-          });
+          return e_delete_address({ id: address.id });
         }
       },
-      // 
-      // cards: {
-      //   add: function(card) {
-      //     return e_create_card({ credit_card: card });
-      //   }
-      // }
+
+      card: {
+        add: function(card) {
+          return e_create_card({ credit_card: card });
+        },
+
+        all: e_cards,
+
+        remove: function(card) {
+          return e_delete_card({ id: card.id });
+        }
+      }
     }
   }
 });
@@ -369,15 +388,24 @@ app.controller('testCtrl', function($scope, api) {
       // api.user.preferences.set({});
       // api.user.preferences.change(function(prefs) {})
 
-      // api.user.address.add('Asd2')
-      // api.user.address.all().thenSet($scope, 'addresses').catchSet($scope, 'addresses')
-      // api.user.address.remove('Asd2') //.thenSet($scope, 'addresses').catchSet($scope, 'addresses')
+      // api.user.address.add('Coronel Diaz 1725').then(function() {
+      // });
+      //   api.user.address.all().thenSet($scope, 'addresses').catchSet($scope, 'addresses')
+      // api.user.address.remove({ id: 761 }) //.thenSet($scope, 'addresses').catchSet($scope, 'addresses')
       // api.user.address.all().thenSet($scope, 'addresses');
-      api.user.cards.add({
-        "number": "4512340987123409",
-        "expirationDate": "1015",
-        "securityCode": "399"
-      }).thenSet($scope, 'addresses');
+    //   api.user.address.add({
+    //     "number": "4512340987123409",
+    //     "expirationDate": "1015",
+    //     "securityCode": "399"
+    //   }).thenSet($scope, 'addresses');
+
+        // api.user.card.add({
+        //   "number": "4512340987123401",
+        //   "expirationDate": "1015",
+        //   "securityCode": "399"
+        // });
+        //
+        // api.user.card.all().thenSet($scope, 'addresses');
     });
 
     // api.products.find().thenSet($scope, 'products');

@@ -12,7 +12,20 @@ function raise(message) {
 }
 
 function getter(prop) {
-  return function(x) { return x[prop] };
+  if (arguments.length < 2)
+    return function(x) { return x[prop] };
+
+  else
+    var props = arguments;
+
+    return function(x) {
+      var object = {};
+
+      for (var i = 0; i < props.length; i++)
+        object[props[i]] = x[props[i]];
+
+      return object;
+    }
 }
 
 function mapper(f) {
@@ -34,16 +47,16 @@ angular.module('promises', [])
       })
     }
 
-    prototype.get = function(prop) {
-      return this.then(getter(prop));
+    prototype.get = function() {
+      return this.then(getter.apply(null, arguments));
     }
 
     prototype.map = function(f) {
       return this.then(mapper(f));
     }
 
-    prototype.mapGet = function(prop) {
-      return this.then(mapper(getter(prop)));
+    prototype.mapGet = function() {
+      return this.then(mapper(getter.apply(null, arguments)));
     }
 
     prototype.thenExtend = function thenExtend(object, overrideResult) {
