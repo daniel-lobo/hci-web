@@ -1,4 +1,4 @@
-var app = angular.module('neonApp', ['ngRoute', 'ui.bootstrap', 'promises']);
+var app = angular.module('neonApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'promises']);
 
 app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
     $routeProvider.
@@ -33,7 +33,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
             {templateUrl: 'views/partials/categories.html', controller: 'MainCtrl'}).
 
         when('/checkout',
-            {templateUrl: 'views/partials/checkout.html', controller: 'MainCtrl'}).
+            {templateUrl: 'views/partials/checkout.html', controller: 'CheckoutCtrl'}).
         otherwise({redirectTo: '/'});
 
          // use the HTML5 History API
@@ -53,6 +53,7 @@ app.directive('head', function(){
         }]
     }
 });
+
 
 app.directive('footer', function () {
     return {
@@ -132,4 +133,9 @@ app.controller('FaqCtrl', function($scope){
         {title: "Politica de cambios", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
         {title: "Terminos y condiciones", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." }
    ];
+});
+
+app.controller('CheckoutCtrl', function($scope){
+  $scope.addressSelection = 'address-existing';
+  $scope.cardSelection = 'card-existing';
 });
