@@ -18,7 +18,7 @@ function buildProduct(data) {
     name    : data.name,
     price   : data.price,
     images  : data.imageUrl,
-    category: data.category.id
+    category: data.category
   }
 }
 

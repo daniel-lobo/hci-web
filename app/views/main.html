@@ -18,7 +18,8 @@
 
         <div class="caption">
           <a ng-href="/product/{{ product.id }}" class="desc">{{ product.name }}</a>
-          <a ng-href="/product/{{ product.id }}" class="price">{{ product.price }}</a>
+          <a ng-href="/product/{{ product.id }}" class="price">$ {{ product.price }}</a>
+          <a ng-href="/category/{{ product.category.id }}" class="category">{{ product.category.name }}</a>
         </div>
       </div>
     </article>
