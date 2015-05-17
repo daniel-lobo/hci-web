@@ -1,4 +1,5 @@
-Last iteration of a web project presented @ ITBA for the subject Human Computer Interaction. May 2015.
+Last iteration of a web project presented @ ITBA for the subject Human Computer Interaction. 
+May 2015.
 
 # Dependencies
 
@@ -17,4 +18,4 @@ policy):
 Don't use this instance for anything else.
 
 # Side Notes
-		This is not a responsive website.
+This is not a responsive website.

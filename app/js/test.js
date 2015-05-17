@@ -29,6 +29,9 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
         when('/cart',
             {templateUrl: 'views/partials/cart.html', controller: 'MainCtrl'}).
 
+        when('/categories',
+            {templateUrl: 'views/partials/categories.html', controller: 'MainCtrl'}).
+
         when('/checkout',
             {templateUrl: 'views/partials/checkout.html', controller: 'MainCtrl'}).
         otherwise({redirectTo: '/'});
@@ -42,7 +45,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
 
 app.directive('head', function(){
     return {
-        restrict: 'A', // This means that it will be used as an attribute and NOT as an element. 
+        restrict: 'A', // This means that it will be used as an attribute and NOT as an element.
         replace: true,
         templateUrl: '/views/partials/head.html',
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -53,7 +56,7 @@ app.directive('head', function(){
 
 app.directive('footer', function () {
     return {
-        restrict: 'A', // This means that it will be used as an attribute and NOT as an element. 
+        restrict: 'A', // This means that it will be used as an attribute and NOT as an element.
         replace: true,
         templateUrl: '/views/partials/footer.html',
         controller: ['$scope', '$filter', function ($scope, $filter) {
@@ -80,7 +83,7 @@ app.directive('products-display', function() {
         replace: true,
         templateUrl: '/views/partials/categories_items.html',
         controller: 'CategoriesCtrl',
-        controllerAs: 'categories-ctrl'
+        controllerAs: 'categoriesC'
     };
 });
 
@@ -113,11 +116,20 @@ app.controller('MainCtrl', function(){
     ];
 });
 
-app.controller('FaqCtrl', function(){
-   this.questions = [
-        {question: "¿Como comprar?", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
-        {question: "Plazos de Entrega", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
-        {question: "Politica de cambios", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
-        {question: "Terminos y condiciones", answer: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." }
-   ]; 
+app.controller('FaqCtrl', function($scope){
+
+  $scope.alerts = [
+   { type: '', msg: 'Esta seccion contiene importante información sobre nuestro sitio web y nuestra tienda Neon. En caso de que no pueda encontrar la respuesta que está buscando, por favor no dude en contactarnos.' }
+  ];
+
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+
+   $scope.groups = [
+        {title: "¿Como comprar?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
+        {title: "Plazos de Entrega", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
+        {title: "Politica de cambios", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
+        {title: "Terminos y condiciones", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." }
+   ];
 });
