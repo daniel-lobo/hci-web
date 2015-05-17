@@ -1,4 +1,9 @@
 
+app.controller('MainCtrl', function($scope, api) {
+    api.product.find({ is_new: true, page_size: 8 }).thenSet($scope, 'products');
+});
+
+
 app.controller('UserCtrl', function($scope, api) {
   $scope.session      = api.session;
   $scope.is_logged_in = api.user.is_logged_in;
