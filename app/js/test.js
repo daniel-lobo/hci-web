@@ -1,43 +1,55 @@
 var app = angular.module('neonApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'promises']);
 
-app.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.
+app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
+  $routeProvider
+    .when('/', {
+      templateUrl : 'views/main.html',
+      controller  : 'MainCtrl'
+    })
 
-        when('/',
-        	{templateUrl: 'views/main.html',
-             controller: 'MainCtrl',
-             controllerAs: 'mainC'
-            }).
+    .when('/index', {
+     templateUrl: 'views/partials/user.html',
+     controller : 'MainCtrl',
+    })
 
-        when('/index',
-            {templateUrl: 'views/partials/user.html',
-             controller: 'MainCtrl',
-            }).
+    .when('/faq', {
+      templateUrl : 'views/partials/faq.html',
+      controller  : 'FaqCtrl',
+      controllerAs: 'faqC'
+    }).
 
-        when('/faq',
-        	{templateUrl: 'views/partials/faq.html',
-             controller: 'FaqCtrl',
-             controllerAs: 'faqC'
-            }).
+    .when('/user', {
+      templateUrl: '/views/partials/user.html', controller: 'UserCtrl'
+    })
 
-        when('/user',
-        	{templateUrl: '/views/partials/user.html', controller: 'PlayersCtrl'}).
+    .when('/liked', {
+      templateUrl: 'views/partials/underconstruction.html',
+      controller : 'MainCtrl'
+    })
 
-        when('/liked',
-            {templateUrl: 'views/partials/underconstruction.html', controller: 'MainCtrl'}).
+    .when('/cart', {
+      templateUrl: 'views/partials/cart.html',
+      controller : 'MainCtrl'
+    })
 
-        when('/cart',
-            {templateUrl: 'views/partials/cart.html', controller: 'MainCtrl'}).
+    .when('/categories', {
+      templateUrl: 'views/partials/categories.html',
+      controller : 'MainCtrl'
+    })
 
-        when('/categories',
-            {templateUrl: 'views/partials/categories.html', controller: 'MainCtrl'}).
+    .when('/product/:productId', {
+       templateUrl: 'views/partials/product.html',
+       controller : 'ProductCtrl'
+     })
 
-        when('/checkout',
-            {templateUrl: 'views/partials/checkout.html', controller: 'CheckoutCtrl'}).
-        otherwise({redirectTo: '/'});
+    .when('/checkout', {
+      templateUrl: 'views/partials/checkout.html',
+      controller : 'CheckoutCtrl'
+    })
 
-         // use the HTML5 History API
-         //$locationProvider.html5Mode(true);
+    .otherwise({ redirectTo: '/' });
+     // use the HTML5 History API
+    // $locationProvider.html5Mode(true);
 }]);
 
 
@@ -106,22 +118,6 @@ app.directive('breadcrumbs', function(){
         templateUrl: '/views/partials/breadcrumbs.html',
         controller: 'BreadcrumbsCtrl'
     };
-});
-
-
-/* CONTROLLERS */
-app.controller('MainCtrl', function($scope){
-    this.products = [
-        {description: 'prod1', price: '123'},
-        {description: 'prod2', price: '456'},
-        {description: 'prod3', price: '789'},
-        {description: 'prod4', price: '101112'}
-    ];
-
-    $scope.carrouselSlides = [
-        {title:"", image:"/assets/img1.jpg", link:"", active:"true"},
-        {title:"", image:"/assets/img2.jpg", link:"", active:"false"}
-    ];
 });
 
 app.controller('FaqCtrl', function($scope){
