@@ -1,43 +1,55 @@
 var app = angular.module('neonApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'promises']);
 
 app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
-    $routeProvider.
+  $routeProvider
+    .when('/', {
+      templateUrl : 'views/main.html',
+      controller  : 'MainCtrl'
+    })
 
-        when('/',
-        	{templateUrl: 'views/main.html',
-             controller: 'MainCtrl',
-             controllerAs: 'mainC'
-            }).
+    .when('/index', {
+     templateUrl: 'views/partials/user.html',
+     controller : 'MainCtrl',
+    })
 
-        when('/index',
-            {templateUrl: 'views/partials/user.html',
-             controller: 'MainCtrl',
-            }).
+    .when('/faq', {
+      templateUrl : 'views/partials/faq.html',
+      controller  : 'FaqCtrl',
+      controllerAs: 'faqC'
+    })
 
-        when('/faq',
-        	{templateUrl: 'views/partials/faq.html',
-             controller: 'FaqCtrl',
-             controllerAs: 'faqC'
-            }).
+    .when('/user', {
+      templateUrl: '/views/partials/user.html', controller: 'UserCtrl'
+    })
 
-        when('/user',
-        	{templateUrl: '/views/partials/user.html', controller: 'PlayersCtrl'}).
+    .when('/liked', {
+      templateUrl: 'views/partials/underconstruction.html',
+      controller : 'MainCtrl'
+    })
 
-        when('/liked',
-            {templateUrl: 'views/partials/underconstruction.html', controller: 'MainCtrl'}).
+    .when('/cart', {
+      templateUrl: 'views/partials/cart.html',
+      controller : 'MainCtrl'
+    })
 
-        when('/cart',
-            {templateUrl: 'views/partials/cart.html', controller: 'MainCtrl'}).
+    .when('/categories', {
+      templateUrl: 'views/partials/categories.html',
+      controller : 'MainCtrl'
+    })
 
-        when('/categories',
-            {templateUrl: 'views/partials/categories.html', controller: 'MainCtrl'}).
+    .when('/product/:productId', {
+       templateUrl: 'views/partials/product.html',
+       controller : 'ProductCtrl'
+     })
 
-        when('/checkout',
-            {templateUrl: 'views/partials/checkout.html', controller: 'CheckoutCtrl'}).
-        otherwise({redirectTo: '/'});
+    .when('/checkout', {
+      templateUrl: 'views/partials/checkout.html',
+      controller : 'CheckoutCtrl'
+    })
 
-         // use the HTML5 History API
-        // $locationProvider.html5Mode(true);
+    .otherwise({ redirectTo: '/' });
+     // use the HTML5 History API
+    // $locationProvider.html5Mode(true);
 }]);
 
 
@@ -108,15 +120,6 @@ app.directive('breadcrumbs', function(){
     };
 });
 
-
-/* CONTROLLERS */
-app.controller('MainCtrl', function(){
-    this.products = [
-        {description: 'hola1', price: '123'},
-        {description: 'chau1', price: '312'}
-    ];
-});
-
 app.controller('FaqCtrl', function($scope){
 
   $scope.alerts = [
@@ -135,7 +138,46 @@ app.controller('FaqCtrl', function($scope){
    ];
 });
 
-app.controller('CheckoutCtrl', function($scope){
+app.controller('CheckoutCtrl', function($scope, api){
+  $scope.newAddressInputField = "";
   $scope.addressSelection = 'address-existing';
   $scope.cardSelection = 'card-existing';
+
+  $scope.alertMessagesForLogIn = [
+    {type:"", message:"Debe iniciar sesión para realizar la compra."}
+  ];
+
+  $scope.closeAlert = function(index) {
+    $scope.alertMessagesForLogIn.splice(index, 1);
+  };
+
+  $scope.existingAddresses = [
+    'Carlos Gardel 3523, Olivos',
+    'Eduardo Madero 399, Capital Federal'
+  ];
+
+  $scope.existingCreditCards = [
+    'AMEX ************3766',
+    'VISA ***********2345'
+  ];
+
+  $scope.onAddAddressClick = function() {
+    console.log("hola");
+
+    var address = $scope.newAddressInputField;
+
+    $scope.isUserLoggedIn = api.user.is_logged_in();
+
+    api.address.add(address).then(function() {
+      $scope.existingAddresses.push(address);
+      $scope.addressSelection = 'address-existing';
+
+    }).catchSet($scope, 'error').catch(function(error) {
+
+    });
+
+    api.address.add(address).thenSet($scope, 'lastAdddedAddress');
+    api.address.add(address)
+  }
+
 });

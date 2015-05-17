@@ -18,18 +18,19 @@ function buildProduct(data) {
     name    : data.name,
     price   : data.price,
     images  : data.imageUrl,
-    category: data.category.id
+    category: data.category
   }
 }
 
 
 function buildProductList(data) {
-  return {
-    page    : data.page,
-    per_page: data.pageSize,
-    total   : data.total,
-    products: data.products.map(buildProduct)
-  }
+  return data.products.map(buildProduct);
+  // return {
+  //   page    : data.page,
+  //   per_page: data.pageSize,
+  //   total   : data.total,
+  //   products: data.products.map(buildProduct)
+  // }
 }
 
 
@@ -60,7 +61,6 @@ function buildSubcategoryList(data) {
 function buildSession(data) {
   var account = data.account || {};
   account.token = data.authenticationToken;
-  account.error = data.error;
   return account;
 }
 
@@ -76,8 +76,24 @@ function buildAddressList(data) {
   return data.addresses;
 }
 
-function buildCreditCard() {
+function buildCreditCard(data) {
   return data.creditCard;
+}
+
+function buildCreditCardList(data) {
+  return data.creditCards;
+}
+
+function buildOrder(data) {
+  return data.order;
+}
+
+function buildOrderList(data) {
+  return data.orders;
+}
+
+function buildOrderItem(data) {
+  return data.orderItem;
 }
 
 
@@ -197,187 +213,290 @@ app.factory('api', function($http, $rootScope, $q) {
     after: buildCreditCard
   })
 
+  var e_cards = endpoint({
+    url     : '/Account.groovy?method=GetAllCreditCards',
+    auth    : true,
+    after   : buildCreditCardList,
+    defaults: { page_size: 1000 }
+  })
+
+  var e_delete_card = endpoint({
+    url  : '/Account.groovy?method=DeleteCreditCard',
+    auth : true
+  })
+
   var e_create_order = endpoint({
-    url : 'http://eiffel.itba.edu.ar/hci/service3/Order.groovy?method=CreateOrder',
+    url  : '/Order.groovy?method=CreateOrder',
+    auth : true,
+    after: buildOrder
+  })
+
+  var e_orders = endpoint({
+    url  : '/Order.groovy?method=GetAllOrders',
+    auth : true,
+    after: buildOrderList
+  })
+
+  var e_order = endpoint({
+    url  : '/Order.groovy?method=GetOrderById',
+    auth : true,
+    after: buildOrder
+  })
+
+  var e_delete_order = endpoint({
+    url : '/Order.groovy?method=DeleteOrder',
+    auth: true
+  })
+
+  var e_add_to_order = endpoint({
+    url : '/Order.groovy?method=AddItemToOrder',
     auth: true
   })
 
   // Service object:
-  return api = {
-    session: {},
+  var api = {
+    session: {}
+  }
 
-    category: {
-      all: function() {
-        var categories;
+  api.category = {
+    all: function() {
+      var categories;
 
-        return e_categories().then(function(result) {
-          categories = result;
+      return e_categories().then(function(result) {
+        categories = result;
 
-          promises = result.map(function(category) {
-            return e_subcategories({ id: category.id });
-          })
-
-          return $q.all(promises);
-
-        }).then(function(result) {
-          result.map(function(subcategories, index) {
-            categories[index].subcategories = subcategories;
-          })
-
-          return categories;
+        promises = result.map(function(category) {
+          return e_subcategories({ id: category.id });
         })
-      },
 
-      get: function(id) {
-        var category;
+        return $q.all(promises);
 
-        return e_category({ id: id }).then(function(result) {
-          category = result;
-          return e_subcategories({ id: id });
+      }).then(function(result) {
+        result.map(function(subcategories, index) {
+          categories[index].subcategories = subcategories;
+        })
 
-        }).then(function(result) {
-          category.subcategories = result;
-          return category;
-        });
-      }
+        return categories;
+      })
     },
 
-    products: {
-      find: function(criteria) {
-        if (! criteria)
-          return e_products();
+    get: function(id) {
+      var category;
 
-        var filters = [];
+      return e_category({ id: id }).then(function(result) {
+        category = result;
+        return e_subcategories({ id: id });
 
-        if (criteria.gender)
-          filters.push({ id: 1, value: criteria.gender });
+      }).then(function(result) {
+        category.subcategories = result;
+        return category;
+      });
+    }
+  };
 
-        if (criteria.age)
-          filters.push({ id: 2, value: criteria.age });
+  api.product = {
+    find: function(criteria) {
+      if (! criteria)
+        return e_products();
 
-        if (criteria.color)
-          filters.push({ id: 4, value: criteria.color });
+      var filters = [];
 
-        if (criteria.brand)
-          filters.push({ id: 9, value: criteria.brand });
+      if (criteria.gender)
+        filters.push({ id: 1, value: criteria.gender });
 
-        if (criteria.is_new)
-          filters.push({ id: 6, value: 'Nuevo' })
+      if (criteria.age)
+        filters.push({ id: 2, value: criteria.age });
 
-        if (criteria.is_offer)
-          filters.push({ id: 5, value: 'Oferta' })
+      if (criteria.color)
+        filters.push({ id: 4, value: criteria.color });
 
-        var sfilters = JSON.stringify(filters);
+      if (criteria.brand)
+        filters.push({ id: 9, value: criteria.brand });
 
-        if (criteria.category)
-          return e_products_by_category({ id: criteria.category, filters: sfilters });
-        else
-          return e_products({ filters: sfilters });
+      if (criteria.is_new)
+        filters.push({ id: 6, value: 'Nuevo' })
+
+      if (criteria.is_offer)
+        filters.push({ id: 5, value: 'Oferta' })
+
+      var query = {
+        filters: JSON.stringify(filters),
+        page_size: criteria.page_size,
+        page: criteria.page
       }
+
+      if (criteria.category) {
+        query[id] = criteria.category.id;
+        return e_products_by_category(query);
+
+      } else
+        return e_products(query);
+    }
+  };
+
+  api.user = {
+    is_logged_in: function() {
+      return api.session.token != null;
     },
 
-    user: {
-      is_logged_in: function() {
-        return api.session.token != null;
-      },
+    login: function(credentials) {
+      return e_login(credentials).thenExtend(api.session);
+    },
 
-      login: function(credentials) {
-        return e_login(credentials).thenExtend(api.session);
-      },
+    logout: function() {
+      return e_logout().thenClear(api.session);
+    },
 
-      logout: function() {
-        return e_logout().thenClear(api.session);
-      },
+    signup: function(profile) {
+      return e_signup({ account: profile }).then(function() {
+        return api.user.login({
+          username: profile.username,
+          password: profile.password
+        })
+      });
+    },
 
-      signup: function(profile) {
-        return e_signup({ account: profile }).then(function() {
-          return api.user.login({
-            username: profile.username,
-            password: profile.password
-          })
-        });
-      },
+    update: function(changes) {
+      var account = angular.merge({}, api.session, changes);
+      delete account.token;
+      return e_update({ account: account}).thenExtend(api.session, account);
+    },
+  };
 
-      update: function(changes) {
-        var account = angular.merge({}, api.session, changes);
-        return e_update({ account: account}).thenExtend(api.session, account);
-      },
+  api.preferences = {
+    get: e_get_preferences,
 
-      preferences: {
-        get: e_get_preferences,
+    set: function(prefs) {
+      return e_set_preferences({ value: prefs });
+    },
 
-        set: function(prefs) {
-          return e_set_preferences({ value: prefs });
-        },
+    change: function(makeChanges) {
+      return e_get_preferences.then(function(prefs) {
+        changed = makeChanges(prefs);
+        return e_set_preferences(changed).then(changed);
+      })
+    }
+  };
 
-        change: function(makeChanges) {
-          return e_get_preferences.then(function(prefs) {
-            changed = makeChanges(prefs);
-            return e_set_preferences(changed).then(changed);
-          })
-        }
-      },
+  api.address = {
+    add: function(name) {
+      address = {
+        name       : name,
+        street     : "aaaaaaaaaa",
+        number     : "1111",
+        province   : "C",
+        zipCode    : "z23123",
+        phoneNumber: "p123123"
+      }
 
-      address: {
-        add: function(address) {
-          address = {
-            name       : address,
-            street     : "aaaaaaaaaa",
-            number     : "1111",
-            province   : "C",
-            zipCode    : "z23123",
-            phoneNumber: "p123123"
-          }
+      return e_create_address({ address: address }).get('id', 'name');
+    },
 
-          return e_create_address({ address: address }).get('name');
-        },
+    all: function() {
+      return e_addresses().mapGet('id', 'name')
+    },
 
-        all: function() {
-          return e_addresses().mapGet('name')
-        },
+    remove: function(address) {
+      return e_delete_address({ id: address.id });
+    }
+  };
 
-        remove: function(address) {
-          return e_addresses().map(function(other) {
-            if (address === other.name)
-              return e_delete_address({ id: other.id });
-          });
-        }
-      },
-      // 
-      // cards: {
-      //   add: function(card) {
-      //     return e_create_card({ credit_card: card });
-      //   }
-      // }
+  api.card = {
+    add: function(card) {
+      return e_create_card({ credit_card: card });
+    },
+
+    all: e_cards,
+
+    remove: function(card) {
+      return e_delete_card({ id: card.id });
+    }
+  };
+
+  api.order = {
+    add: e_create_order,
+
+    all: e_orders,
+
+    get: function(id) {
+      return e_order({ id: id });
+    },
+
+    remove: function(order) {
+      return e_delete_order({ id: order.id });
+    },
+
+    addProduct: function(order, product, quantity) {
+      var item = {
+        order   : { id: order.id },
+        product : { id: product.id },
+        quantity: quantity || 1
+      }
+
+      return e_add_to_order({ order_item: item });
     }
   }
+
+  return api;
 });
 
 app.controller('testCtrl', function($scope, api) {
 
     // $scope.categories = api.products.find({ category: 2 });
     $scope.session = api.session;
-
-    api.user.login({ username: 'testuser3', password: 'asdf1234' })
-    .then(function() {
+    //
+    // api.user.login({ username: 'testuser3', password: 'asdf1234' })
+    // .then(function() {
       // return api.user.logout();
 
       // api.user.update({
       //   gender: 'F'
       // })
 
-      // api.user.preferences.set({});
-      // api.user.preferences.change(function(prefs) {})
+      // api.preferences.set({});
+      // api.preferences.change(function(prefs) {})
 
-      // api.user.address.add('Asd2')
-      // api.user.address.all().thenSet($scope, 'addresses').catchSet($scope, 'addresses')
-      // api.user.address.remove('Asd2') //.thenSet($scope, 'addresses').catchSet($scope, 'addresses')
-      // api.user.address.all().thenSet($scope, 'addresses');
-      api.user.cards.add({
-        "number": "4512340987123409",
-        "expirationDate": "1015",
-        "securityCode": "399"
-      }).thenSet($scope, 'addresses');
+      // api.address.add('Coronel Diaz 1725').then(function() {
+      // });
+      // api.address.remove({ id: 761 }) //.thenSet($scope, 'addresses').catchSet($scope, 'addresses')
+      // api.address.all().thenSet($scope, 'addresses');
+    //   api.address.add({
+    //     "number": "4512340987123409",
+    //     "expirationDate": "1015",
+    //     "securityCode": "399"
+    //   }).thenSet($scope, 'addresses');
+
+        // api.card.add({
+        //   "number": "4512340987123401",
+        //   "expirationDate": "1015",
+        //   "securityCode": "399"
+        // });
+        //
+        // console.log(api)
+        // api.address.all().thenSet($scope, 'addresses').catchSet($scope, 'addresses')
+        // api.card.all().thenSet($scope, 'cards').catchSet($scope, 'cards');
+        // // api.order.add().thenSet($scope, 'order');
+        // api.order.all().thenSet($scope, 'order')
+        // api.order.remove({ id: 1734 })
+    // });
+
+
+    api.user.login({ username: 'testuser3', password: 'asdf1234' })
+    .then(function() {
+      api.address.all().thenSet($scope, 'addresses');
+
+      api.order.all().then(function(orders) {
+        return api.order.get(orders[0].id);
+
+      }).thenSet($scope, 'order')
+
+      .then(function() {
+          return api.product.find({ page_size: 1 }).thenSet($scope, 'products')
+
+      }).then(function() {
+          api.order.addProduct($scope.order, $scope.products[0], 2);
+      });
+
     });
 
     // api.products.find().thenSet($scope, 'products');

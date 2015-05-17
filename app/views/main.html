@@ -1,19 +1,27 @@
 <div class="container">
-  <div class="row">
-    
+  <div class="row" style="height:350px">
+    <carousel interval="myInterval">
+      <slide ng-repeat="slide in carrouselSlides" active="slide.active">
+        <img ng-src="{{slide.image}}" style="margin:auto; height:305px;">
+        <div class="carousel-caption">
+          <p>{{slide.title}}</p>
+        </div>
+      </slide>
+    </carousel>
   </div>
   <div class="row">
-    <article ng-repeat="product in mainC.products" class="product-mini">
+    <article ng-repeat="product in products" class="product-mini">
       <div class="thumbnail">
-        <a href="product1.html">
-          <img src="img/product1.jpg" alt="{{product.description}}" />
+        <a ng-href="/product/{{ product.id }}">
+          <img src="{{ product.images[0] }}" alt="{{ product.name }}" />
         </a>
+
         <div class="caption">
-          <a href="product{{ id }}.html" class="desc">{{product.description}}</a>
-          <a href="product{{ id }}.html" class="price">{{product.price}}</a>
+          <a ng-href="/product/{{ product.id }}" class="desc">{{ product.name }}</a>
+          <a ng-href="/product/{{ product.id }}" class="price">$ {{ product.price }}</a>
+          <a ng-href="/category/{{ product.category.id }}" class="category">{{ product.category.name }}</a>
         </div>
       </div>
     </article>
   </div>
 </div>
-
