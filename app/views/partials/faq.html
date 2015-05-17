@@ -6,7 +6,8 @@
         Esta seccion contiene importante información sobre nuestro sitio web y nuestra tienda <strong>Neon</strong>. En caso de que no pueda encontrar la respuesta que está buscando, por favor no dude en contactarnos.
     </div>
 
-    <div class="panel-group" id="accordion">
+    <accordion>
+    <accordion-group>
         <div class="faqHeader"><h2>Preguntas generales</h2></div>
         <div ng-repeat="question in faqC.questions" class="panel panel-default">
             <div class="panel-heading">
@@ -20,5 +21,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </accordion-group>
+    </accordion>
 </div>

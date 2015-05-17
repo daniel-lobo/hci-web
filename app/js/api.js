@@ -1,5 +1,4 @@
-
-var ROOT='http://eiffel.itba.edu.ar/hci/service3'
+var ROOT = 'http://eiffel.itba.edu.ar/hci/service3'
 
 
 function attributesToObject(attributes) {

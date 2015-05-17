@@ -29,6 +29,9 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
         when('/cart',
             {templateUrl: 'views/partials/cart.html', controller: 'MainCtrl'}).
 
+        when('/categories',
+            {templateUrl: 'views/partials/categories.html', controller: 'MainCtrl'}).
+
         when('/checkout',
             {templateUrl: 'views/partials/checkout.html', controller: 'MainCtrl'}).
         otherwise({redirectTo: '/'});
@@ -80,7 +83,7 @@ app.directive('products-display', function() {
         replace: true,
         templateUrl: '/views/partials/categories_items.html',
         controller: 'CategoriesCtrl',
-        controllerAs: 'categories-ctrl'
+        controllerAs: 'categoriesC'
     };
 });
 
