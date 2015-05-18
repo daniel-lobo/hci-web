@@ -93,26 +93,42 @@
           <div ng-if="cardSelection.selectionStatus == 'card-new'">
             <br/>
             <div class="col-md-6 col-md-offset-3">
-              <div id="discount-text">Datos de tarjeta de credito: </div>
-              <div class="first-row-third-step-2">
-                <div class="col-md-8">
-                  <input type="text" class="form-control" ng-model="cardData.number" placeholder="Numero de tarjeta">
+
+              <form action="" name="creditCardForm" ng-submit="submitForm(userForm.$valid)" novalidate>
+                
+                <div id="discount-text">Datos de tarjeta de credito: </div>
+                <div class="first-row-third-step-2">
+                  <div class="col-md-8">
+
+                    <div class="form-group">
+                      <input type="text" class="form-control" ng-model="cardData.number" placeholder="Numero de tarjeta" required>
+                    </div>
+
+                  </div>
+                  <div class="col-md-4">
+
+                    <div class="form-group">
+                      <input type="text" class="form-control" ng-model="cardData.ccv" placeholder="Cod. Seguridad" required>
+                    </div>
+
+                  </div>
                 </div>
-                <div class="col-md-4">
-                  <input type="text" class="form-control" ng-model="cardData.ccv" placeholder="Cod. Seguridad">
+                <div class="col-md-2">Vencimiento:</div>
+                <div class="col-md-5 amount">
+                  <select class="form-control" ng-model="cardData.month" ng-options="opt for opt in dateFormat.mstep"></select>
                 </div>
-              </div>
-              <div class="col-md-2">Vencimiento:</div>
-              <div class="col-md-5 amount">
-                <select class="form-control" ng-model="cardData.month" ng-options="opt for opt in dateFormat.mstep"></select>
-              </div>
-              <div class="col-md-5 amount">
-                <select class="form-control" ng-model="cardData.year" ng-options="opt for opt in dateFormat.ystep"></select>
-              </div>
-              <h3>&nbsp;</h3>
-              <div class="control-group col-md-offset-5">
-                <button class="btn-primary" ng-click="onAddCardClick()">Añadir</button>
-              </div>
+                <div class="col-md-5 amount">
+                  <select class="form-control" ng-model="cardData.year" ng-options="opt for opt in dateFormat.ystep"></select>
+                </div>
+                <h3>&nbsp;</h3>
+                <div class="control-group col-md-offset-5">
+                  <button class="btn-primary" ng-click="onAddCardClick()"  ng-disabled="creditCardForm.$invalid">Añadir</button>
+                </div>
+                
+              </form>
+
+
+
             </div>
           </div>
         </div>

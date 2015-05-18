@@ -7101,13 +7101,21 @@ article.product-mini .caption .desc {
 }
 #footer div#faq {
   border-right: 2px solid #FFFFFF;
-  height: auto;
+  height: 183px;
 }
 #footer #upper_footer {
   border-bottom: 2px solid #FFFFFF;
 }
 #footer #footer_below {
   padding-top: 10px;
+}
+#footer #footer_below div.col-md-1 {
+  width: 15.333333%;
+  padding-left: 24px;
+}
+#footer #footer_below img {
+  padding-bottom: 5px;
+  padding-right: 10px;
 }
 #sidebar {
   position: relative;
