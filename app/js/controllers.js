@@ -8,15 +8,17 @@ app.controller('MainCtrl', function($scope, api) {
 });
 
 
-app.controller('ProductCtrl', function($scope, $routeParams, api) {
+app.controller('ProductCtrl', function($scope, $routeParams, api, $rootScope) {
   api.product.get($routeParams.productId).thenSet($scope, 'product');
+
+  $scope.addToCart = function() {
+
+  }
 });
 
 
 app.controller('UserCtrl', function($scope, api) {
-  $scope.session      = api.session;
-  $scope.is_logged_in = api.user.is_logged_in;
-  $scope.errors       = {};
+  $scope.errors = {};
 
   $scope.login_form = { username: 'testuser3', password: 'asdf1234' };
   $scope.login_form_loading = false;
@@ -47,7 +49,7 @@ app.controller('UserCtrl', function($scope, api) {
   }
 
   $scope.$watch('session', function() {
-    angular.extend($scope.update_form, $scope.session)
+    angular.extend($scope.update_form, $scope.session.profile)
   }, true)
 });
 
