@@ -4,16 +4,20 @@ app.filter('join', function() {
   }
 })
 
+app.filter('orderCount', function() {
+  return function orderCount(order) {
+    return order.items
+      .map(function (item) { return item.quantity })
+      .sum()
+    ;
+  }
+})
+
 app.filter('orderTotal', function() {
   return function orderTotal(order) {
-    if (! order.items)
-      return 0;
-
-    var total = 0;
-    for (var i = 0; i < order.items.length; i++) {
-      total += order.items[i].quantity * order.items[i].product.price;
-    }
-
-    return total;
+    return order.items
+      .map(function(item) { return item.quantity * item.product.price })
+      .sum()
+    ;
   }
 })

@@ -7107,18 +7107,18 @@ form.login {
 #order .details span.label {
   font-size: 100%;
 }
-#order .item img {
+#order .items img {
   height: 120px;
 }
-#order .item td {
+#order .items td {
   min-width: 100px;
 }
-#order .item td .label {
+#order .items td .label {
   display: block;
   font-size: 100%;
   padding: 10px 5px;
 }
-#order .item td.name {
+#order .items td.name {
   text-align: left;
   font-size: 180%;
 }
