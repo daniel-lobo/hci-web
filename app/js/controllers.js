@@ -215,18 +215,24 @@ app.controller('CartController', function($scope, cart, session) {
 
   $scope.quantities = [1,2,3,4,5,6,7,8,9,10];
 
+  $scope.updateTotalPrice = function () {
+
+    $scope.variables.totalPrice = 0;
+
+    for(var i=0;i<cart.items.length;i++){
+        $scope.variables.totalPrice = $scope.variables.totalPrice + Number(cart.items[i].product.price * cart.items[i].quantity);
+    }
+    $scope.variables.totalPrice = '$' + $scope.variables.totalPrice.toFixed(2);
+  }
+
   $scope.$watch('session', function() {
     if (session.is_logged_in()) {
-      for(var i=0;i<cart.items.length;i++){
-          $scope.variables.totalPrice = $scope.variables.totalPrice + Number(cart.items[i].product.price);
-      }
-      $scope.variables.totalPrice = '$' + $scope.variables.totalPrice.toFixed(2);
+      $scope.updateTotalPrice();
     }
   }, true);
 
   $scope.updateQuantity = function (item) {
-    //console.log(item);
-    cart.remove(item).then(cart.add(item.product,item.quantity).then(console.log(cart)));
+    cart.remove(item).then(cart.add(item.product,item.quantity).then($scope.updateTotalPrice()));
   }
 
   $scope.onClickRemove = function (item) {

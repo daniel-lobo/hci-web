@@ -49,6 +49,16 @@ app.directive('sidebar', function(){
     };
 });
 
+app.directive('cartproductlist', function(){
+    // Runs during compile
+    return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: '/views/partials/cart_product_list.html',
+        controller: 'CartController'
+    };
+});
+
 app.directive('breadcrumbs', function(){
     // Runs during compile
     return {
