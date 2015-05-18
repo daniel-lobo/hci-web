@@ -36,6 +36,17 @@ app.factory('cart', function($rootScope, $q, api, session) {
       });
 
       return whenAdded;
+    },
+
+    remove: function(item) {
+      var whenDeleted = getOrderId().then(function(order_id) {
+        return api.order.removeItem(item).then(function() {
+          var index = cart.items.map(function(item) { return item.id }).indexOf(item.id)
+          cart.items.splice(index, 1);
+        });
+      });
+
+      return whenDeleted;
     }
   }
 

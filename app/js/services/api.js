@@ -278,6 +278,11 @@ app.factory('api', function($http, $rootScope, $q, session) {
     auth: true
   })
 
+  var e_remove_from_order = endpoint({
+    url : '/Order.groovy?method=RemoveItemFromOrder',
+    auth: true
+  })
+
   var e_confirm_order = endpoint({
     url : '/Order.groovy?method=ConfirmOrder',
     auth: true
@@ -461,6 +466,10 @@ app.factory('api', function($http, $rootScope, $q, session) {
       }
 
       return e_add_to_order({ order_item: item });
+    },
+
+    removeItem: function(item) {
+      return e_remove_from_order({ id: item.id });
     },
 
     confirm: function(order, address, card) {
