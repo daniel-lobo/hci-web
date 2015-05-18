@@ -25,7 +25,7 @@ app.directive('header', function () {
     return {
         restrict: 'A',
         replace: true,
-        scope: {user: '='}, // This is one of the cool things :). Will be explained in post.
+        scope: true,
         templateUrl: '/views/partials/header.html',
         controller: 'HeaderCtrl',
     }

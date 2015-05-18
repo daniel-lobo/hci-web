@@ -19,15 +19,20 @@
           <li>
             <a class="home" href="#/">Home</a>
           </li>
-          <li ng-repeat="filter in ['hombres', 'mujeres', 'chicos', 'chicas']">
-            <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" on-toggle="toggled(open)" aria-expanded="false">{{filter}}<span class="caret"></span></a>
+          <li ng-repeat="filter in ['hombres', 'mujeres', 'chicos', 'chicas']" class="dropdown" dropdown>
 
-            <ul class="dropdown-menu" dropdown-menu role="menu">
+            <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">{{filter}}<span class="caret"></span></a>
+
+            <ul class="dropdown-menu" role="menu">
               <li ng-repeat="category in categories">
                  <a href="#category/{{ filter }}/{{ category.id }}">{{ category.name }}</a>
               </li>
               <!-- <li class="divider"></li> -->
             </ul>
+
+          </li>
+          <li>
+            <a>Items in cart: {{ cart.items.length }}</a>
           </li>
         </ul>
         <ul class="search">
