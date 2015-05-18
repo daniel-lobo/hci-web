@@ -106,12 +106,24 @@ function buildCreditCardList(data) {
 }
 
 function buildOrder(data) {
-  data.order.items = (data.order.items || []).map(buildOrderItem);
-  return data.order;
+  if (data.order)
+    data = data.order;
+
+  if (data.items)
+    data.items = data.items.map(buildOrderItem);
+
+  data.status = {
+    1: 'unconfirmed',
+    2: 'confirmed',
+    3: 'sent',
+    4: 'received'
+  }[data.status];
+
+  return data;
 }
 
 function buildOrderList(data) {
-  return data.orders;
+  return data.orders.map(buildOrder);
 }
 
 function buildOrderItem(data) {

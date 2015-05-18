@@ -1,6 +1,13 @@
 var globalSession;
 var globalCart;
 
+Array.prototype.sum = function() {
+  var total = 0;
+  for (var i = 0; i < this.length; i++)
+    total += this[i];
+  return total;
+}
+
 function raise(message) {
   if (typeof message === 'string') {
     error = new Error(message);
