@@ -3,5 +3,5 @@ var app = angular.module('neonApp', [
   'ngMessages',
   'ngCookies',
   'ui.bootstrap',
-  'promises'
+  'promises',
 ]);
