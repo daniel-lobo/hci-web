@@ -74,14 +74,14 @@ function buildCategoryList(data) {
 }
 
 function buildSubcategoryList(data) {
-  console.log(data);
   return data.subcategories.map(buildCategory);
 }
 
 function buildSession(data) {
-  var account = data.account || {};
-  account.token = data.authenticationToken;
-  return account;
+  return {
+    profile: data.account,
+    token  : data.authenticationToken
+  }
 }
 
 function buildPreferences(data) {
@@ -117,9 +117,7 @@ function buildOrderItem(data) {
 }
 
 
-app.factory('api', function($http, $rootScope, $q) {
-  var api;
-
+app.factory('api', function($http, $rootScope, $q, session) {
   // Endpoints:
   function endpoint(options) {
     var url      = ROOT + options.url;
@@ -132,8 +130,8 @@ app.factory('api', function($http, $rootScope, $q) {
 
       if (auth) {
         angular.merge(params, {
-          username: api.session.username,
-          authentication_token: api.session.token
+          username: session.profile.username,
+          authentication_token: session.token
         })
       }
 
@@ -278,9 +276,7 @@ app.factory('api', function($http, $rootScope, $q) {
   })
 
   // Service object:
-  var api = {
-    session: {}
-  }
+  var api = {};
 
   api.category = {
     all: function() {
@@ -363,16 +359,12 @@ app.factory('api', function($http, $rootScope, $q) {
   };
 
   api.user = {
-    is_logged_in: function() {
-      return api.session.token != null;
-    },
-
     login: function(credentials) {
-      return e_login(credentials).thenExtend(api.session);
+      return e_login(credentials).thenExtend(session);
     },
 
     logout: function() {
-      return e_logout().thenClear(api.session);
+      return e_logout().thenClear(session);
     },
 
     signup: function(profile) {
@@ -385,9 +377,8 @@ app.factory('api', function($http, $rootScope, $q) {
     },
 
     update: function(changes) {
-      var account = angular.merge({}, api.session, changes);
-      delete account.token;
-      return e_update({ account: account}).thenExtend(api.session, account);
+      var profile = angular.merge({}, session.profile, changes);
+      return e_update({ account: profile }).thenExtend(session.profile, profile);
     },
   };
 
@@ -469,9 +460,7 @@ app.factory('api', function($http, $rootScope, $q) {
 });
 
 app.controller('testCtrl', function($scope, api) {
-
     // $scope.categories = api.products.find({ category: 2 });
-    $scope.session = api.session;
     //
     // api.user.login({ username: 'testuser3', password: 'asdf1234' })
     // .then(function() {

@@ -1,37 +1,26 @@
 app.controller('MainCtrl', function($scope, api) {
-  api.product.find({
-    is_new: true,
-    page_size: 8
-  }).thenSet($scope, 'products');
+    api.product.find({ is_new: true, page_size: 8 }).thenSet($scope, 'products');
 
-  $scope.carrouselSlides = [{
-    title: "",
-    image: "assets/img1.jpg",
-    link: "",
-    active: "true"
-  }, {
-    title: "",
-    image: "assets/img2.jpg",
-    link: "",
-    active: "false"
-  }];
-  
+    $scope.carrouselSlides = [
+      {title:"", image:"assets/img1.jpg", link:"", active:"true"},
+      {title:"", image:"assets/img2.jpg", link:"", active:"false"}
+    ];
 });
 
-app.controller('ProductCtrl', function($scope, $routeParams, api) {
+
+app.controller('ProductCtrl', function($scope, $routeParams, api, $rootScope) {
   api.product.get($routeParams.productId).thenSet($scope, 'product');
+
+  $scope.addToCart = function() {
+
+  }
 });
 
 
 app.controller('UserCtrl', function($scope, api) {
-  $scope.session = api.session;
-  $scope.is_logged_in = api.user.is_logged_in;
   $scope.errors = {};
 
-  $scope.login_form = {
-    username: 'testuser3',
-    password: 'asdf1234'
-  };
+  $scope.login_form = { username: 'testuser3', password: 'asdf1234' };
   $scope.login_form_loading = false;
 
   $scope.update_form = {};
@@ -42,9 +31,8 @@ app.controller('UserCtrl', function($scope, api) {
 
     api.user.login($scope.login_form)
       .catchSet($scope, 'errors')
-      .finally(function() {
-        $scope.login_form_loading = false
-      });
+      .finally(function(){ $scope.login_form_loading = false })
+    ;
   }
 
   $scope.update = function() {
@@ -52,9 +40,8 @@ app.controller('UserCtrl', function($scope, api) {
 
     api.user.update($scope.update_form)
       .catchSet($scope, 'errors')
-      .finally(function() {
-        $scope.update_form_loading = false
-      });
+      .finally(function(){ $scope.update_form_loading = false })
+    ;
   }
 
   $scope.logout = function() {
@@ -62,7 +49,7 @@ app.controller('UserCtrl', function($scope, api) {
   }
 
   $scope.$watch('session', function() {
-    angular.extend($scope.update_form, $scope.session)
+    angular.extend($scope.update_form, $scope.session.profile)
   }, true)
 });
 
@@ -84,46 +71,42 @@ app.controller('FaqCtrl', function($scope){
    ];
 });
 
-app.controller('CheckoutCtrl', function($scope, api){
-  $scope.newAddressInputField = "";
+app.controller('CheckoutCtrl', function($scope, api, session){
   $scope.addressSelection = 'address-existing';
   $scope.cardSelection = 'card-existing';
+
+  $scope.addressInputField = 'Holaa';
 
   $scope.alertMessagesForLogIn = [
     {type:"", message:"Debe iniciar sesión para realizar la compra."}
   ];
 
+  $scope.alertMessagesForAddress = [];
+
   $scope.closeAlert = function(index) {
     $scope.alertMessagesForLogIn.splice(index, 1);
   };
 
-  $scope.existingAddresses = [
-    'Carlos Gardel 3523, Olivos',
-    'Eduardo Madero 399, Capital Federal'
-  ];
+  $scope.existingAddresses = [];
+  api.address.all().thenSet($scope,'existingAddresses');
 
-  $scope.existingCreditCards = [
-    'AMEX ************3766',
-    'VISA ***********2345'
-  ];
+  $scope.existingCreditCards = [];
+  api.card.all().thenSet($scope,'existingCreditCards');
+
 
   $scope.onAddAddressClick = function() {
-    console.log("hola");
+    var address = $scope.addressInputField;
+    console.log($scope.addressInputField);
 
-    var address = $scope.newAddressInputField;
-
-    $scope.isUserLoggedIn = api.user.is_logged_in();
-
-    api.address.add(address).then(function() {
+    /*api.address.add(address).then(function() {
       $scope.existingAddresses.push(address);
       $scope.addressSelection = 'address-existing';
 
-    }).catchSet($scope, 'error').catch(function(error) {
-
-    });
-
-    api.address.add(address).thenSet($scope, 'lastAdddedAddress');
-    api.address.add(address)
+    }).catch(function(error) {
+      $scope.alertMessagesForAddress.push({type:"danger", message: error.message});
+    });*/
+    //api.address.add(address).thenSet($scope, 'lastAdddedAddress');
+    //api.address.add(address)
   }
 
 });

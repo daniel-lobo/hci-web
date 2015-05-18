@@ -1,5 +1,3 @@
-var app = angular.module('neonApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'promises']);
-
 app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
   $routeProvider
     .when('/', {
@@ -51,4 +49,3 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
      // use the HTML5 History API
     // $locationProvider.html5Mode(true);
 }]);
-

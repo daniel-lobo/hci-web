@@ -13,28 +13,41 @@
   <div class="summary">
     <accordion close-others="false">
       <accordion-group heading="1. Información Personal" is-open="true">
-        <div class="discount row">
-          <div class="col-md-6"><h2>Email</h2></div>
-          <div class="col-md-2">
-            <input type="text" class="form-control" placeholder="Ingresar email">
+        <div ng-if="session.is_logged_in()">
+          <div class="discount row col-md-8">
+            <h4>Nombre: {{session.profile.firstName}} {{session.profile.lastName}}</h4>
+            <h4>Email: {{session.profile.email}}</h4>
+            <h4>Nombre de usuario: {{session.profile.username}}</h4>
           </div>
         </div>
-        <div class="discount row">
-          <div class="col-md-6"><h2>Contraseña</h2></div>
-          <div class="col-md-2">
-            <input type="text" class="form-control" placeholder="Ingresar contraseña">
+        <div ng-if="!session.is_logged_in()">
+          <div class="discount row">
+            <div class="col-md-6">
+              <h2>Usuario</h2>
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" placeholder="Nombre de usuario">
+            </div>
           </div>
-        </div>
-        <div class="selection-area">
-          <button class="btn-primary">Registrarme</button>
-          <button class="btn-primary">Ingresar</button>
-        </div>
-        <div class="row col-md-8 col-md-offset-2">
-          <br/>
-          <alert ng-repeat="alert in alertMessagesForLogIn" type="{{alert.type}}" close="closeAlert($index)">{{alert.message}}</alert>
+          <div class="discount row">
+            <div class="col-md-6">
+              <h2>Contraseña</h2>
+            </div>
+            <div class="col-md-2">
+              <input type="text" class="form-control" placeholder="Contraseña">
+            </div>
+          </div>
+          <div class="selection-area">
+            <button class="btn-primary">Registrarme</button>
+            <button class="btn-primary">Ingresar</button>
+          </div>
+          <div class="row col-md-8 col-md-offset-2">
+            <br/>
+            <alert ng-repeat="alert in alertMessagesForLogIn" type="{{alert.type}}" close="closeAlert($index)">{{alert.message}}</alert>
+          </div>
         </div>
       </accordion-group>
-      <accordion-group heading="2. Datos de envío" is-disabled="!isUserLoggedIn">
+      <accordion-group heading="2. Datos de envío" is-disabled="!session.is_logged_in()" is-open="session.is_logged_in()">
         <div class="selection-area">
           <div class="btn-group">
             <label class="btn btn-primary" ng-model="addressSelection" btn-radio="'address-existing'">Dirección Existente</label>
@@ -45,21 +58,24 @@
           <div ng-if="addressSelection == 'address-existing'">
             <div class="col-md-5 amount">
               <select class="form-control">
-                <option ng-repeat="address in existingAddresses">{{address}}</option>
+                <option ng-repeat="address in existingAddresses">{{address.name}}</option>
               </select>
             </div>
           </div>
           <div ng-if="addressSelection == 'address-new'">
             <div class="col-md-6">
               <br/>
-              <input type="text" class="form-control" ng-model="newAddressInputField" placeholder="Ingrese dirección">
+              <input type="text" class="form-control" ng-model="addressInputField" placeholder="Ingrese dirección">
               <br/>
               <button class="btn-primary" ng-click="onAddAddressClick()">Añadir</button>
             </div>
           </div>
-      </div>
+        </div>
+        <div class="col-md-8">
+          <alert ng-repeat="alert in alertMessagesForAddress" type="{{alert.type}}">{{alert.message}}</alert>
+        </div>
       </accordion-group>
-      <accordion-group heading="3. Método de pago" is-disabled="!isUserLoggedIn">
+      <accordion-group heading="3. Método de pago" is-disabled="!session.is_logged_in()" is-open="session.is_logged_in()">
         <div class="selection-area">
           <div class="btn-group">
             <label class="btn btn-primary" ng-model="cardSelection" btn-radio="'card-existing'">Tarjeta Existente</label>
@@ -70,7 +86,7 @@
           <div ng-if="cardSelection == 'card-existing'">
             <div class="col-md-5 amount">
               <select class="form-control">
-                <option ng-repeat="creditCard in existingCreditCards">{{creditCard}}</option>
+                <option ng-repeat="creditCard in existingCreditCards">{{creditCard.name}}</option>
               </select>
             </div>
           </div>
@@ -116,13 +132,13 @@
               </div>
               <h1>&nbsp;</h1>
               <div class="control-group col-md-offset-5">
-              <button class="btn-primary">Añadir</button>
-            </div>
+                <button class="btn-primary">Añadir</button>
+              </div>
             </div>
           </div>
         </div>
       </accordion-group>
-      <accordion-group heading="4. Resumen" is-disabled="!isUserLoggedIn">
+      <accordion-group heading="4. Resumen" is-disabled="!session.is_logged_in()" is-open="session.is_logged_in()">
         <div class="product row">
           <div class="col-md-2 image">
             <img src="img/product_{{ image }}.jpg" alt="{{ desc }}">
@@ -143,7 +159,9 @@
           <div class="col-md-2 total">${{ price }}</div>
         </div>
         <div class="total row">
-          <div class="col-md-2 col-md-offset-8"><h2>Total</h2></div>
+          <div class="col-md-2 col-md-offset-8">
+            <h2>Total</h2>
+          </div>
           <div class="col-md-2 total">$601</div>
         </div>
         <div class="action row">
@@ -155,5 +173,5 @@
           </div>
         </div>
       </accordion-group>
-    </div>
   </div>
+</div>

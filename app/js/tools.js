@@ -32,6 +32,10 @@ function mapper(f) {
   return function(l) { return l.map(f) };
 }
 
+function clear(object) {
+  for (var prop in object) delete object[prop];
+}
+
 angular.module('promises', [])
 .config(function ($provide) {
   $provide.decorator('$q', function ($delegate, $location) {
@@ -76,9 +80,7 @@ angular.module('promises', [])
 
     prototype.thenClear = function thenClear(object) {
       return this.then(function(result) {
-        for (var prop in object)
-            delete object[prop];
-
+        clear(object);
         return result;
       })
     }
