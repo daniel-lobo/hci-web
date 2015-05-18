@@ -39,7 +39,7 @@ app.factory('cart', function($rootScope, $q, api, session) {
     }
   }
 
-  var cart = $rootScope.cart = Object.create(prototype);
+  var cart = $rootScope.cart = globalCart = Object.create(prototype);
   angular.extend(cart, { order_id: null, items: [] });
   //
   // function checkout(address, card) {

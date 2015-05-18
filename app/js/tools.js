@@ -1,4 +1,5 @@
 var globalSession;
+var globalCart;
 
 function raise(message) {
   if (typeof message === 'string') {

@@ -105,6 +105,7 @@ function buildCreditCardList(data) {
 }
 
 function buildOrder(data) {
+  data.order.items = data.order.items.map(buildOrderItem);
   return data.order;
 }
 
@@ -113,7 +114,9 @@ function buildOrderList(data) {
 }
 
 function buildOrderItem(data) {
-  return data.orderItem;
+  data.product.price = data.price;
+  delete data.price;
+  return data;
 }
 
 
