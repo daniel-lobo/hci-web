@@ -254,11 +254,8 @@ app.controller('CartController', function($scope, cart, session) {
 
   $scope.quantities = [1,2,3,4,5,6,7,8,9,10];
 
-  $scope.myOption = "";
-
   $scope.$watch('session', function() {
     if (session.is_logged_in()) {
-      console.log(cart);
       for(var i=0;i<cart.items.length;i++){
           $scope.variables.totalPrice = $scope.variables.totalPrice + Number(cart.items[i].product.price);
       }
@@ -267,7 +264,17 @@ app.controller('CartController', function($scope, cart, session) {
   }, true);
 
   $scope.updateQuantity = function (item) {
+    cart.remove(item).then(cart.add(item.product,Number($scope.options.selected.item.id)).then(console.log(cart)));
+  }
 
+  $scope.onClickRemove = function (item) {
+    cart.remove(item);
+  }
+
+  $scope.onClickRemoveAll = function()  {
+    cart.items.forEach(function(item) {
+      cart.remove(item);
+    });
   }
 
 });
