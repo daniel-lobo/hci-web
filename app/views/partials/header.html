@@ -45,7 +45,7 @@
             <button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando...</button>
           </div>
 
-          <ul ng-if="cart.items" class="items">
+          <ul ng-if="cart.items && cart.items.length>0" class="items">
             <li ng-repeat="item in cart.items" class="item row">
                 <div class="image col-md-3">
                   <a href="#/product/{{ item.product.id }}">
@@ -62,14 +62,23 @@
                   <button class="btn btn-danger remove" ng-click="cart.remove(cart.items[$index])">Quitar</button>
                 </div>
             </li>
+            <li>
+              <div style="text-align:center"><h5>Total: ${{ cart.total() }} en {{ cart.items.length }} productos</h5></div>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <div>
+                <a class="btn btn-default checkout" style="width: 50%" href="#cart">Ver carrito</a>
+                <a class="btn btn-success checkout" style="width: 49%" href="#checkout">Comprar</a>
+                </div>
+            </li>
           </ul>
-
-          <div class="row" ng-if="cart.items">
-            <div class="col-md-8">${{ cart.total() }} en {{ cart.items.length }} productos</div>
-            <div class="col-md-4">
-              <button class="btn btn-success checkout" ng-click="checkout()">Comprar</button>
+          <ul ng-if="cart.items==0">
+            <div style="width:85%">
+              <br/>
+              <alert>El carrito esta vacío.</alert>
             </div>
-          </div>
+          </ul>
         </ul>
       </li>
 
