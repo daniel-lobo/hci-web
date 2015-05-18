@@ -105,6 +105,7 @@ function buildCreditCardList(data) {
 }
 
 function buildOrder(data) {
+  data.order.items = data.order.items.map(buildOrderItem);
   return data.order;
 }
 
@@ -113,7 +114,9 @@ function buildOrderList(data) {
 }
 
 function buildOrderItem(data) {
-  return data.orderItem;
+  data.product.price = data.price;
+  delete data.price;
+  return data;
 }
 
 
@@ -272,6 +275,11 @@ app.factory('api', function($http, $rootScope, $q, session) {
 
   var e_add_to_order = endpoint({
     url : '/Order.groovy?method=AddItemToOrder',
+    auth: true
+  })
+
+  var e_remove_from_order = endpoint({
+    url : '/Order.groovy?method=RemoveItemFromOrder',
     auth: true
   })
 
@@ -458,6 +466,10 @@ app.factory('api', function($http, $rootScope, $q, session) {
       }
 
       return e_add_to_order({ order_item: item });
+    },
+
+    removeItem: function(item) {
+      return e_remove_from_order({ id: item.id });
     },
 
     confirm: function(order, address, card) {
