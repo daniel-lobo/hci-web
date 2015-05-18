@@ -1,10 +1,20 @@
 app.controller('MainCtrl', function($scope, api) {
-    api.product.find({ is_new: true, page_size: 8 }).thenSet($scope, 'products');
+  api.product.find({
+    is_new: true,
+    page_size: 8
+  }).thenSet($scope, 'products');
 
-    $scope.carrouselSlides = [
-      {title:"", image:"assets/img1.jpg", link:"", active:"true"},
-      {title:"", image:"assets/img2.jpg", link:"", active:"false"}
-    ];
+  $scope.carrouselSlides = [{
+    title: "",
+    image: "assets/img1.jpg",
+    link: "",
+    active: "true"
+  }, {
+    title: "",
+    image: "assets/img2.jpg",
+    link: "",
+    active: "false"
+  }];
 });
 
 
@@ -29,22 +39,36 @@ app.controller('HeaderCtrl', function($scope, api, cart) {
 app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   var filter = null;
 
-  switch($routeParams.filter) {
+  switch ($routeParams.filter) {
     case "hombres":
-      filter = {gender: 'Masculino', ages: "Adulto"};
+      filter = {
+        gender: 'Masculino',
+        ages: "Adulto"
+      };
       break;
     case "mujeres":
-      filter = {gender: 'Femenino', ages: "Adulto"};
+      filter = {
+        gender: 'Femenino',
+        ages: "Adulto"
+      };
       break;
     case "chicos":
-      filter = {gender: 'Masculino', ages: "Infantil"};
+      filter = {
+        gender: 'Masculino',
+        ages: "Infantil"
+      };
       break;
     case "chicas":
-      filter = {gender: 'Femenino', ages: "Infantil"};
+      filter = {
+        gender: 'Femenino',
+        ages: "Infantil"
+      };
       break;
   }
 
-  filter.category = {id: $routeParams.categoryId};
+  filter.category = {
+    id: $routeParams.categoryId
+  };
 
   api.product.find(filter).thenSet($scope, 'products');
 
@@ -53,7 +77,10 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
 app.controller('UserCtrl', function($scope, api) {
   $scope.errors = {};
 
-  $scope.login_form = { username: 'testuser3', password: 'asdf1234' };
+  $scope.login_form = {
+    username: 'testuser3',
+    password: 'asdf1234'
+  };
   $scope.login_form_loading = false;
 
   $scope.update_form = {};
@@ -64,8 +91,9 @@ app.controller('UserCtrl', function($scope, api) {
 
     api.user.login($scope.login_form)
       .catchSet($scope, 'errors')
-      .finally(function(){ $scope.login_form_loading = false })
-    ;
+      .finally(function() {
+        $scope.login_form_loading = false
+      });
   }
 
   $scope.update = function() {
@@ -73,8 +101,9 @@ app.controller('UserCtrl', function($scope, api) {
 
     api.user.update($scope.update_form)
       .catchSet($scope, 'errors')
-      .finally(function(){ $scope.update_form_loading = false })
-    ;
+      .finally(function() {
+        $scope.update_form_loading = false
+      });
   }
 
   $scope.logout = function() {
@@ -86,31 +115,40 @@ app.controller('UserCtrl', function($scope, api) {
   }, true)
 });
 
-app.controller('FaqCtrl', function($scope){
+app.controller('FaqCtrl', function($scope) {
 
-  $scope.alerts = [
-   { type: '', msg: 'Esta seccion contiene importante información sobre nuestro sitio web y nuestra tienda Neon. En caso de que no pueda encontrar la respuesta que está buscando, por favor no dude en contactarnos.' }
-  ];
+  $scope.alerts = [{
+    type: '',
+    msg: 'Esta seccion contiene importante información sobre nuestro sitio web y nuestra tienda Neon. En caso de que no pueda encontrar la respuesta que está buscando, por favor no dude en contactarnos.'
+  }];
 
   $scope.closeAlert = function(index) {
     $scope.alerts.splice(index, 1);
   };
 
-   $scope.groups = [
-        {title: "¿Como comprar?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
-        {title: "Plazos de Entrega", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
-        {title: "Politica de cambios", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
-        {title: "Terminos y condiciones", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." }
-   ];
+  $scope.groups = [{
+    title: "¿Como comprar?",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit."
+  }, {
+    title: "Plazos de Entrega",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit."
+  }, {
+    title: "Politica de cambios",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit."
+  }, {
+    title: "Terminos y condiciones",
+    content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit."
+  }];
 });
 
-app.controller('CheckoutCtrl', function($scope, api, session){
+app.controller('CheckoutCtrl', function($scope, api, session) {
 
   // Info
 
-  $scope.alertMessagesForLogIn = [
-    {type:"", message:"Debe iniciar sesión para realizar la compra."}
-  ];
+  $scope.alertMessagesForLogIn = [{
+    type: "",
+    message: "Debe iniciar sesión para realizar la compra."
+  }];
 
   $scope.closeAlert = function(index) {
     $scope.alertMessagesForLogIn.splice(index, 1);
@@ -118,10 +156,12 @@ app.controller('CheckoutCtrl', function($scope, api, session){
 
   // Address variables
 
-  $scope.addressInputField = {address:""};
+  $scope.addressInputField = {
+    address: ""
+  };
   $scope.addressSelection = {
-    selectionStatus:'address-existing',
-    selectedAddress:''
+    selectionStatus: 'address-existing',
+    selectedAddress: ''
   };
 
   // Address list
@@ -148,7 +188,7 @@ app.controller('CheckoutCtrl', function($scope, api, session){
       $scope.addressSelection.selectionStatus = 'address-existing';
       $scope.addressSelection.selectedAddress = address.name;
     }).catch(function(error) {
-        console.log("Error");
+      console.log("Error");
     });
   }
 
@@ -165,10 +205,10 @@ app.controller('CheckoutCtrl', function($scope, api, session){
   };
 
   $scope.cardData = {
-    month:'Mes',
-    year:'Año',
-    number:'',
-    ccv:''
+    month: 'Mes',
+    year: 'Año',
+    number: '',
+    ccv: ''
   }
 
   // Add new card
@@ -177,7 +217,7 @@ app.controller('CheckoutCtrl', function($scope, api, session){
 
     console.log($scope);
     var cardData = $scope.cardData;
-    var expiration = cardData.month + cardData.year.substring(2,4);
+    var expiration = cardData.month + cardData.year.substring(2, 4);
 
     api.card.add({
       number: cardData.number,
@@ -189,7 +229,7 @@ app.controller('CheckoutCtrl', function($scope, api, session){
       $scope.cardSelection.selectedCard = card.number;
 
     }).catch(function(error) {
-        console.log("Error");
+      console.log("Error");
     });
   }
 
@@ -199,7 +239,7 @@ app.controller('CheckoutCtrl', function($scope, api, session){
 
   $scope.$watch('session', function() {
     if (session.is_logged_in()) {
-      api.card.all().thenSet($scope, 'existingCreditCards').then(function(card){
+      api.card.all().thenSet($scope, 'existingCreditCards').then(function(card) {
         $scope.cardSelection.selectedCard = card[0].number;
       });
     }
@@ -207,13 +247,29 @@ app.controller('CheckoutCtrl', function($scope, api, session){
 
 });
 
-app.controller('CartController', function($scope, cart, session){
+app.controller('CartController', function($scope, cart, session) {
 
-  $scope.$on('session.change', function() {
-      console.log("Hola");
-  }, true)
+  $scope.variables = {
+    totalPrice: 0
+  }
 
-  console.log(cart);
+  $scope.quantities = [1,2,3,4,5,6,7,8,9,10];
+
+  $scope.myOption = "";
+
+  $scope.$watch('session', function() {
+    if (session.is_logged_in()) {
+      console.log(cart);
+      for(var i=0;i<cart.items.length;i++){
+          $scope.variables.totalPrice = $scope.variables.totalPrice + Number(cart.items[i].product.price);
+      }
+      $scope.variables.totalPrice = '$' + $scope.variables.totalPrice.toFixed(2);
+    }
+  }, true);
+
+  $scope.updateQuantity = function (item) {
+
+  }
 
 });
 

@@ -31,20 +31,19 @@
 			<div ng-repeat="item in cart.items">
 				<div class="product row">
 	        <div class="col-md-2 image">
-	          <img src="{{item.product.imageUrl}}" style="height:100px;" alt="{{ item.product.name }}">
-	          <button class="btn-primary">Modificar</button>
+	          <img src="{{item.product.images[0]}}" style="height:100px;" alt="{{ item.product.name }}">
 	          <button class="btn-danger">Quitar</button>
 	        </div>
 	        <div class="col-md-4 desc">
 	          <h5>{{ item.product.name }}</h5>
 	        </div>
 	        <div class="col-md-2 amount">
-	          <select class="form-control">
-	            <option>1</option>
+	          <select class="form-control" ng-change="updateQuantity({{item}})" ng-model="myOption">
+							<option ng-repeat="quantity in quantities">{{quantity}}</option>
 	          </select>
 	        </div>
-	        <div class="col-md-2 price">${{ item.price }}</div>
-	        <div class="col-md-2 total">${{ item.price * item.quantity }}</div>
+	        <div class="col-md-2 price">${{ item.product.price }}</div>
+	        <div class="col-md-2 total">${{ item.product.price * item.quantity }}</div>
 	      </div>
 				<br/>
 			</div>
@@ -53,7 +52,7 @@
           <h3>Total</h3>
         </div>
         <div class="col-md-2 total">
-          <h3>$601</h3>
+          <h3>{{variables.totalPrice}}</h3>
         </div>
       </div>
       <br/>
