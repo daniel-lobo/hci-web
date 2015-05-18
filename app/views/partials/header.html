@@ -43,7 +43,7 @@
                 <li>
                   <p class="name">{{ item.product.name }}</p>
                   <img src="{{ item.product.images[0] }}" alt="">
-                  <button class="btn btn-danger">Quitar</button>
+                  <button class="btn btn-danger" ng-click="cart.remove(cart.items[$index])">Quitar</button>
                 </li>
             </div>
             </ul>
