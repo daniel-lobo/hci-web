@@ -15,6 +15,7 @@ app.controller('MainCtrl', function($scope, api) {
     link: "",
     active: "false"
   }];
+  
 });
 
 app.controller('ProductCtrl', function($scope, $routeParams, api) {
