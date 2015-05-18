@@ -17,7 +17,7 @@ app.controller('ProductCtrl', function($scope, $rootScope, $routeParams, api, ca
 
 });
 
-app.controller('HeaderCtrl', function($scope, api){
+app.controller('HeaderCtrl', function($scope, api, cart) {
   api.category.all().thenSet($scope, 'categories');
 
   $scope.toggled = function(open) {
