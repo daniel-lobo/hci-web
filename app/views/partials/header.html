@@ -33,7 +33,9 @@
           </li>
           <li class="cart dropdown" dropdown>
             <!-- <a>Items in cart: {{ cart.items.length }}</a> -->
-            <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">Carrito <span class="caret"></span></a>
+            <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">
+              Carrito <span class="badge">{{ cart.items.length }}</span> <span class="caret"></span>
+            </a>
 
             <ul class="dropdown-menu" role="menu">
               <div ng-repeat="item in cart.items">
