@@ -99,6 +99,14 @@ angular.module('promises', [])
       })
     }
 
+    prototype.finallySet = function(object, prop, overrideResult) {
+      return this.finally(function(result) {
+        if (overrideResult) result = overrideResult;
+        object[prop] = result;
+        return result;
+      })
+    }
+
     return $delegate;
   });
 });

@@ -34,7 +34,7 @@
           <h2 class="price">${{ product.price }}</h2>
         </div>
         <div class="col-md-6">
-          <a ng-click="addToCart()" class="buy btn btn-success">Añadir al Carrito</a>
+          <a ng-click="addToCart()" class="buy btn btn-success" ng-disabled="loading">Añadir al Carrito</a>
         </div>
       </div>
     </div>
