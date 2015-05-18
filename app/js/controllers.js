@@ -15,7 +15,10 @@ app.controller('MainCtrl', function($scope, api) {
     link: "",
     active: "false"
   }];
+});
 
+app.controller('ProductCtrl', function($scope, $routeParams, api) {
+  api.product.get($routeParams.productId).thenSet($scope, 'product');
 });
 
 
@@ -60,4 +63,66 @@ app.controller('UserCtrl', function($scope, api) {
   $scope.$watch('session', function() {
     angular.extend($scope.update_form, $scope.session)
   }, true)
-})
+});
+
+app.controller('FaqCtrl', function($scope){
+
+  $scope.alerts = [
+   { type: '', msg: 'Esta seccion contiene importante información sobre nuestro sitio web y nuestra tienda Neon. En caso de que no pueda encontrar la respuesta que está buscando, por favor no dude en contactarnos.' }
+  ];
+
+  $scope.closeAlert = function(index) {
+    $scope.alerts.splice(index, 1);
+  };
+
+   $scope.groups = [
+        {title: "¿Como comprar?", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
+        {title: "Plazos de Entrega", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
+        {title: "Politica de cambios", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." },
+        {title: "Terminos y condiciones", content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent luctus dui et nulla congue, a molestie leo efficitur. Pellentesque quis pretium velit." }
+   ];
+});
+
+app.controller('CheckoutCtrl', function($scope, api){
+  $scope.newAddressInputField = "";
+  $scope.addressSelection = 'address-existing';
+  $scope.cardSelection = 'card-existing';
+
+  $scope.alertMessagesForLogIn = [
+    {type:"", message:"Debe iniciar sesión para realizar la compra."}
+  ];
+
+  $scope.closeAlert = function(index) {
+    $scope.alertMessagesForLogIn.splice(index, 1);
+  };
+
+  $scope.existingAddresses = [
+    'Carlos Gardel 3523, Olivos',
+    'Eduardo Madero 399, Capital Federal'
+  ];
+
+  $scope.existingCreditCards = [
+    'AMEX ************3766',
+    'VISA ***********2345'
+  ];
+
+  $scope.onAddAddressClick = function() {
+    console.log("hola");
+
+    var address = $scope.newAddressInputField;
+
+    $scope.isUserLoggedIn = api.user.is_logged_in();
+
+    api.address.add(address).then(function() {
+      $scope.existingAddresses.push(address);
+      $scope.addressSelection = 'address-existing';
+
+    }).catchSet($scope, 'error').catch(function(error) {
+
+    });
+
+    api.address.add(address).thenSet($scope, 'lastAdddedAddress');
+    api.address.add(address)
+  }
+
+});
