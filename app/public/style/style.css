@@ -6904,6 +6904,9 @@ fieldset[disabled] #header nav.user a.active {
 #header nav.shop a.home {
   color: white;
 }
+#header nav .cart img {
+  width: 150px;
+}
 #header .search {
   margin-bottom: 0;
   padding-left: 0;

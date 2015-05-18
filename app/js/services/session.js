@@ -6,6 +6,11 @@ app.factory('session', function($rootScope, $cookies) {
 
     is_logged_in: function() {
       return this.profile !== undefined;
+    },
+
+    save: function() {
+      $cookies.putObject('session', this);
+      $rootScope.$broadcast('session.change');
     }
   };
 
@@ -15,8 +20,7 @@ app.factory('session', function($rootScope, $cookies) {
   $rootScope.session = globalSession = session;
 
   $rootScope.$watch('session', function() {
-    $cookies.putObject('session', session);
-    $rootScope.$broadcast('session.change');
+    session.save();
   }, true);
 
 
