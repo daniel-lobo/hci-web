@@ -206,3 +206,20 @@ app.controller('CheckoutCtrl', function($scope, api, session){
   }, true);
 
 });
+
+app.controller('CartController', function($scope, cart, session){
+
+  $scope.$on('session.change', function() {
+      console.log("Hola");
+  }, true)
+
+  console.log(cart);
+
+});
+
+/*
+$scope.$on('session.change', function() {
+    if (session.is_logged_in()) {
+      console.log("Logged in");
+    }
+});*/

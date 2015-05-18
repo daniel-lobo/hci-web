@@ -1,64 +1,71 @@
-<div class="action row">
-	<div class="col-md-12">
-		<div class="pull-right">
-			<a class="btn btn-danger">Vaciar Carrito</a>
-			<a class="btn btn-success" href="#checkout">Finalizar Compra</a>
-		</div>
+<div class="container">
+	<div ng-if="!session.is_logged_in()">
+		<alert type="">Se necesita estar logueado.</alert>
 	</div>
-</div>
-<div class="summary">
-	<div class="header row">
-		<div class="col-md-6">Productos</div>
-		<div class="col-md-2">Cantidad</div>
-		<div class="col-md-2">Precio</div>
-		<div class="col-md-2">Total</div>
-	</div>
-	<div class="product row">
-		<div class="col-md-2 image">
-			<img src="img/product_{{ image }}.jpg" alt="{{ desc }}">
-			<button class="btn-primary">Modificar</button>
-			<button class="btn-danger">Quitar</button>
-		</div>
-		<div class="col-md-4 desc">
-			<h3>{{ desc }}</h3>
-			<h4>Color {{ color }}</h4>
-			<h4>Talle {{ size }}</h4>
-		</div>
-		<div class="col-md-2 amount">
-			<select class="form-control">
-				<option>1</option>
-			</select>
-		</div>
-		<div class="col-md-2 price">${{ price }}</div>
-		<div class="col-md-2 total">${{ price }}</div>
-	</div>
-	<div class="delivery row">
-		<div class="col-md-6"><h2>Código Postal de Envío</h2></div>
-		<div class="col-md-2">
-			<input type="text" value="1425" disabled>
-		</div>
-		<div class="col-md-2"><h2>Costo de Envío</h2></div>
-		<div class="col-md-2 total">$21</div>
-	</div>
-	<div class="discount row">
-		<div class="col-md-6"><h2>Cupón de Descuento</h2></div>
-		<div class="col-md-2">
-			<input type="text" value="" disabled>
-		</div>
-		<div class="col-md-2"><h2>Descuento</h2></div>
-		<div class="col-md-2 total">-</div>
-	</div>
-	<div class="total row">
-		<div class="col-md-2 col-md-offset-8"><h2>Total</h2></div>
-		<div class="col-md-2 total">$601</div>
-	</div>
-	<div class="action row">
-		<div class="col-md-12">
-			<div class="pull-right">
-				<a class="btn btn-danger">Vaciar Carrito</a>
-				<a class="btn btn-success" href="#checkout">Finalizar Compra</a>
+  <div ng-if="session.is_logged_in()">
+    <div class="action row">
+      <div class="col-md-12">
+        <div class="pull-right">
+          <a class="btn btn-danger">Vaciar Carrito</a>
+          <a class="btn btn-success" href="#checkout">Finalizar Compra</a>
+        </div>
+      </div>
+    </div>
+    <div class="summary">
+      <br/>
+      <div class="header row">
+        <div class="col-md-6">
+          <h4>Productos</h4>
+        </div>
+        <div class="col-md-2">
+          <h4>Cantidad</h4>
+        </div>
+        <div class="col-md-2">
+          <h4>Precio Unitario</h4>
+        </div>
+        <div class="col-md-2">
+          <h4>Total</h4>
+        </div>
+      </div>
+      <br/>
+			<div ng-repeat="item in cart.items">
+				<div class="product row">
+	        <div class="col-md-2 image">
+	          <img src="{{item.product.imageUrl}}" style="height:100px;" alt="{{ item.product.name }}">
+	          <button class="btn-primary">Modificar</button>
+	          <button class="btn-danger">Quitar</button>
+	        </div>
+	        <div class="col-md-4 desc">
+	          <h5>{{ item.product.name }}</h5>
+	        </div>
+	        <div class="col-md-2 amount">
+	          <select class="form-control">
+	            <option>1</option>
+	          </select>
+	        </div>
+	        <div class="col-md-2 price">${{ item.price }}</div>
+	        <div class="col-md-2 total">${{ item.price * item.quantity }}</div>
+	      </div>
+				<br/>
 			</div>
-		</div>
-	</div>
-</div>
+      <div class="total row">
+        <div class="col-md-2 col-md-offset-8">
+          <h3>Total</h3>
+        </div>
+        <div class="col-md-2 total">
+          <h3>$601</h3>
+        </div>
+      </div>
+      <br/>
+      <div class="action row">
+        <div class="col-md-12">
+          <div class="pull-right">
+            <a class="btn btn-danger">Vaciar Carrito</a>
+            <a class="btn btn-success" href="#checkout">Finalizar Compra</a>
+          </div>
+        </div>
+      </div>
+      <br/>
+    </div>
+  </div>
 </div>

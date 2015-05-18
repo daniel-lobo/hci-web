@@ -27,7 +27,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
 
     .when('/cart', {
       templateUrl: 'views/partials/cart.html',
-      controller : 'MainCtrl'
+      controller : 'CartController'
     })
 
     .when('/category/:filter/:categoryId', {
