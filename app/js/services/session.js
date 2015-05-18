@@ -1,7 +1,7 @@
-app.factory('session', function($rootScope) {
+app.factory('session', function($rootScope, $cookies) {
   var prototype = {
-    extend: function(extras) { angular.extend(this, extras) },
-    merge : function(extras) { angular.merge(this, extras) },
+    extend: function(extras) { _.extend(this, extras) },
+    merge : function(extras) { _.merge(this, extras) },
     clear : function() { clear(this) },
 
     is_logged_in: function() {
@@ -9,9 +9,13 @@ app.factory('session', function($rootScope) {
     }
   };
 
-  var storage = Object.create(prototype)
+  var session = $rootScope.session = Object.create(prototype)
 
-  $rootScope.session = storage;
+  angular.extend(session, $cookies.getObject('session'));
 
-  return storage;
+  $rootScope.$watch('session', function() {
+    $cookies.putObject('session', session);
+  }, true);
+
+  return session;
 })

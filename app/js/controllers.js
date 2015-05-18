@@ -16,6 +16,7 @@ app.controller('ProductCtrl', function($scope, $routeParams, api, $rootScope) {
   }
 });
 
+app.controller('ProductListCtrl', function($scope, api) {});
 
 app.controller('UserCtrl', function($scope, api) {
   $scope.errors = {};
@@ -72,41 +73,104 @@ app.controller('FaqCtrl', function($scope){
 });
 
 app.controller('CheckoutCtrl', function($scope, api, session){
-  $scope.addressSelection = 'address-existing';
-  $scope.cardSelection = 'card-existing';
 
-  $scope.addressInputField = 'Holaa';
+  // Info
 
   $scope.alertMessagesForLogIn = [
     {type:"", message:"Debe iniciar sesión para realizar la compra."}
   ];
 
-  $scope.alertMessagesForAddress = [];
-
   $scope.closeAlert = function(index) {
     $scope.alertMessagesForLogIn.splice(index, 1);
   };
 
+  // Address variables
+
+  $scope.addressInputField = {address:""};
+  $scope.addressSelection = {
+    selectionStatus:'address-existing',
+    selectedAddress:''
+  };
+
+  // Address list
+
   $scope.existingAddresses = [];
-  api.address.all().thenSet($scope,'existingAddresses');
 
-  $scope.existingCreditCards = [];
-  api.card.all().thenSet($scope,'existingCreditCards');
+  $scope.$watch('session', function() {
+    if (session.is_logged_in()) {
+      api.address.all().thenSet($scope, 'existingAddresses').then(function(address) {
+        $scope.addressSelection.selectedAddress = address[0].name;
+      });
+    }
+  }, true);
 
+  // Add new adress
 
   $scope.onAddAddressClick = function() {
-    var address = $scope.addressInputField;
-    console.log($scope.addressInputField);
 
-    /*api.address.add(address).then(function() {
+    console.log($scope);
+    var address = $scope.addressInputField.address;
+
+    api.address.add(address).then(function(address) {
       $scope.existingAddresses.push(address);
-      $scope.addressSelection = 'address-existing';
+      $scope.addressSelection.selectionStatus = 'address-existing';
+      $scope.addressSelection.selectedAddress = address.name;
+    }).catch(function(error) {
+        console.log("Error");
+    });
+  }
+
+  // Card variables
+
+  $scope.cardSelection = {
+    selectionStatus: 'card-existing',
+    selectedCard: ''
+  }
+
+  $scope.dateFormat = {
+    mstep: ['Mes', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+    ystep: ['Año', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031']
+  };
+
+  $scope.cardData = {
+    month:'Mes',
+    year:'Año',
+    number:'',
+    ccv:''
+  }
+
+  // Add new card
+
+  $scope.onAddCardClick = function() {
+
+    console.log($scope);
+    var cardData = $scope.cardData;
+    var expiration = cardData.month + cardData.year.substring(2,4);
+
+    api.card.add({
+      number: cardData.number,
+      expirationDate: expiration,
+      securityCode: cardData.ccv
+    }).then(function(card) {
+      $scope.existingCreditCards.push(card);
+      $scope.cardSelection.selectionStatus = 'card-existing';
+      $scope.cardSelection.selectedCard = card.number;
 
     }).catch(function(error) {
-      $scope.alertMessagesForAddress.push({type:"danger", message: error.message});
-    });*/
-    //api.address.add(address).thenSet($scope, 'lastAdddedAddress');
-    //api.address.add(address)
+        console.log("Error");
+    });
   }
+
+  // Card list
+
+  $scope.existingCreditCards = [];
+
+  $scope.$watch('session', function() {
+    if (session.is_logged_in()) {
+      api.card.all().thenSet($scope, 'existingCreditCards').then(function(card){
+        $scope.cardSelection.selectedCard = card[0].number;
+      });
+    }
+  }, true);
 
 });

@@ -1,7 +1,7 @@
 <div id="cart" class="container">
   <div class="row">
     <div class="col-md-6">
-      <div breadcrumbs></div>
+      <!--<div breadcrumbs></div>-->
       <!-- Using the above instead of this:
 
       {{ location('Confirmación de compra', [
@@ -50,22 +50,22 @@
       <accordion-group heading="2. Datos de envío" is-disabled="!session.is_logged_in()" is-open="session.is_logged_in()">
         <div class="selection-area">
           <div class="btn-group">
-            <label class="btn btn-primary" ng-model="addressSelection" btn-radio="'address-existing'">Dirección Existente</label>
-            <label class="btn btn-primary" ng-model="addressSelection" btn-radio="'address-new'">Nueva Dirección</label>
+            <label class="btn btn-primary" ng-model="addressSelection.selectionStatus" btn-radio="'address-existing'">Dirección Existente</label>
+            <label class="btn btn-primary" ng-model="addressSelection.selectionStatus" btn-radio="'address-new'">Nueva Dirección</label>
           </div>
         </div>
         <div class="discount row">
-          <div ng-if="addressSelection == 'address-existing'">
+          <div ng-if="addressSelection.selectionStatus == 'address-existing'">
             <div class="col-md-5 amount">
-              <select class="form-control">
+              <select class="form-control" ng-model="addressSelection.selectedAddress">
                 <option ng-repeat="address in existingAddresses">{{address.name}}</option>
               </select>
             </div>
           </div>
-          <div ng-if="addressSelection == 'address-new'">
+          <div ng-if="addressSelection.selectionStatus == 'address-new'">
             <div class="col-md-6">
               <br/>
-              <input type="text" class="form-control" ng-model="addressInputField" placeholder="Ingrese dirección">
+              <input type="text" class="form-control" ng-model="addressInputField.address" placeholder="Ingrese dirección">
               <br/>
               <button class="btn-primary" ng-click="onAddAddressClick()">Añadir</button>
             </div>
@@ -78,61 +78,40 @@
       <accordion-group heading="3. Método de pago" is-disabled="!session.is_logged_in()" is-open="session.is_logged_in()">
         <div class="selection-area">
           <div class="btn-group">
-            <label class="btn btn-primary" ng-model="cardSelection" btn-radio="'card-existing'">Tarjeta Existente</label>
-            <label class="btn btn-primary" ng-model="cardSelection" btn-radio="'card-new'">Nueva Tarjeta</label>
+            <label class="btn btn-primary" ng-model="cardSelection.selectionStatus" btn-radio="'card-existing'">Tarjeta Existente</label>
+            <label class="btn btn-primary" ng-model="cardSelection.selectionStatus" btn-radio="'card-new'">Nueva Tarjeta</label>
           </div>
         </div>
         <div class="discount row">
-          <div ng-if="cardSelection == 'card-existing'">
+          <div ng-if="cardSelection.selectionStatus == 'card-existing'">
             <div class="col-md-5 amount">
-              <select class="form-control">
-                <option ng-repeat="creditCard in existingCreditCards">{{creditCard.name}}</option>
+              <select class="form-control" ng-model="cardSelection.selectedCard">
+                <option ng-repeat="creditCard in existingCreditCards">{{creditCard.number}}</option>
               </select>
             </div>
           </div>
-          <div ng-if="cardSelection == 'card-new'">
+          <div ng-if="cardSelection.selectionStatus == 'card-new'">
             <br/>
-            <div class="col-md-6">
-              <div id="discount-text">Datos de facturacion: </div>
-              <div class="row">
-                <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="Nombre">
-                </div>
-                <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="Apellido">
-                </div>
-              </div>
-              <br/>
-              <input type="text" class="form-control" placeholder="Telefono">
-              <br/>
-              <input type="text" class="form-control" placeholder="Direccion">
-              <br/>
-              <input type="text" class="form-control" placeholder="Codigo Postal">
-            </div>
-            <div class="col-md-6">
+            <div class="col-md-6 col-md-offset-3">
               <div id="discount-text">Datos de tarjeta de credito: </div>
               <div class="first-row-third-step-2">
                 <div class="col-md-8">
-                  <input type="text" class="form-control" placeholder="Numero de tarjeta">
+                  <input type="text" class="form-control" ng-model="cardData.number" placeholder="Numero de tarjeta">
                 </div>
                 <div class="col-md-4">
-                  <input type="text" class="form-control" placeholder="Cod. Seguridad">
+                  <input type="text" class="form-control" ng-model="cardData.ccv" placeholder="Cod. Seguridad">
                 </div>
               </div>
               <div class="col-md-2">Vencimiento:</div>
               <div class="col-md-5 amount">
-                <select class="form-control">
-                  <option>Mes</option>
-                </select>
+                <select class="form-control" ng-model="cardData.month" ng-options="opt for opt in dateFormat.mstep"></select>
               </div>
               <div class="col-md-5 amount">
-                <select class="form-control">
-                  <option>Año</option>
-                </select>
+                <select class="form-control" ng-model="cardData.year" ng-options="opt for opt in dateFormat.ystep"></select>
               </div>
-              <h1>&nbsp;</h1>
+              <h3>&nbsp;</h3>
               <div class="control-group col-md-offset-5">
-                <button class="btn-primary">Añadir</button>
+                <button class="btn-primary" ng-click="onAddCardClick()">Añadir</button>
               </div>
             </div>
           </div>
