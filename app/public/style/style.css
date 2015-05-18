@@ -6667,6 +6667,7 @@ fieldset[disabled] button {
   background-color: #222222;
   border-color: #080808;
   border-radius: 0 !important;
+  margin-bottom: 30px;
 }
 @media (min-width: 768px) {
   #header {
@@ -7068,6 +7069,7 @@ article.product-mini .caption .desc {
 #footer {
   background-color: #222222;
   color: #FFFFFF;
+  margin-top: 30px;
 }
 #footer a:link {
   color: #FFFFFF;
@@ -7393,4 +7395,8 @@ article.product-mini .caption .desc {
     float: left;
     width: 16.66666667%;
   }
+}
+form.signup {
+  width: 600px;
+  margin: auto;
 }

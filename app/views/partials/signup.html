@@ -1,5 +1,9 @@
 <div class="container">
-  <form class="form-horizontal">
+  <form class="form-horizontal signup">
+    <div class="alert alert-danger" ng-if="error.code">
+      {{ error.message }}
+    </div>
+
     <div class="form-group">
       <label class="col-md-2 control-label">E-mail</label>
 
@@ -43,6 +47,7 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-success pull-right">Submit</button>
+    <div ng-if="loading">LOADING</div>
+    <button type="submit" class="btn btn-success pull-right" ng-click="submit()">Crear cuenta</button>
   </form>
 </div>
