@@ -31,6 +31,11 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
       controller : 'LoginCtrl'
     })
 
+    .when('/order/:orderId', {
+      templateUrl: '/views/partials/order.html',
+      controller : 'OrderCtrl'
+    })
+
     .when('/liked', {
       templateUrl: 'views/partials/underconstruction.html',
       controller : 'MainCtrl'

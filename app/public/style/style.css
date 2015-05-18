@@ -6675,6 +6675,7 @@ fieldset[disabled] button {
 #header .cart .items .item {
   border-bottom: 1px solid #ddd;
   margin-bottom: 5px;
+  padding-bottom: 5px;
 }
 #header .cart .items .image {
   padding: 0;
@@ -7092,4 +7093,32 @@ form.signup,
 form.login {
   width: 600px;
   margin: auto;
+}
+#order {
+  width: 950px;
+  margin: auto;
+}
+#order td {
+  vertical-align: middle;
+}
+#order th:not(.name) {
+  text-align: center;
+}
+#order .details span.label {
+  font-size: 100%;
+}
+#order .item img {
+  height: 120px;
+}
+#order .item td {
+  min-width: 100px;
+}
+#order .item td .label {
+  display: block;
+  font-size: 100%;
+  padding: 10px 5px;
+}
+#order .item td.name {
+  text-align: left;
+  font-size: 180%;
 }

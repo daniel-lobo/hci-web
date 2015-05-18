@@ -31,6 +31,7 @@ button   { .btn; }
       .item {
         border-bottom: 1px solid #ddd;
         margin-bottom: 5px;
+        padding-bottom: 5px;
       }
 
       .image {
@@ -441,5 +442,37 @@ form {
   &.signup, &.login {
     width: 600px;
     margin: auto;
+  }
+}
+
+#order {
+  width : 950px;
+  margin: auto;
+
+  td { vertical-align: middle; }
+  th:not(.name) { text-align: center; }
+
+  .details span.label {
+    font-size: 100%;
+  }
+
+  .item {
+    img { height: 120px; }
+
+    td {
+      min-width: 100px;
+
+      .label {
+        display: block;
+        font-size: 100%;
+        padding: 10px 5px;
+      }
+
+      &.name {
+        text-align: left;
+        font-size: 180%;
+      }
+    }
+
   }
 }

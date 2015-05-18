@@ -113,10 +113,10 @@ function buildOrder(data) {
     data.items = data.items.map(buildOrderItem);
 
   data.status = {
-    1: 'created',
+    1: 'unconfirmed',
     2: 'confirmed',
-    3: 'shipped',
-    4: 'delivered'
+    3: 'sent',
+    4: 'received'
   }[data.status];
 
   return data;
