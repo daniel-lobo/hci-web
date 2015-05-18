@@ -7081,9 +7081,15 @@ article.product-mini .caption .desc {
     width: 16.66666667%;
   }
 }
+#profile {
+  width: 700px;
+  margin: auto;
+}
+#profile form {
+  margin-bottom: 20px;
+}
 form.signup,
-form.login,
-form.update {
+form.login {
   width: 600px;
   margin: auto;
 }

@@ -4,6 +4,12 @@ app.controller('ProfileCtrl', function($scope, $location, session, api) {
 
   $scope.form = {};
 
+  api.order.all().then(function(orders) {
+    return orders.filter(function(order) {
+      return order.status != 'created';
+    })
+  }).thenSet($scope, 'orders');
+
   $scope.update = function() {
     $scope.loading = true;
 
