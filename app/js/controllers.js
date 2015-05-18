@@ -1,7 +1,7 @@
 app.controller('MainCtrl', function($scope, api) {
   api.product.find({
     is_new: true,
-    page_size: 8
+    page_size: 9
   }).thenSet($scope, 'products');
 
   $scope.carrouselSlides = [{
@@ -30,6 +30,8 @@ app.controller('HeaderCtrl', function($scope, api, cart) {
 
 app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   var filter = null;
+
+  var currentMaxPageDisplayed = 1;
 
   switch ($routeParams.filter) {
     case "hombres":
@@ -61,6 +63,9 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   filter.category = {
     id: $routeParams.categoryId
   };
+
+  filter.page_size = 9;
+  filter.page = currentMaxPageDisplayed;
 
   api.product.find(filter).thenSet($scope, 'products');
 

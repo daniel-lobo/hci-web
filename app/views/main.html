@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="row" style="height:350px">
+  <div class="row col-md-10 col-md-offset-1" style="height:350px">
     <carousel interval="myInterval">
       <slide ng-repeat="slide in carrouselSlides" active="slide.active">
         <img ng-src="{{slide.image}}" style="margin:auto; height:305px;">
@@ -9,6 +9,7 @@
       </slide>
     </carousel>
   </div>
-
-  <div product-list products="products"></div>
+  <div class="col-md-10 col-md-offset-1">
+    <div product-list products="products"></div>
+  </div>
 </div>
