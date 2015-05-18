@@ -13,13 +13,33 @@ function attributesToObject(attributes) {
 
 
 function buildProduct(data) {
-  return {
+  if (! data.id)
+    data = data.product;
+
+  var product = {
     id      : data.id,
     name    : data.name,
     price   : data.price,
     images  : data.imageUrl,
     category: data.category
   }
+
+  if (data.attributes) {
+    var attrs = attributesToObject(data.attributes)
+
+    product.color    = (attrs.Color || [])[0];
+    product.ages     = attrs.Edad;
+    product.genders  = attrs.Genero;
+    product.brand    = (attrs.Marca || [])[0];
+    product.is_new   = !!attrs.Nuevo;
+    product.is_offer = !!attrs.Oferta;
+
+    for (var attr in attrs)
+      if (attr.startsWith('Talle-'))
+        product.sizes = attrs[attr];
+  }
+
+  return product;
 }
 
 
@@ -135,7 +155,6 @@ app.factory('api', function($http, $rootScope, $q) {
       after: buildCategory
   })
 
-
   var e_categories = endpoint({
     url  : '/Catalog.groovy?method=GetAllCategories',
     after: buildCategoryList
@@ -144,6 +163,11 @@ app.factory('api', function($http, $rootScope, $q) {
   var e_subcategories = endpoint({
     url  : '/Catalog.groovy?method=GetAllSubcategories',
     after: buildSubcategoryList
+  })
+
+  var e_product = endpoint({
+    url     : '/Catalog.groovy?method=GetProductById',
+    after   : buildProduct
   })
 
   var e_products_by_category = endpoint({
@@ -295,6 +319,10 @@ app.factory('api', function($http, $rootScope, $q) {
   };
 
   api.product = {
+    get: function(id) {
+      return e_product({ id: id });
+    },
+
     find: function(criteria) {
       if (! criteria)
         return e_products();

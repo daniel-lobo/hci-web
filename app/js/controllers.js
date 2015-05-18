@@ -10,6 +10,11 @@ app.controller('MainCtrl', function($scope, api) {
 });
 
 
+app.controller('ProductCtrl', function($scope, $routeParams, api) {
+  api.product.get($routeParams.productId).thenSet($scope, 'product');
+});
+
+
 app.controller('UserCtrl', function($scope, api) {
   $scope.session      = api.session;
   $scope.is_logged_in = api.user.is_logged_in;

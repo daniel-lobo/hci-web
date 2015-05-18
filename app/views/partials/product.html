@@ -1,41 +1,50 @@
 <div id="product-detail" class="container">
-  <div class="images col-md-4 col-md-offset-2">
-    <div class="main-container">
-      <img class="main" src="img/product_{{ id }}.jpg" alt="{{ desc }}">
+  <div ng-if="product">
+    <div class="images col-md-4 col-md-offset-2">
+      <div class="main-container">
+        <img class="main" src="{{ product.images[0] }}" alt="{{ product.name }}">
+      </div>
+
+      <div class="clearfix"></div>
+
+      <img class="mini" ng-repeat="src in product.images.slice(1, 4)" src="{{ src }}" alt="{{ product.name }}">
     </div>
-    <div class="clearfix"></div>
-    <img class="mini" src="img/product_{{ id }}.jpg" alt="{{ desc }}">
-    <img class="mini" src="img/product_{{ id }}.jpg" alt="{{ desc }}">
-    <img class="mini" src="img/product_{{ id }}.jpg" alt="{{ desc }}">
+
+    <div class="description col-md-4">
+      <h1 class="desc">{{ product.name }}</h1>
+
+      <table class="table">
+        <caption>Detalles del Producto</caption>
+        <tr ng-if="product.brand">
+          <td>Marca</td> <td>{{ product.brand }}</td>
+        </tr>
+        <tr ng-if="product.sizes">
+          <td>Talles</td> <td>{{ product.sizes | join: ', ' }}</td>
+        </tr>
+        <tr ng-if="product.color">
+          <td>Color</td> <td>{{ product.color }}</td>
+        </tr>
+        <tr ng-if="product.material">
+          <td>Material</td> <td>{{ product.material }}</td>
+        </tr>
+      </table>
+
+      <div class="row">
+        <div class="col-md-6">
+          <h2 class="price">${{ product.price }}</h2>
+        </div>
+        <div class="col-md-6">
+          <a href="cart.html" class="buy btn btn-success">Añadir al Carrito</a>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="description col-md-4">
-    <h1 class="desc">{{ desc }}</h1>
-    <table class="table">
-      <caption>Detalles del Producto</caption>
-      <tr>
-        <td>Marca</td> <td>{{ brand }}</td>
-      </tr>
-      <tr>
-        <td>Talles</td> <td>{{ sizes | join(' - ') }}</td>
-      </tr>
-      <tr>
-        <td>Color</td> <td>{{ color }}</td>
-      </tr>
-      <tr>
-        <td>Material</td> <td>{{ material }}</td>
-      </tr>
-    </table>
-    <div class="row">
-      <div class="col-md-6">
-        <h2 class="price">${{ price }}</h2>
-      </div>
-      <div class="col-md-6">
-        <a href="cart.html" class="buy btn btn-success">Añadir al Carrito</a>
-      </div>
-    </div>
+
+  <div ng-if="! product">
+    <h1>Cargando...</h1>
   </div>
 </div>
-<div class="container">
+<!-- <div class="container">
   <div id="related" class="row">
     <div class="row">
       <h1 class="col-md-offset-2">Relacionados</h1>
@@ -82,5 +91,5 @@
   </div>
 </div>
 </article>
-</div>
+</div> -->
 </div>
