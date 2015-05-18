@@ -350,7 +350,7 @@ app.factory('api', function($http, $rootScope, $q, session) {
       }
 
       if (criteria.category) {
-        query[id] = criteria.category.id;
+        query.id = criteria.category.id;
         return e_products_by_category(query);
 
       } else
