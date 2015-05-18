@@ -17,14 +17,33 @@ app.controller('ProductCtrl', function($scope, $rootScope, $routeParams, api, ca
 
 });
 
-app.controller('HeaderCtrl', function($scope, api, cart) {
-  // api.category.all().then(function(categories) {
-  //   console.log(categories);
-  // });
+app.controller('HeaderCtrl', function($scope, api){
   api.category.all().thenSet($scope, 'categories');
 })
 
-app.controller('ProductListCtrl', function($scope, api) {});
+app.controller('CategoryCtrl', function($scope, $routeParams, api) {
+  var filter = null;
+
+  switch($routeParams.filter) {
+    case "hombres":
+      filter = {gender: 'Masculino', ages: "Adulto"};
+      break;
+    case "mujeres":
+      filter = {gender: 'Femenino', ages: "Adulto"};
+      break;
+    case "chicos":
+      filter = {gender: 'Masculino', ages: "Infantil"};
+      break;
+    case "chicas":
+      filter = {gender: 'Femenino', ages: "Infantil"};
+      break;
+  }
+
+  filter.category = {id: $routeParams.categoryId};
+
+  api.product.find(filter).thenSet($scope, 'products');
+
+});
 
 app.controller('UserCtrl', function($scope, api) {
   $scope.errors = {};
@@ -80,10 +99,9 @@ app.controller('FaqCtrl', function($scope){
    ];
 });
 
-app.controller('CheckoutCtrl', function($scope, api){
-  $scope.newAddressInputField = "";
-  $scope.addressSelection = 'address-existing';
-  $scope.cardSelection = 'card-existing';
+app.controller('CheckoutCtrl', function($scope, api, session){
+
+  // Info
 
   $scope.alertMessagesForLogIn = [
     {type:"", message:"Debe iniciar sesión para realizar la compra."}
@@ -93,32 +111,93 @@ app.controller('CheckoutCtrl', function($scope, api){
     $scope.alertMessagesForLogIn.splice(index, 1);
   };
 
-  $scope.existingAddresses = [
-    'Carlos Gardel 3523, Olivos',
-    'Eduardo Madero 399, Capital Federal'
-  ];
+  // Address variables
 
-  $scope.existingCreditCards = [
-    'AMEX ************3766',
-    'VISA ***********2345'
-  ];
+  $scope.addressInputField = {address:""};
+  $scope.addressSelection = {
+    selectionStatus:'address-existing',
+    selectedAddress:''
+  };
+
+  // Address list
+
+  $scope.existingAddresses = [];
+
+  $scope.$watch('session', function() {
+    if (session.is_logged_in()) {
+      api.address.all().thenSet($scope, 'existingAddresses').then(function(address) {
+        $scope.addressSelection.selectedAddress = address[0].name;
+      });
+    }
+  }, true);
+
+  // Add new adress
 
   $scope.onAddAddressClick = function() {
 
-    var address = $scope.newAddressInputField;
+    console.log($scope);
+    var address = $scope.addressInputField.address;
 
-    $scope.isUserLoggedIn = api.user.is_logged_in();
-
-    api.address.add(address).then(function() {
+    api.address.add(address).then(function(address) {
       $scope.existingAddresses.push(address);
-      $scope.addressSelection = 'address-existing';
-
-    }).catchSet($scope, 'error').catch(function(error) {
-
+      $scope.addressSelection.selectionStatus = 'address-existing';
+      $scope.addressSelection.selectedAddress = address.name;
+    }).catch(function(error) {
+        console.log("Error");
     });
-
-    api.address.add(address).thenSet($scope, 'lastAdddedAddress');
-    api.address.add(address)
   }
+
+  // Card variables
+
+  $scope.cardSelection = {
+    selectionStatus: 'card-existing',
+    selectedCard: ''
+  }
+
+  $scope.dateFormat = {
+    mstep: ['Mes', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+    ystep: ['Año', '2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031']
+  };
+
+  $scope.cardData = {
+    month:'Mes',
+    year:'Año',
+    number:'',
+    ccv:''
+  }
+
+  // Add new card
+
+  $scope.onAddCardClick = function() {
+
+    console.log($scope);
+    var cardData = $scope.cardData;
+    var expiration = cardData.month + cardData.year.substring(2,4);
+
+    api.card.add({
+      number: cardData.number,
+      expirationDate: expiration,
+      securityCode: cardData.ccv
+    }).then(function(card) {
+      $scope.existingCreditCards.push(card);
+      $scope.cardSelection.selectionStatus = 'card-existing';
+      $scope.cardSelection.selectedCard = card.number;
+
+    }).catch(function(error) {
+        console.log("Error");
+    });
+  }
+
+  // Card list
+
+  $scope.existingCreditCards = [];
+
+  $scope.$watch('session', function() {
+    if (session.is_logged_in()) {
+      api.card.all().thenSet($scope, 'existingCreditCards').then(function(card){
+        $scope.cardSelection.selectedCard = card[0].number;
+      });
+    }
+  }, true);
 
 });
