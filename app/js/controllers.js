@@ -16,6 +16,13 @@ app.controller('ProductCtrl', function($scope, $routeParams, api, $rootScope) {
   }
 });
 
+app.controller('HeaderCtrl', function($scope, api){
+  // api.category.all().then(function(categories) {
+  //   console.log(categories);
+  // });
+  api.category.all().thenSet($scope, 'categories');
+})
+
 app.controller('ProductListCtrl', function($scope, api) {});
 
 app.controller('UserCtrl', function($scope, api) {

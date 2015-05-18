@@ -19,55 +19,18 @@
           <li>
             <a class="home" href="#/">Home</a>
           </li>
-          <li class="dropdown" dropdown on-toggle="toggled(open)">
-            <a href="#" class="dropdown-toggle"  dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">HOMBRES<span class="caret"></span></a>
+          <li ng-repeat="filter in ['HOMBRES', 'MUJERES', 'CHICOS', 'CHICAS']">
+
+            <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">{{filter}}<span class="caret"></span></a>
+
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#categories">Pantalones</a></li>
-              <li><a href="#categories">Remeras</a></li>
-              <li><a href="#categories">Zapatillas</a></li>
-              <li class="divider"></li>
-              <li><a href="#categories">Accesorios</a></li>
-              <li class="divider"></li>
-              <li><a href="#categories">Otros</a></li>
+              <li ng-repeat="category in categories">
+                 <a href="#category/{{ filter }}/{{ category.id }}">{{ category.name }}</a>
+              </li>
+              <!-- <li class="divider"></li> -->
             </ul>
+
           </li>
-          <li class="dropdown" dropdown on-toggle="toggled(open)">
-            <a href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">MUJERES<span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#categories">Pantalones</a></li>
-              <li><a href="#categories">Remeras</a></li>
-              <li><a href="#categories">Zapatillas</a></li>
-              <li class="divider"></li>
-              <li><a href="#categories">Accesorios</a></li>
-              <li class="divider"></li>
-              <li><a href="#categories">Otros</a></li>
-            </ul>
-          </li>
-          <li class="dropdown" dropdown on-toggle="toggled(open)">
-            <a href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">NIÑOS<span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#categories">Pantalones</a></li>
-              <li><a href="#categories">Remeras</a></li>
-              <li><a href="#categories">Zapatillas</a></li>
-              <li class="divider"></li>
-              <li><a href="#categories">Accesorios</a></li>
-              <li class="divider"></li>
-              <li><a href="#categories">Otros</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">NIÑAS<span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#categories">Pantalones</a></li>
-              <li><a href="#categories">Remeras</a></li>
-              <li><a href="#categories">Zapatillas</a></li>
-              <li class="divider"></li>
-              <li><a href="#categories">Accesorios</a></li>
-              <li class="divider"></li>
-              <li><a href="#categories">Otros</a></li>
-            </ul>
-          </li>
-        </ul>
         <ul class="search">
           <form class="navbar-form navbar-left" role="search" action="#categories">
             <div class="form-group">

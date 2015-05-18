@@ -35,6 +35,11 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
       controller : 'MainCtrl'
     })
 
+    .when('/categories/:categoryId', {
+      templateUrl: 'views/partials/categories.html',
+      controller : 'HeaderCtrl'
+    })
+
     .when('/product/:productId', {
        templateUrl: 'views/partials/product.html',
        controller : 'ProductCtrl'
