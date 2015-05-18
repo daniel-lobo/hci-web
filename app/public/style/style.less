@@ -7,49 +7,40 @@ fieldset { .form-group; }
 button   { .btn; }
 
 #header {
-  .navbar;
-  .navbar-inverse;
-
-  border-radius: 0 !important;
-  margin-bottom: 30px;
-
-  h1 {
-    .center-block();
-    width: 400px;
-
-    color     : white;
-    text-align: center;
-    font-size : 46px;
-
-    margin     : 0;
-    padding    : 0;
-    line-height: 100px;
+  .buttons i {
+    font-size: 20px;
   }
 
-  nav.user {
-    .container-fluid;
-    .pull-right;
-
-    a { .btn; .btn-default; }
-
-    line-height: 100px;
-    padding-right: 0;
-  }
-
-  nav.shop {
-    a.dropdown-toggle, a.home {
-      color: white;
+  .cart {
+    button { display: block; width: 100% }
+    
+    .drawer, .row {
+      width : 400px;
+      margin: 0;
     }
-  }
 
-  nav .cart {
-    img { width: 150px; }
-  }
+    .image {
+      color: red;
+    }
 
-  .search {
-    .nav;
-    .navbar-nav;
-    .pull-right;
+    .items {
+      padding: 2px;
+      list-style: none;
+
+      .item { padding: 0; }
+      .item {
+        border-bottom: 1px solid #ddd;
+        margin-bottom: 5px;
+      }
+
+      .image {
+        padding: 0;
+        img { width: 100px; }
+      }
+
+      .desc { font-size: 140%; margin-top: 10px; padding-left: 10px }
+      .price { font-size: 150%; text-align: center; margin-top: 10px }
+    }
   }
 }
 

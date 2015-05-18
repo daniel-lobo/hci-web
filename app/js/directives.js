@@ -31,7 +31,7 @@ app.directive('header', function () {
     }
 });
 
-app.directive('productlist', function() {
+app.directive('productList', function() {
     return {
         restrict: 'A',
         replace: true,

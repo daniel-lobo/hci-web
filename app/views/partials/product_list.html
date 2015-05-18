@@ -7,7 +7,7 @@
     <article ng-repeat="product in products" class="product-mini">
       <div class="thumbnail">
         <a href="#/product/{{ product.id }}">
-          <img src="{{ product.images[0] }}" alt="{{ product.name }}" />
+          <img ng-src="{{ product.images[0] }}" alt="{{ product.name }}" />
         </a>
         <div class="caption">
           <a href="#/product/{{ product.id }}" class="desc">{{ product.name }}</a>

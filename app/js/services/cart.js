@@ -23,6 +23,13 @@ app.factory('cart', function($rootScope, $q, api, session) {
 
     checkout: function(address, card) {
       return api.order.confirm({ id: this.order_id }, address, card);
+    },
+
+    total: function() {
+      var sum = 0;
+      for (var i = 0; i < cart.items.length; i++)
+        sum += cart.items[i].product.price * cart.items[i].quantity;
+      return sum;
     }
   }
 

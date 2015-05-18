@@ -7,7 +7,7 @@
 
       <div class="clearfix"></div>
 
-      <img class="mini" ng-repeat="src in product.images.slice(1, 4)" src="{{ src }}" alt="{{ product.name }}">
+      <img class="mini" ng-repeat="src in product.images.slice(1, 4)" ng-src="{{ src }}" alt="{{ product.name }}">
     </div>
     <div class="description col-md-4">
       <h1 class="desc">{{ product.name }}</h1>
