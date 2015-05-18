@@ -31,10 +31,23 @@
             </ul>
 
           </li>
-          <li>
-            <a>Items in cart: {{ cart.items.length }}</a>
+          <li class="cart dropdown" dropdown>
+            <!-- <a>Items in cart: {{ cart.items.length }}</a> -->
+            <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">Carrito <span class="caret"></span></a>
+
+            <ul class="dropdown-menu" role="menu">
+              <div ng-repeat="item in cart.items">
+                <li class="divider"></li>
+                <li>
+                  <p class="name">{{ item.product.name }}</p>
+                  <img src="{{ item.product.images[0] }}" alt="">
+                  <button class="btn btn-danger">Quitar</button>
+                </li>
+            </div>
+            </ul>
           </li>
         </ul>
+
         <ul class="search">
           <form class="navbar-form navbar-left" role="search" action="#categories">
             <div class="form-group">
