@@ -20,6 +20,10 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
       templateUrl: '/views/partials/user.html', controller: 'UserCtrl'
     })
 
+    .when('/signup', {
+      templateUrl: '/views/partials/signup.html', controller: 'SignupFormCtrl'
+    })
+
     .when('/liked', {
       templateUrl: 'views/partials/underconstruction.html',
       controller : 'MainCtrl'

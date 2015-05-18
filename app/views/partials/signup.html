@@ -1,0 +1,48 @@
+<div class="container">
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-md-2 control-label">E-mail</label>
+
+      <div class="col-md-10">
+        <input type="email" class="form-control" placeholder="tu@email.com"
+          ng-model="form.email">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">Nombre</label>
+
+      <div class="col-md-10">
+        <input type="text" class="form-control" placeholder="Juan Pérez"
+          ng-model="form.name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">Número mágico</label>
+
+      <div class="col-md-10">
+        <input type="text" class="form-control" placeholder="Hasta 10 dígitos"
+          ng-model="form.number">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">Contraseña</label>
+
+      <div class="col-md-10">
+        <input type="password" class="form-control" ng-model="form.password">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">Repetirla</label>
+
+      <div class="col-md-10">
+        <input type="password" class="form-control" ng-model="form.password2">
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success pull-right">Submit</button>
+  </form>
+</div>

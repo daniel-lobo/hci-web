@@ -24,6 +24,7 @@ app.controller('HeaderCtrl', function($scope, api, cart) {
     console.log("hola");
   };
 
+  api.order.all().thenSet($scope, 'magicDrawer');
 })
 
 app.controller('CategoryCtrl', function($scope, $routeParams, api) {
@@ -85,6 +86,7 @@ app.controller('UserCtrl', function($scope, api) {
     angular.extend($scope.update_form, $scope.session.profile)
   }, true)
 });
+
 
 app.controller('FaqCtrl', function($scope){
 

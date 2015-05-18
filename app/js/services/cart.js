@@ -19,6 +19,10 @@ app.factory('cart', function($rootScope, $q, api, session) {
       });
 
       return whenDeleted;
+    },
+
+    checkout: function(address, card) {
+      return api.order.confirm({ id: this.order_id }, address, card);
     }
   }
 
