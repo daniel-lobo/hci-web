@@ -8,15 +8,16 @@ app.controller('MainCtrl', function($scope, api) {
 });
 
 
-app.controller('ProductCtrl', function($scope, $routeParams, api, $rootScope) {
+app.controller('ProductCtrl', function($scope, $rootScope, $routeParams, api, cart) {
   api.product.get($routeParams.productId).thenSet($scope, 'product');
 
   $scope.addToCart = function() {
-
+    cart.add($scope.product, 1);
   }
+
 });
 
-app.controller('HeaderCtrl', function($scope, api){
+app.controller('HeaderCtrl', function($scope, api, cart) {
   // api.category.all().then(function(categories) {
   //   console.log(categories);
   // });

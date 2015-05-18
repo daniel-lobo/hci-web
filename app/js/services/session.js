@@ -9,13 +9,16 @@ app.factory('session', function($rootScope, $cookies) {
     }
   };
 
-  var session = $rootScope.session = Object.create(prototype)
-
+  var session = Object.create(prototype)
   angular.extend(session, $cookies.getObject('session'));
+
+  $rootScope.session = globalSession = session;
 
   $rootScope.$watch('session', function() {
     $cookies.putObject('session', session);
+    $rootScope.$broadcast('session.change');
   }, true);
+
 
   return session;
 })

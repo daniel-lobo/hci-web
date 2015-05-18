@@ -275,6 +275,11 @@ app.factory('api', function($http, $rootScope, $q, session) {
     auth: true
   })
 
+  var e_confirm_order = endpoint({
+    url : '/Order.groovy?method=ConfirmOrder',
+    auth: true
+  })
+
   // Service object:
   var api = {};
 
@@ -453,6 +458,14 @@ app.factory('api', function($http, $rootScope, $q, session) {
       }
 
       return e_add_to_order({ order_item: item });
+    },
+
+    confirm: function(order, address, card) {
+      return e_confirm_order({
+        id        : order.id,
+        address   : { id: address.id },
+        creditCard: { id: card.id }
+      });
     }
   }
 

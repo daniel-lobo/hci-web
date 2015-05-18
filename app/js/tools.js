@@ -1,3 +1,4 @@
+var globalSession;
 
 function raise(message) {
   if (typeof message === 'string') {
