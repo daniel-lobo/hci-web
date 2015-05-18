@@ -31,8 +31,6 @@ app.controller('HeaderCtrl', function($scope, api, cart) {
 app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   var filter = null;
 
-  var currentMaxPageDisplayed = 1;
-
   switch ($routeParams.filter) {
     case "hombres":
       filter = {
@@ -64,10 +62,24 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
     id: $routeParams.categoryId
   };
 
-  filter.page_size = 9;
-  filter.page = currentMaxPageDisplayed;
+  filter.page_size = 12;
+  filter.page = 1;
 
   api.product.find(filter).thenSet($scope, 'products');
+
+  $scope.onClickFetchMoreItems = function() {
+
+    filter.page = filter.page + 1;
+
+    api.product.find(filter).
+    then(function(products) {
+      products.forEach(function(product){
+        $scope.products.push(product);
+      });
+    }).catch(function(error) {
+      console.log("Error");
+    });
+  }
 
 });
 
