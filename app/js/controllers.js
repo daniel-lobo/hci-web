@@ -16,6 +16,8 @@ app.controller('ProductCtrl', function($scope, $routeParams, api, $rootScope) {
   }
 });
 
+app.controller('ProductListCtrl', function($scope, api) {});
+
 app.controller('UserCtrl', function($scope, api) {
   $scope.errors = {};
 

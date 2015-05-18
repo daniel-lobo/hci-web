@@ -33,13 +33,13 @@ app.directive('header', function () {
     }
 });
 
-app.directive('products-display', function() {
+app.directive('productlist', function() {
     return {
         restrict: 'A',
         replace: true,
-        templateUrl: '/views/partials/categories_items.html',
-        controller: 'CategoriesCtrl',
-        controllerAs: 'categoriesC'
+        templateUrl: '/views/partials/product_list.html',
+        controller: 'ProductListCtrl',
+        scope: { products: '=' }
     };
 });
 
