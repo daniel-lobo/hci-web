@@ -1,7 +1,7 @@
 {
-  "name": "angular-messages",
+  "name": "angular-cookies",
   "version": "1.4.0-rc.2",
-  "description": "AngularJS module that provides enhanced support for displaying messages within templates",
+  "description": "AngularJS module for cookies",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,6 +14,7 @@
     "angular",
     "framework",
     "browser",
+    "cookies",
     "client-side"
   ],
   "author": "Angular Core Team <angular-core+npm@google.com>",

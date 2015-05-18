@@ -1,4 +1,4 @@
-app.factory('session', function($rootScope) {
+app.factory('session', function($rootScope, $cookies) {
   var prototype = {
     extend: function(extras) { angular.extend(this, extras) },
     merge : function(extras) { angular.merge(this, extras) },
@@ -9,9 +9,15 @@ app.factory('session', function($rootScope) {
     }
   };
 
-  var storage = Object.create(prototype)
+  var storage = $rootScope.session = Object.create(prototype)
 
-  $rootScope.session = storage;
+  angular.extend(storage, $cookies.session);
+  console.log
+
+  $rootScope.$watch('session', function() {
+    $cookies.session = storage;
+    console.log('saved')
+  }, true);
 
   return storage;
 })
