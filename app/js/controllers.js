@@ -16,7 +16,33 @@ app.controller('ProductCtrl', function($scope, $routeParams, api, $rootScope) {
   }
 });
 
-app.controller('ProductListCtrl', function($scope, api) {});
+app.controller('HeaderCtrl', function($scope, api){
+  api.category.all().thenSet($scope, 'categories');
+})
+
+app.controller('CategoryCtrl', function($scope, $routeParams, api) {
+  var filter = null;
+
+  switch($routeParams.filter) {
+    case "hombres":
+      filter = {gender: 'Masculino', ages: "Adulto"};
+      break;
+    case "mujeres":
+      filter = {gender: 'Femenino', ages: "Adulto"};
+      break;
+    case "chicos":
+      filter = {gender: 'Masculino', ages: "Infantil"};
+      break;
+    case "chicas":
+      filter = {gender: 'Femenino', ages: "Infantil"};
+      break;
+  }
+
+  filter.category = {id: $routeParams.categoryId};
+
+  api.product.find(filter).thenSet($scope, 'products');
+
+});
 
 app.controller('UserCtrl', function($scope, api) {
   $scope.errors = {};

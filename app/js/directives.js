@@ -27,9 +27,7 @@ app.directive('header', function () {
         replace: true,
         scope: {user: '='}, // This is one of the cool things :). Will be explained in post.
         templateUrl: '/views/partials/header.html',
-        controller: ['$scope', '$filter', function ($scope, $filter) {
-            // Your behaviour goes here :)
-        }]
+        controller: 'HeaderCtrl',
     }
 });
 
@@ -38,7 +36,6 @@ app.directive('productlist', function() {
         restrict: 'A',
         replace: true,
         templateUrl: '/views/partials/product_list.html',
-        controller: 'ProductListCtrl',
         scope: { products: '=' }
     };
 });
@@ -49,7 +46,6 @@ app.directive('sidebar', function(){
         restrict: 'A',
         replace: true,
         templateUrl: '/views/partials/sidebar.html',
-        controller: 'SidebarCtrl'
     };
 });
 
@@ -59,6 +55,5 @@ app.directive('breadcrumbs', function(){
         restrict: 'A',
         replace: true,
         templateUrl: '/views/partials/breadcrumbs.html',
-        controller: 'BreadcrumbsCtrl'
     };
 });

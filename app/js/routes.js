@@ -30,9 +30,9 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
       controller : 'MainCtrl'
     })
 
-    .when('/categories', {
-      templateUrl: 'views/partials/categories.html',
-      controller : 'MainCtrl'
+    .when('/category/:filter/:categoryId', {
+      templateUrl: 'views/partials/category.html',
+      controller : 'CategoryCtrl'
     })
 
     .when('/product/:productId', {
