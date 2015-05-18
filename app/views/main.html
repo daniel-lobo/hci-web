@@ -12,14 +12,14 @@
   <div class="row">
     <article ng-repeat="product in products" class="product-mini">
       <div class="thumbnail">
-        <a ng-href="/product/{{ product.id }}">
+        <a href="#/product/{{ product.id }}">
           <img src="{{ product.images[0] }}" alt="{{ product.name }}" />
         </a>
 
         <div class="caption">
-          <a ng-href="/product/{{ product.id }}" class="desc">{{ product.name }}</a>
-          <a ng-href="/product/{{ product.id }}" class="price">$ {{ product.price }}</a>
-          <a ng-href="/category/{{ product.category.id }}" class="category">{{ product.category.name }}</a>
+          <a href="#/product/{{ product.id }}" class="desc">{{ product.name }}</a>
+          <a href="#/product/{{ product.id }}" class="price">$ {{ product.price }}</a>
+          <a href="#/category/{{ product.category.id }}" class="category">{{ product.category.name }}</a>
         </div>
       </div>
     </article>
