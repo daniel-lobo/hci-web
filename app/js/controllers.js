@@ -127,7 +127,6 @@ app.controller('CheckoutCtrl', function($scope, api, session){
   };
 
   // Address list
-
   $scope.existingAddresses = [];
 
   $scope.$watch('session', function() {
