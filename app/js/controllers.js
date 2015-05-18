@@ -16,6 +16,7 @@ app.controller('ProductCtrl', function($scope, $routeParams, api, $rootScope) {
   }
 });
 
+app.controller('ProductListCtrl', function($scope, api) {});
 
 app.controller('UserCtrl', function($scope, api) {
   $scope.errors = {};
@@ -95,7 +96,6 @@ app.controller('CheckoutCtrl', function($scope, api){
   ];
 
   $scope.onAddAddressClick = function() {
-    console.log("hola");
 
     var address = $scope.newAddressInputField;
 
