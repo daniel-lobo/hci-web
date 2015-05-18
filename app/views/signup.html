@@ -1,0 +1,20 @@
+<div class="container">
+  <form class="form-horizontal signup">
+    <div class="alert alert-danger" ng-if="error.code">
+      {{ error.message }}
+    </div>
+
+    <div form-input label="'E-mail'" model="form.email" placeholder="'tu@email.com'"></div>
+    <div form-input label="'Nombre'" model="form.name" placeholder="'Juan Pérez'"></div>
+    <div form-input label="'Número mágico'" model="form.number" placeholder="'Hasta 10 dígitos'"></div>
+    <div form-input label="'Contraseña'" model="form.password" type="'password'"></div>
+    <div form-input label="'Repetirla'" model="form.password2" type="'password'"></div>
+
+    <div ng-if="loading">LOADING</div>
+
+    <div class="pull-right">
+      <a type="submit" class="btn btn-info" ng-href="#/login">Ya tengo cuenta</a>
+      <button type="submit" class="btn btn-success" ng-click="submit()">Crear cuenta</button>
+    </div>
+  </form>
+</div>

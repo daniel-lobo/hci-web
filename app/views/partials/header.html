@@ -31,7 +31,7 @@
             </ul>
 
           </li>
-          <li class="cart dropdown" dropdown>
+          <li class="cart dropdown" dropdown ng-if="session.is_logged_in()">
             <!-- <a>Items in cart: {{ cart.items.length }}</a> -->
             <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">
               Carrito <span class="badge">{{ cart.items.length }}</span> <span class="caret"></span>

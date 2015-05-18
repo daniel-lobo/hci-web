@@ -57,3 +57,13 @@ app.directive('breadcrumbs', function(){
         templateUrl: '/views/partials/breadcrumbs.html',
     };
 });
+
+
+app.directive('formInput', function() {
+  return {
+    restrict   : 'A',
+    replace    : true,
+    scope      : { label: '=', placeholder: '=', model: '=', type: '=' },
+    templateUrl: '/views/partials/form_input.html'
+  }
+})

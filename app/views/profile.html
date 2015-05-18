@@ -1,0 +1,19 @@
+<div class="profile container">
+
+  <form class="form-horizontal update">
+    <h1>{{ session.username }}</h1>
+
+    <div form-input label="'Nombre'" model="form.firstName"></div>
+    <div form-input data-label="'Número Mágico'" model="form.identityCard"></div>
+    <div form-input label="'E-mail'" model="form.email"></div>
+
+    <div class="pull-right">
+      <button type="submit" class="btn btn-danger" ng-click="logout()">Cerrar Sesión</button>
+      <button type="submit" class="btn btn-success" ng-click="update()" ng-disabled="loading">
+          Guardar cambios
+      </button>
+    </div>
+
+    <span ng-if="update_form_loading">CARGANDO</span>
+  </form>
+</div>

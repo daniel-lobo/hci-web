@@ -16,12 +16,19 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
       controllerAs: 'faqC'
     })
 
-    .when('/user', {
-      templateUrl: '/views/partials/user.html', controller: 'UserCtrl'
+    .when('/profile', {
+      templateUrl: '/views/profile.html',
+      controller: 'ProfileCtrl'
     })
 
     .when('/signup', {
-      templateUrl: '/views/partials/signup.html', controller: 'SignupFormCtrl'
+      templateUrl: '/views/signup.html',
+      controller : 'SignupCtrl'
+    })
+
+    .when('/login', {
+      templateUrl: '/views/login.html',
+      controller : 'LoginCtrl'
     })
 
     .when('/liked', {

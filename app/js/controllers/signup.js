@@ -1,4 +1,4 @@
-app.controller('SignupFormCtrl', function($scope, api) {
+app.controller('SignupCtrl', function($scope, api) {
   $scope.form    = {};
   $scope.loading = false;
 
@@ -16,22 +16,10 @@ app.controller('SignupFormCtrl', function($scope, api) {
       birthDate   : "1970-01-02"
     }
 
-    console.log('before', profile)
-
     api.user.signup(profile)
       .then(function() { delete $scope.error; })
       .catchSet($scope, 'error')
       .finally(function(){ $scope.loading = false })
     ;
-  }
-});
-
-app.directive('signupForm', function () {
-  return {
-    restrict   : 'A',
-    replace    : true,
-    // scope   : true,
-    templateUrl: '/views/partials/signup.html',
-    controller : 'SignupFormCtrl'
   }
 });

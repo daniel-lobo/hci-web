@@ -7396,7 +7396,9 @@ article.product-mini .caption .desc {
     width: 16.66666667%;
   }
 }
-form.signup {
+form.signup,
+form.login,
+form.update {
   width: 600px;
   margin: auto;
 }

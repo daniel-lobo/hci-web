@@ -50,6 +50,9 @@ app.factory('cart', function($rootScope, $q, api, session) {
   }
 
   $rootScope.$on('session.change', function() {
+    if (! session.is_logged_in())
+      return; // That's it. The cart object is not valid if not logged in (ha!)
+
     if (! session.cart_order_id || session.cart_order_id != cart.order_id) {
       cart.order_id = null;
       getOrderId();
