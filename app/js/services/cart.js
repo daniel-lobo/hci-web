@@ -2,8 +2,8 @@ app.factory('cart', function($rootScope, $q, api, session) {
   var prototype = {
     add: function(product, quantity) {
       var whenAdded = getOrderId().then(function(order_id) {
-        return api.order.addProduct({ id: order_id }, product, quantity).then(function() {
-          cart.items.push({ product: product, quantity: quantity });
+        return api.order.addProduct({ id: order_id }, product, quantity).then(function(item) {
+          cart.items.push(item);
         });
       });
 
@@ -13,12 +13,16 @@ app.factory('cart', function($rootScope, $q, api, session) {
     remove: function(item) {
       var whenDeleted = getOrderId().then(function(order_id) {
         return api.order.removeItem(item).then(function() {
-          var index = cart.items.map(function(item) { return item.id }).indexOf(item.id)
+          var index = cart.items.map(function(i) { return i.id }).indexOf(item.id);
           cart.items.splice(index, 1);
         });
       });
 
       return whenDeleted;
+    },
+
+    checkout: function(address, card) {
+      return api.order.confirm({ id: this.order_id }, address, card);
     }
   }
 
@@ -26,7 +30,7 @@ app.factory('cart', function($rootScope, $q, api, session) {
   angular.extend(cart, { order_id: null, items: [] });
 
   function getOrderId() {
-    if (cart.order_id != null)
+    if (cart.order_id != null && cart.order_id == session.cart_order_id)
       return $q.when(cart.order_id);
 
     else if (session.cart_order_id != null)

@@ -34,6 +34,7 @@ app.controller('HeaderCtrl', function($scope, api, cart) {
     console.log("hola");
   };
 
+  api.order.all().thenSet($scope, 'magicDrawer');
 })
 
 app.controller('CategoryCtrl', function($scope, $routeParams, api) {
@@ -115,7 +116,7 @@ app.controller('UserCtrl', function($scope, api) {
   }, true)
 });
 
-app.controller('FaqCtrl', function($scope) {
+app.controller('FaqCtrl', function($scope){
 
   $scope.alerts = [{
     type: '',
@@ -264,7 +265,8 @@ app.controller('CartController', function($scope, cart, session) {
   }, true);
 
   $scope.updateQuantity = function (item) {
-    cart.remove(item).then(cart.add(item.product,Number($scope.options.selected.item.id)).then(console.log(cart)));
+    //console.log(item);
+    cart.remove(item).then(cart.add(item.product,item.quantity).then(console.log(cart)));
   }
 
   $scope.onClickRemove = function (item) {

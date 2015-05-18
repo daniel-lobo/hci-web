@@ -79,8 +79,9 @@ function buildSubcategoryList(data) {
 
 function buildSession(data) {
   return {
-    profile: data.account,
-    token  : data.authenticationToken
+    profile      : data.account,
+    token        : data.authenticationToken,
+    cart_order_id: null
   }
 }
 
@@ -114,6 +115,9 @@ function buildOrderList(data) {
 }
 
 function buildOrderItem(data) {
+  if (data.orderItem)
+    data = data.orderItem;
+
   data.product.price = data.price;
   delete data.price;
 
@@ -277,8 +281,9 @@ app.factory('api', function($http, $rootScope, $q, session) {
   })
 
   var e_add_to_order = endpoint({
-    url : '/Order.groovy?method=AddItemToOrder',
-    auth: true
+    url  : '/Order.groovy?method=AddItemToOrder',
+    auth : true,
+    after: buildOrderItem
   })
 
   var e_remove_from_order = endpoint({

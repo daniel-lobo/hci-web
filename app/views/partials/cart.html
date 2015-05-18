@@ -34,7 +34,7 @@
         </div>
       </div>
       <br/>
-      <div ng-repeat="item in cart.items">
+      <div ng-repeat="item in cart.items | orderBy:'-product.name'">
         <div class="product row">
           <div class="col-md-2 image">
             <img src="{{item.product.images[0]}}" style="height:100px;" alt="{{ item.product.name }}">
@@ -45,7 +45,7 @@
           </div>
           <div class="col-md-2 amount">
             <select class="form-control"
-							ng-change="updateQuantity($index)"
+							ng-change="updateQuantity(item)"
 							ng-model="cart.items[$index].quantity"
 							ng-options="q for q in quantities">
             </select>
