@@ -95,7 +95,7 @@
             <div class="col-md-6 col-md-offset-3">
 
               <form action="" name="creditCardForm" ng-submit="submitForm(userForm.$valid)" novalidate>
-                
+
                 <div id="discount-text">Datos de tarjeta de credito: </div>
                 <div class="first-row-third-step-2">
                   <div class="col-md-8">
@@ -124,7 +124,7 @@
                 <div class="control-group col-md-offset-5">
                   <button class="btn-primary" ng-click="onAddCardClick()"  ng-disabled="creditCardForm.$invalid">Añadir</button>
                 </div>
-                
+
               </form>
 
 
@@ -134,39 +134,8 @@
         </div>
       </accordion-group>
       <accordion-group heading="4. Resumen" is-disabled="!session.is_logged_in()" is-open="session.is_logged_in()">
-        <div class="product row">
-          <div class="col-md-2 image">
-            <img src="img/product_{{ image }}.jpg" alt="{{ desc }}">
-            <button class="btn-primary">Modificar</button>
-            <button class="btn-danger">Quitar</button>
-          </div>
-          <div class="col-md-4 desc">
-            <h3>{{ desc }}</h3>
-            <h4>Color {{ color }}</h4>
-            <h4>Talle {{ size }}</h4>
-          </div>
-          <div class="col-md-2 amount">
-            <select class="form-control">
-              <option>1</option>
-            </select>
-          </div>
-          <div class="col-md-2 price">${{ price }}</div>
-          <div class="col-md-2 total">${{ price }}</div>
-        </div>
-        <div class="total row">
-          <div class="col-md-2 col-md-offset-8">
-            <h2>Total</h2>
-          </div>
-          <div class="col-md-2 total">$601</div>
-        </div>
-        <div class="action row">
-          <div class="col-md-12">
-            <div class="pull-right">
-              <button class="btn-danger">Vaciar Carrito</button>
-              <button class="btn-success">Finalizar Compra</button>
-            </div>
-          </div>
-        </div>
+        <div cartProductList></div>
+        <a class="btn btn-success pull-right" href="#checkout">Realizar Compra</a>
       </accordion-group>
   </div>
 </div>
