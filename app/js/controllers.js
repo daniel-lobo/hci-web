@@ -265,6 +265,22 @@ app.controller('CartController', function($scope, cart, session) {
 
 });
 
+app.controller('ProductListController', function($scope, cart, session) {
+
+  $scope.loggedIn = session.is_logged_in();
+
+  $scope.addToCart = function(product) {
+
+    $scope.loading = true;
+
+    cart.add(product, 1)
+      .catchSet($scope, 'error')
+      .finallySet($scope, 'loading', false)
+    ;
+  }
+
+});
+
 /*
 $scope.$on('session.change', function() {
     if (session.is_logged_in()) {
