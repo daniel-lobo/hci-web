@@ -11,7 +11,6 @@ function attributesToObject(attributes) {
   return object;
 }
 
-
 function buildProduct(data) {
 
   if (! data.id)
@@ -119,6 +118,11 @@ function buildOrder(data) {
     3: 'sent',
     4: 'received'
   }[data.status];
+
+  ['receivedDate', 'processedDate', 'shippedDate', 'deliveredDate'].map(function(attr) {
+    if (data[attr])
+      data[attr] = new Date(data[attr]);
+  })
 
   return data;
 }
