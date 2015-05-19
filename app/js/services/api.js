@@ -196,6 +196,12 @@ app.factory('api', function($http, $rootScope, $q, session) {
     defaults: { page_size: 1000 }
   })
 
+  var e_products_by_name = endpoint({
+    url     : '/Catalog.groovy?method=GetProductsByName',
+    after   : buildProductList,
+    defaults: { page_size: 1000 }
+  })
+
   var e_products = endpoint({
     url     : '/Catalog.groovy?method=GetAllProducts',
     after   : buildProductList,
@@ -356,6 +362,9 @@ app.factory('api', function($http, $rootScope, $q, session) {
       if (! criteria)
         return e_products();
 
+      if (criteria.ctaegory && criteria.name)
+        throw new Error("Can't search both by name and category");
+
       var filters = [];
 
       if (criteria.gender)
@@ -385,6 +394,10 @@ app.factory('api', function($http, $rootScope, $q, session) {
       if (criteria.category) {
         query.id = criteria.category.id;
         return e_products_by_category(query);
+
+      } else if (criteria.name) {
+        query.name = criteria.name
+        return e_products_by_name(query);
 
       } else
         return e_products(query);
