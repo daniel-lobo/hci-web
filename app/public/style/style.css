@@ -7082,3 +7082,7 @@ form.login {
   text-align: left;
   font-size: 150%;
 }
+#checkout .selector {
+  text-align: center;
+  margin-bottom: 10px;
+}

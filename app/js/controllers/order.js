@@ -1,6 +1,4 @@
 app.controller('OrderCtrl', function($scope, $routeParams, $q, api) {
-  angular.defaults($scope, { compact: false, editable: true });
-
   // Unwrap callbacks:
   var notifyEdit   = $scope.onEdit ? $scope.onEdit() : angular.noop;
   var notifyRemove = $scope.onRemove ? $scope.onRemove() : angular.noop;
