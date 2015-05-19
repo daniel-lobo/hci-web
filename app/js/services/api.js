@@ -397,7 +397,7 @@ app.factory('api', function($http, $rootScope, $q, session) {
       if (! criteria)
         return e_products();
 
-      if (criteria.ctaegory && criteria.name)
+      if (criteria.category && criteria.name)
         throw new Error("Can't search both by name and category");
 
       var filters = [];

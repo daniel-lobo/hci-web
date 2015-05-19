@@ -17,53 +17,81 @@ app.controller('MainCtrl', function($scope, api) {
   }];
 });
 
-
-app.controller('HeaderCtrl', function($scope, api, cart) {
+app.controller('HeaderCtrl', function($scope, $location, api, cart) {
   api.category.all().thenSet($scope, 'categories');
+
+  $scope.searchBoxText = '';
+
+  $scope.searched = function() {
+    $location.path('searched/' + $scope.searchBoxText);
+    $scope.searchBoxText = '';
+  };
+
+  $scope.toggled = function(open) {
+    console.log("hola");
+  };
+});
+
+/*app.controller('HeaderCtrl', function($scope, $location, api, cart) {
+  api.category.all().thenSet($scope, 'categories');
+
+  $scope.searchBoxText = '';
+
+  $scope.searched = function($location){
+    console.log($location);
+    console.log($scope.searchBoxText);
+    //$location.path('category/searched/mac');
+    $location.path('/login');
+    $scope.searchBoxText = '';
+  };
 
   $scope.toggled = function(open) {
     console.log("hola");
   };
 
   // api.order.all().thenSet($scope, 'magicDrawer');
-})
+})*/
 
 app.controller('CategoryCtrl', function($scope, $routeParams, api) {
 
   var filter = null;
 
-  switch ($routeParams.filter) {
-    case "hombres":
-      filter = {
-        gender: 'Masculino',
-        ages: "Adulto"
-      };
-      break;
-    case "mujeres":
-      filter = {
-        gender: 'Femenino',
-        ages: "Adulto"
-      };
-      break;
-    case "chicos":
-      filter = {
-        gender: 'Masculino',
-        ages: "Infantil"
-      };
-      break;
-    case "chicas":
-      filter = {
-        gender: 'Femenino',
-        ages: "Infantil"
-      };
-      break;
+  if ($routeParams.categoryId != null) {
+    switch ($routeParams.filter) {
+      case "hombres":
+        filter = {
+          gender: 'Masculino',
+          ages: "Adulto"
+        };
+        break;
+      case "mujeres":
+        filter = {
+          gender: 'Femenino',
+          ages: "Adulto"
+        };
+        break;
+      case "chicos":
+        filter = {
+          gender: 'Masculino',
+          ages: "Infantil"
+        };
+        break;
+      case "chicas":
+        filter = {
+          gender: 'Femenino',
+          ages: "Infantil"
+        };
+        break;
+    }
+
+    filter.category = {
+      id: $routeParams.categoryId
+    };
+
+  } else {
+    filter = {};
+    filter.name = $routeParams.name;
   }
-
-  $scope.filter = filter;
-
-  filter.category = {
-    id: $routeParams.categoryId
-  };
 
   filter.ocation = '';
   filter.color = '';
@@ -72,7 +100,9 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   filter.page_size = 12;
   filter.page = 1;
 
-  api.product.find(filter).thenSet($scope, 'products').then(function(products){
+  $scope.filter = filter;
+
+  api.product.find(filter).thenSet($scope, 'products').then(function(products) {
     if (products.length < filter.page_size) {
       fetchMoreItems.status = 2;
     }
@@ -115,21 +145,27 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   $scope.attributeChanged = function() {
     filter.page = 1;
     $scope.fetchMoreItems.status = 0;
-    api.product.find(filter).thenSet($scope, 'products').then(function(products){
+    api.product.find(filter).thenSet($scope, 'products').then(function(products) {
       if (products.length < filter.page_size) {
         fetchMoreItems.status = 2;
       }
     });
   }
 
-  $scope.removeCategory = function () {
-    filter.category = '';
-    $scope.attributeChanged();
-  }
+  if ($routeParams.categoryId != null) {
+    $scope.removeCategory = function() {
+      filter.category = '';
+      $scope.attributeChanged();
+    }
 
-  if(filter.category != ''){
-    api.category.get(filter.category.id).thenSet($scope,'categoryName').then(function(){
-    });
+    if (filter.category != '') {
+      api.category.get(filter.category.id).thenSet($scope, 'categoryName').then(function() {});
+    }
+  } else {
+    $scope.removeName = function() {
+      filter.name = '';
+      $scope.attributeChanged();
+    }
   }
 
   /// END: FILTER SELECTION

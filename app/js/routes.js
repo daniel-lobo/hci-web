@@ -51,6 +51,11 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
       controller : 'CategoryCtrl'
     })
 
+    .when('/searched/:name', {
+      templateUrl: 'views/partials/category.html',
+      controller : 'CategoryCtrl'
+    })
+
     .when('/product/:productId', {
        templateUrl: 'views/partials/product.html',
        controller : 'ProductCtrl'

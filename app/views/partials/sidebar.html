@@ -7,6 +7,12 @@
           <span class="btn btn-default" ng-click="removeCategory()"><i class="glyphicon glyphicon-remove"></i> {{categoryName.name}}</span>
         </div>
       </span>
+      <span ng-if="filter.name" class="list-group-item">
+        <h5>Búsqueda</h5>
+        <div class="">
+          <span class="btn btn-default" ng-click="removeName()"><i class="glyphicon glyphicon-remove"></i> {{filter.name}}</span>
+        </div>
+      </span>
       <span class="list-group-item">
         <h5>Genero</h5>
         <table style="font-size:14px">
