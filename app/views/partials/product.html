@@ -34,14 +34,14 @@
           <h2 class="price">${{ product.price }}</h2>
         </div>
         <div class="col-md-6">
-          <a ng-click="addToCart()" class="buy btn btn-success" ng-disabled="loading">Añadir al Carrito</a>
+          <a ng-click="addToCart()" class="buy btn btn-info" ng-disabled="loading">Añadir al Carrito</a>
         </div>
       </div>
     </div>
   </div>
 
   <div ng-if="! product">
-    <h1>Cargando...</h1>
+    <a class="btn btn-lg btn-warning glyphicon glyphicon-refresh glyphicon-refresh-animate" style="width:100%"> Cargando..</a>
   </div>
 </div>
 <!-- <div class="container">

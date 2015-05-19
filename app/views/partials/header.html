@@ -54,11 +54,11 @@
                 </div>
 
                 <div class="desc col-md-5">
-                  <a href="#/product/{{ item.product.id }}" class="name">{{ item.product.name }}</a>
+                  <a href="#/product/{{ item.product.id }}" class="text-primary"><h4>{{ item.product.name }}</h4></a>
                 </div>
 
                 <div class="col-md-4">
-                  <p class="price">${{ item.product.price }}</p>
+                  <h3>${{ item.product.price }}<h3>
                   <button class="btn btn-danger remove" ng-click="cart.remove(cart.items[$index])">Quitar</button>
                 </div>
             </li>
@@ -69,7 +69,7 @@
             <li>
               <div>
                 <a class="btn btn-default checkout" style="width: 50%" href="#cart">Ver carrito</a>
-                <a class="btn btn-success checkout" style="width: 49%" href="#checkout">Comprar</a>
+                <a class="btn btn-success checkout" style="width: 49%" href="#checkout">Finalizar compra</a>
                 </div>
             </li>
           </ul>

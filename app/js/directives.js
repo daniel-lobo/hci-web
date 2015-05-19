@@ -36,7 +36,8 @@ app.directive('productList', function() {
         restrict: 'A',
         replace: true,
         templateUrl: '/views/partials/product_list.html',
-        scope: { products: '=' }
+        scope: { products: '='},
+        controller: 'ProductListController'
     };
 });
 
@@ -45,7 +46,7 @@ app.directive('sidebar', function(){
     return {
         restrict: 'A',
         replace: true,
-        templateUrl: '/views/partials/sidebar.html',
+        templateUrl: '/views/partials/sidebar2.html',
     };
 });
 

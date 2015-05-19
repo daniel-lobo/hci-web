@@ -65,20 +65,50 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   filter.page_size = 12;
   filter.page = 1;
 
+  $scope.fetchMoreItems = {
+    status: 0,
+    message: 'Ver más'
+  }
+
+  var fetchMoreItems = $scope.fetchMoreItems;
+
   api.product.find(filter).thenSet($scope, 'products');
 
-  $scope.onClickFetchMoreItems = function() {
-
+  var fetchItems = function() {
     filter.page = filter.page + 1;
+
+    fetchMoreItems.status = 1;
+    fetchMoreItems.message = 'Cargando...';
+
+    console.log("Hola");
 
     api.product.find(filter).
     then(function(products) {
       products.forEach(function(product){
         $scope.products.push(product);
       });
+
+      fetchMoreItems.status = 0;
+      fetchMoreItems.message = 'Ver más';
+
+      if (products.length < filter.page_size){
+        fetchMoreItems.status = 2;
+      }
+
     }).catch(function(error) {
       console.log("Error");
     });
+  }
+
+  $scope.onClickFetchMoreItems = function() {
+    fetchItems();
+  }
+
+  $scope.moreItemsButtonDisabled = function() {
+      if(fetchMoreItems.status == 0)
+        return true;
+
+      return false;
   }
 
 });
@@ -212,6 +242,22 @@ app.controller('CheckoutCtrl', function($scope, api, session) {
       });
     }
   }, true);
+
+});
+
+app.controller('ProductListController', function($scope, cart, session) {
+
+  $scope.loggedIn = session.is_logged_in();
+
+  $scope.addToCart = function(product) {
+
+    $scope.loading = true;
+
+    cart.add(product, 1)
+      .catchSet($scope, 'error')
+      .finallySet($scope, 'loading', false)
+    ;
+  }
 
 });
 
