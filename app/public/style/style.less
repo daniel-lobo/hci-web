@@ -436,11 +436,22 @@ article.product-mini {
 }
 
 #profile {
-  width: 700px;
+  width: 900px;
   margin: auto;
 
   form {
+    width: 700px;
+    margin: auto;
     margin-bottom: 20px
+  }
+
+  .orders {
+    th:not(:first-child) { text-align: center };
+    td:not(:first-child) { text-align: center };
+
+    td.status .label {
+      font-size: 100%;
+    }
   }
 }
 

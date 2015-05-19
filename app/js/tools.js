@@ -70,20 +70,23 @@ function formatCreditCard(card) {
   var snumber = card.number.toString();
 
   if ((snumber.startsWith('34') || snumber.startsWith('37')) && snumber.length == 15)
-    string += "American Express ";
+    string += "American Express";
   else
   if (snumber.startsWith('36') && snumber.length == 16)
-    string += "Diners ";
+    string += "Diners";
   else
   if ((snumber.startsWith('51') || snumber.startsWith('52') || snumber.startsWith('53')) && snumber.length == 16)
-    string += "Mastercard ";
+    string += "Mastercard";
   else
   if (snumber.startsWith('4') && snumber.length == 13 || snumber.length == 16)
-    string += "Visa ";
+    string += "Visa";
   else
     return null;
 
-  string += card.number + " (" + card.expirationDate + ")";
+  string += " " + card.number;
+
+  if (card.expirationDate)
+    string += " (" + card.expirationDate + ")";
 
   return string;
 }

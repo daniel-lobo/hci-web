@@ -6656,9 +6656,6 @@ html {
 #header .category .name {
   text-transform: capitalize;
 }
-/*#header .buttons i {
-  font-size: 20px;
-}*/
 #header .buttons .cart a {
   padding-right: 0;
 }
@@ -7038,11 +7035,22 @@ article.product-mini .caption .desc {
   }
 }
 #profile {
-  width: 700px;
+  width: 900px;
   margin: auto;
 }
 #profile form {
+  width: 700px;
+  margin: auto;
   margin-bottom: 20px;
+}
+#profile .orders th:not(:first-child) {
+  text-align: center;
+}
+#profile .orders td:not(:first-child) {
+  text-align: center;
+}
+#profile .orders td.status .label {
+  font-size: 100%;
 }
 form.signup,
 form.login {

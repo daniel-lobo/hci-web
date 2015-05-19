@@ -21,3 +21,10 @@ app.filter('orderTotal', function() {
     ;
   }
 })
+
+
+app.filter('formatCard', function() {
+  return function formatCard(card) {
+    return formatCreditCard({ number: card.number || card });
+  }
+})
