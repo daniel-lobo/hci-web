@@ -13,6 +13,7 @@ function attributesToObject(attributes) {
 
 
 function buildProduct(data) {
+
   if (! data.id)
     data = data.product;
 
@@ -136,6 +137,18 @@ function buildOrderItem(data) {
   data.product.images = [data.product.imageUrl];
   delete data.product.imageUrl;
   return data;
+}
+
+function buildAttribute(data){
+  return data.attribute;
+}
+
+function buildAttributesList(data) {
+  return data.attributes;
+}
+
+function buildAttribute(data) {
+  return data.attribute;
 }
 
 
@@ -308,8 +321,30 @@ app.factory('api', function($http, $rootScope, $q, session) {
     auth: true
   })
 
+  var e_attributes = endpoint({
+    url : '/Common.groovy?method=GetAllAttributes',
+    auth: false,
+    after: buildAttributesList
+  })
+
+  var e_attribute = endpoint({
+    url : '/Common.groovy?method=GetAttributeById',
+    auth: false,
+    after: buildAttribute
+  })
+
   // Service object:
   var api = {};
+
+  api.attribute = {
+    all: function () {
+      return e_attributes().mapGet('id', 'name');
+    },
+
+    get: function(id) {
+      return e_attribute({ id: id });
+    },
+  }
 
   api.category = {
     all: function() {
@@ -369,6 +404,9 @@ app.factory('api', function($http, $rootScope, $q, session) {
 
       if (criteria.brand)
         filters.push({ id: 9, value: criteria.brand });
+
+      if (criteria.ocation)
+        filters.push({ id: 3, value: criteria.ocation });
 
       if (criteria.is_new)
         filters.push({ id: 6, value: 'Nuevo' })
