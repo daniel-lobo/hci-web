@@ -1,6 +1,13 @@
 var globalSession;
 var globalCart;
 
+Array.prototype.sum = function() {
+  var total = 0;
+  for (var i = 0; i < this.length; i++)
+    total += this[i];
+  return total;
+}
+
 function raise(message) {
   if (typeof message === 'string') {
     error = new Error(message);
@@ -96,6 +103,14 @@ angular.module('promises', [])
     prototype.catchExtend = function catchExtend(object) {
       return this.catch(function(error) {
         angular.extend(object, error);
+      })
+    }
+
+    prototype.finallySet = function(object, prop, overrideResult) {
+      return this.finally(function(result) {
+        if (overrideResult) result = overrideResult;
+        object[prop] = result;
+        return result;
       })
     }
 

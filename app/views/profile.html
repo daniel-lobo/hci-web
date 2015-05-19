@@ -1,0 +1,30 @@
+<div class="container" id="profile">
+
+  <form class="form-horizontal update">
+    <h1>Perfil</h1>
+
+    <div form-input label="'Nombre'" model="form.firstName"></div>
+    <div form-input data-label="'Número Mágico'" model="form.identityCard"></div>
+    <div form-input label="'E-mail'" model="form.email"></div>
+
+    <div class="pull-right">
+      <button type="submit" class="btn btn-danger" ng-click="logout()">Cerrar Sesión</button>
+      <button type="submit" class="btn btn-success" ng-click="update()" ng-disabled="loading">
+          Guardar cambios
+      </button>
+    </div>
+    <span ng-if="update_form_loading">CARGANDO</span>
+    <div class="clearfix"></div>
+  </form>
+
+  <div class="history">
+    <h1>Historial</h1>
+    <div ng-if="! orders.length">
+      <div class="alert alert-info">No has comprado nada hasta el momento</div>
+    </div>
+
+    <div ng-if="orders.length">
+      {{ orders }}
+    </div>
+  </div>
+</div>

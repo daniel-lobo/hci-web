@@ -19,9 +19,24 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
       ncyBreadcrumb: 'FAQ'
     })
 
-    .when('/user', {
-      templateUrl: '/views/partials/user.html', controller: 'UserCtrl',
-      ncyBreadcrumb: 'User'
+    .when('/profile', {
+      templateUrl: '/views/profile.html',
+      controller: 'ProfileCtrl'
+    })
+
+    .when('/signup', {
+      templateUrl: '/views/signup.html',
+      controller : 'SignupCtrl'
+    })
+
+    .when('/login', {
+      templateUrl: '/views/login.html',
+      controller : 'LoginCtrl'
+    })
+
+    .when('/order/:orderId', {
+      templateUrl: '/views/partials/order.html',
+      controller : 'OrderCtrl'
     })
 
     .when('/liked', {
@@ -31,8 +46,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
 
     .when('/cart', {
       templateUrl: 'views/partials/cart.html',
-      controller : 'MainCtrl',
-      ncyBreadcrumb: 'Cart'
+      controller : 'CartController'
     })
 
     .when('/category/:filter/:categoryId', {

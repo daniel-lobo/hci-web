@@ -31,7 +31,7 @@ app.directive('header', function () {
     }
 });
 
-app.directive('productlist', function() {
+app.directive('productList', function() {
     return {
         restrict: 'A',
         replace: true,
@@ -49,6 +49,16 @@ app.directive('sidebar', function(){
     };
 });
 
+app.directive('cartproductlist', function(){
+    // Runs during compile
+    return {
+        restrict: 'A',
+        replace: true,
+        templateUrl: '/views/partials/cart_product_list.html',
+        controller: 'CartController'
+    };
+});
+
 app.directive('breadcrumbs', function(){
     // Runs during compile
     return {
@@ -57,3 +67,13 @@ app.directive('breadcrumbs', function(){
         templateUrl: '/views/partials/breadcrumbs.html',
     };
 });
+
+
+app.directive('formInput', function() {
+  return {
+    restrict   : 'A',
+    replace    : true,
+    scope      : { label: '=', placeholder: '=', model: '=', type: '=' },
+    templateUrl: '/views/partials/form_input.html'
+  }
+})

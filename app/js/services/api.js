@@ -79,8 +79,9 @@ function buildSubcategoryList(data) {
 
 function buildSession(data) {
   return {
-    profile: data.account,
-    token  : data.authenticationToken
+    profile      : data.account,
+    token        : data.authenticationToken,
+    cart_order_id: null
   }
 }
 
@@ -105,15 +106,30 @@ function buildCreditCardList(data) {
 }
 
 function buildOrder(data) {
-  data.order.items = (data.order.items || []).map(buildOrderItem);
-  return data.order;
+  if (data.order)
+    data = data.order;
+
+  if (data.items)
+    data.items = data.items.map(buildOrderItem);
+
+  data.status = {
+    1: 'unconfirmed',
+    2: 'confirmed',
+    3: 'sent',
+    4: 'received'
+  }[data.status];
+
+  return data;
 }
 
 function buildOrderList(data) {
-  return data.orders;
+  return data.orders.map(buildOrder);
 }
 
 function buildOrderItem(data) {
+  if (data.orderItem)
+    data = data.orderItem;
+
   data.product.price = data.price;
   delete data.price;
 
@@ -277,8 +293,9 @@ app.factory('api', function($http, $rootScope, $q, session) {
   })
 
   var e_add_to_order = endpoint({
-    url : '/Order.groovy?method=AddItemToOrder',
-    auth: true
+    url  : '/Order.groovy?method=AddItemToOrder',
+    auth : true,
+    after: buildOrderItem
   })
 
   var e_remove_from_order = endpoint({
