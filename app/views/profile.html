@@ -47,9 +47,9 @@
               <span ng-switch-when="sent" class="label label-info">Enviada</span>
               <span ng-switch-when="received" class="label label-info">Recibida</span>
             </td>
-            <td>{{  order.processedDate }}</td>
-            <td>{{  order.shippedDate }}</td>
-            <td>{{  order.deliveredDate }}</td>
+            <td>{{  order.processedDate | formatDate }}</td>
+            <td>{{  order.shippedDate | formatDate }}</td>
+            <td>{{  order.deliveredDate | formatDate }}</td>
           </tr>
         </tbody>
       </table>
