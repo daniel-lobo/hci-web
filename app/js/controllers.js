@@ -29,6 +29,7 @@ app.controller('HeaderCtrl', function($scope, api, cart) {
 })
 
 app.controller('CategoryCtrl', function($scope, $routeParams, api) {
+
   var filter = null;
 
   switch ($routeParams.filter) {
@@ -58,9 +59,58 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
       break;
   }
 
+  $scope.filter = filter;
+
   filter.category = {
     id: $routeParams.categoryId
   };
+
+  filter.ocation = '';
+  filter.color = '';
+  filter.brand = '';
+
+  api.product.find(filter).thenSet($scope, 'products');
+
+  // START: FILTER SELECTION
+
+  $scope.possibleGenders = [];
+
+  api.attribute.get(1).then(function(genders) {
+    $scope.possibleGenders = genders.values;
+  });
+
+  $scope.possibleColors = [];
+
+  api.attribute.get(4).then(function(colors) {
+    $scope.possibleColors = colors.values;
+  });
+
+
+  $scope.possibleAges = [];
+
+  api.attribute.get(2).then(function(ages) {
+    $scope.possibleAges = ages.values;
+  });
+
+  $scope.possibleOcations = [];
+
+  api.attribute.get(3).then(function(ocations) {
+    $scope.possibleOcations = ocations.values;
+  });
+
+  $scope.possibleBrands = [];
+
+  api.attribute.get(9).then(function(brands) {
+    $scope.possibleBrands = brands.values;
+  });
+
+
+  $scope.attributeChanged = function() {
+    filter.page = 1;
+    api.product.find(filter).thenSet($scope, 'products');
+  }
+
+  /// END: FILTER SELECTION
 
   filter.page_size = 12;
   filter.page = 1;
@@ -72,26 +122,23 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
 
   var fetchMoreItems = $scope.fetchMoreItems;
 
-  api.product.find(filter).thenSet($scope, 'products');
+  var fetchAdditionalItems = function() {
 
-  var fetchItems = function() {
     filter.page = filter.page + 1;
 
     fetchMoreItems.status = 1;
     fetchMoreItems.message = 'Cargando...';
 
-    console.log("Hola");
-
     api.product.find(filter).
     then(function(products) {
-      products.forEach(function(product){
+      products.forEach(function(product) {
         $scope.products.push(product);
       });
 
       fetchMoreItems.status = 0;
       fetchMoreItems.message = 'Ver más';
 
-      if (products.length < filter.page_size){
+      if (products.length < filter.page_size) {
         fetchMoreItems.status = 2;
       }
 
@@ -101,20 +148,20 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   }
 
   $scope.onClickFetchMoreItems = function() {
-    fetchItems();
+    fetchAdditionalItems();
   }
 
   $scope.moreItemsButtonDisabled = function() {
-      if(fetchMoreItems.status == 0)
-        return true;
+    if (fetchMoreItems.status == 0)
+      return true;
 
-      return false;
+    return false;
   }
 
 });
 
 
-app.controller('FaqCtrl', function($scope){
+app.controller('FaqCtrl', function($scope) {
 
   $scope.alerts = [{
     type: '',
@@ -150,8 +197,7 @@ app.controller('ProductListController', function($scope, cart, session) {
 
     cart.add(product, 1)
       .catchSet($scope, 'error')
-      .finallySet($scope, 'loading', false)
-    ;
+      .finallySet($scope, 'loading', false);
   }
 
 });

@@ -2,7 +2,9 @@ app.controller('ProductCtrl', function($scope, $rootScope, $routeParams, api, ca
   $scope.loading = false;
 
   if (! $scope.product)
-    api.product.get($routeParams.productId).thenSet($scope, 'product');
+    api.product.get($routeParams.productId).thenSet($scope, 'product').then(function(){
+      console.log($scope.product);
+    });
 
   $scope.addToCart = function() {
     $scope.loading = true;
@@ -12,4 +14,9 @@ app.controller('ProductCtrl', function($scope, $rootScope, $routeParams, api, ca
       .finallySet($scope, 'loading', false)
     ;
   }
+
+  api.attribute.get(3).then(function(attr){
+    console.log(attr);
+  });
+
 });

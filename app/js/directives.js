@@ -46,7 +46,7 @@ app.directive('sidebar', function(){
     return {
         restrict: 'A',
         replace: true,
-        templateUrl: '/views/partials/sidebar2.html',
+        templateUrl: '/views/partials/sidebar.html',
     };
 });
 

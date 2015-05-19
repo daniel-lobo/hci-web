@@ -1,215 +1,47 @@
-<div class="container">
-<div id="sidebar">
-  <ul class="filters">
-    <li class="filter">
-      <div class="row title">
-        <div class="col-md-12">
-          Búsqueda
+<div class="row" style="position:fixed;">
+  <div class="col-sm-4 col-md-12 sidebar col-md-offset-2">
+    <div class="list-group">
+      <span class="list-group-item">
+        <h5>Categoría</h5>
+        <div class="">
+          Hola
         </div>
-      </div>
-      <div class="row">
-          <div class="col-md-12">
-            <button class="btn btn-xs glyphicon glyphicon-remove"></button>
-            Camisas
-          </div>
-      </div>
-    </li>
-    <li class="filter">
-      <div class="row title">
-        <div class="col-md-12">
-          Género
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <form class="form-horizontal options">
-            <div>
-              <table id="mytb" class="table table-hover table-condensed checkboxes-row">
-                <thead>
-                  <tr>
-        	           <th style="width: 10%;"></th>
-                     <th style="width: 80%;"></th>
-        	        </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="vcenter checkboxes-row"><input type="checkbox" id="blahA" value="1"/></td>
-                    <td>Hombres</td>
-                  </tr>
-                  <tr>
-                    <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                    <td>Mujeres</td>
-                  </tr>
-                  <tr>
-                    <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                    <td>Niños</td>
-                  </tr>
-                  <tr>
-                    <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                    <td>Niñas</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </form>
-        </div>
-      </div>
-    </li>
-    <li class="filter">
-      <div class="row title">
-        <div class="col-md-12">
-          Talle
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <form class="form-horizontal options">
-            <div>
-              <table id="mytb" class="table table-hover table-condensed checkboxes-row">
-                <thead>
-                  <tr>
-        	           <th style="width: 10%;"></th>
-                     <th style="width: 80%;"></th>
-        	        </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="vcenter checkboxes-row"><input type="checkbox" id="blahA" value="1"/></td>
-                    <td>S </td>
-                  </tr>
-                  <tr>
-                    <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                    <td>M </td>
-                  </tr>
-                  <tr>
-                    <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                    <td>L </td>
-                  </tr>
-                  <tr>
-                    <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                    <td>XL </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </form>
-        </div>
-      </div>
-    </li>
-    <li class="filter">
-      <div class="row title">
-        <div class="col-md-12">
-          Color
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <form class="form-inline options">
-          <div class="checkbox-inline">
-              <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-          </div>
-          <div class="checkbox-inline">
-              <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-          </div>
-          <div class="checkbox-inline">
-              <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-          </div>
-          <div class="checkbox-inline">
-              <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-          </div>
-          <div class="checkbox-inline">
-              <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-          </div>
-          <div class="checkbox-inline">
-              <input type="checkbox" id="blankCheckbox" value="option1" aria-label="...">
-          </div>
-        </form>
-        </div>
-      </div>
-    </li>
-    <li class="filter">
-      <div class="row title">
-        <div class="col-md-12">
-          Rango de precios
-        </div>
-        <form class="form-horizontal rangoprecios">
-          <div class="form-group">
-              <label class="col-md-2 col-md-offset-1 control-label">Min</label>
-              <div class="col-md-7">
-                <input class="form-control" placeholder="Min">
-              </div>
-          </div>
-          <div class="form-group">
-            <label class="col-md-2 col-md-offset-1 control-label">Max</label>
-            <div class="col-md-7">
-              <input class="form-control"placeholder="Max">
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="col-md-offset-3 col-md-10">
-              <button type="submit" class="btn btn-default">Confirmar</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </li>
-    <li class="filter">
-      <div class="row title">
-        <div class="col-md-12">
-          Marcas
-        </div>
-        <div class="row marcas">
-          <div class="col-md-10 col-md-offset-1">
-            <form class="form-horizontal">
-              <div>
-                <table id="mytb" class="table table-hover table-condensed checkboxes-row">
-                  <thead>
-                    <tr>
-                       <th style="width: 10%;"></th>
-                       <th style="width: 80%;"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="vcenter checkboxes-row"><input type="checkbox" id="blahA" value="1"/></td>
-                      <td>A.Y. Not Dead </td>
-                    </tr>
-                    <tr>
-                      <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                      <td>Airborn </td>
-                    </tr>
-                    <tr>
-                      <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                      <td>Bensimon </td>
-                    </tr>
-                    <tr>
-                      <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                      <td>Bokura </td>
-                    </tr>
-                    <tr>
-                      <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                      <td>Bolivia </td>
-                    </tr>
-                    <tr>
-                      <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                      <td>Bravo </td>
-                    </tr>
-                    <tr>
-                      <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                      <td>CD Terra </td>
-                    </tr>
-                    <tr>
-                      <td class="vcenter"><input type="checkbox" id="blahA" value="1"/></td>
-                      <td>Foss </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </li>
-  </ul>
-</div>
+      </span>
+      <span class="list-group-item">
+        <h5>Genero</h5>
+        <table style="font-size:14px">
+          <thead>
+            <tr>
+               <th style="width: 20%;"></th>
+               <th style="width: 10%;"></th>
+               <th style="width: 70%;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="gender in possibleGenders">
+              <td class="vcenter checkboxes-row"><input type="radio" value="{{gender}}" ng-change='attributeChanged()' ng-model="filter.gender" name="gender"/></td>
+              <td></td>
+              <td>{{gender}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </span>
+      <span class="list-group-item" style="height: 100px">
+        <h5>Color</h5>
+            <select class="form-control" ng-model="filter.color" ng-options="c for c in possibleColors" ng-change='attributeChanged()'><option></option></select>
+      </span>
+      <span class="list-group-item" style="height: 100px">
+        <h5>Edad</h5>
+            <select class="form-control" ng-model="filter.ages" ng-options="a for a in possibleAges" ng-change='attributeChanged()'><option></option></select>
+      </span>
+      <span class="list-group-item" style="height: 100px">
+        <h5>Ocasión</h5>
+            <select class="form-control" ng-model="filter.ocation" ng-options="a for a in possibleOcations" ng-change='attributeChanged()'><option></option></select>
+      </span>
+      <span class="list-group-item" style="height: 100px">
+        <h5>Marca</h5>
+            <select class="form-control" ng-model="filter.brand" ng-options="a for a in possibleBrands" ng-change='attributeChanged()'><option></option></select>
+      </span>
+    </div>
+  </div>
 </div>

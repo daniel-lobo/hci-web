@@ -6656,9 +6656,9 @@ html {
 #header .category .name {
   text-transform: capitalize;
 }
-#header .buttons i {
+/*#header .buttons i {
   font-size: 20px;
-}
+}*/
 #header .buttons .cart a {
   padding-right: 0;
 }
