@@ -51,6 +51,43 @@ function clear(object) {
   for (var prop in object) delete object[prop];
 }
 
+function range(start, stop) {
+  var r = [];
+  for (var i = start; i < stop; i++) r.push(i);
+  return r;
+}
+
+function formatDate(date) {
+  return date.toString();
+}
+
+function isCreditCardValid(card) {
+  return formatCreditCard(card) !== null;
+}
+
+function formatCreditCard(card) {
+  var string  = "";
+  var snumber = card.number.toString();
+
+  if ((snumber.startsWith('34') || snumber.startsWith('37')) && snumber.length == 15)
+    string += "American Express ";
+  else
+  if (snumber.startsWith('36') && snumber.length == 16)
+    string += "Diners ";
+  else
+  if ((snumber.startsWith('51') || snumber.startsWith('52') || snumber.startsWith('53')) && snumber.length == 16)
+    string += "Mastercard ";
+  else
+  if (snumber.startsWith('4') && snumber.length == 13 || snumber.length == 16)
+    string += "Visa ";
+  else
+    return null;
+
+  string += card.number + " (" + card.expirationDate + ")";
+
+  return string;
+}
+
 angular.module('promises', [])
 .config(function ($provide) {
   $provide.decorator('$q', function ($delegate, $location) {

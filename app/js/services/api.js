@@ -434,11 +434,11 @@ app.factory('api', function($http, $rootScope, $q, session) {
     add: function(name) {
       address = {
         name       : name,
-        street     : "aaaaaaaaaa",
-        number     : "1111",
+        street     : "Av. Eduardo Madero",
+        number     : "399",
         province   : "C",
-        zipCode    : "z23123",
-        phoneNumber: "p123123"
+        zipCode    : "C1106ACD",
+        phoneNumber: "6393-ITBA",
       }
 
       return e_create_address({ address: address }).get('id', 'name');
@@ -494,9 +494,11 @@ app.factory('api', function($http, $rootScope, $q, session) {
 
     confirm: function(order, address, card) {
       return e_confirm_order({
-        id        : order.id,
-        address   : { id: address.id },
-        creditCard: { id: card.id }
+        order:{
+          id        : order.id,
+          address   : { id: address.id },
+          creditCard: { id: card.id }
+        }
       });
     }
   }

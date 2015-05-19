@@ -57,7 +57,7 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
      })
 
     .when('/checkout', {
-      templateUrl: 'views/partials/checkout.html',
+      templateUrl: 'views/checkout.html',
       controller : 'CheckoutCtrl'
     })
 

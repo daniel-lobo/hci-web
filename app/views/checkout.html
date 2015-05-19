@@ -1,0 +1,113 @@
+<div class="container" id="checkout">
+  <h1 class="col-md-offset-1">Envío</h1>
+
+  <form class="form-horizontal address">
+    <div class="selector row">
+      <div class="btn-group" ng-init="addressPanel = 1">
+        <label class="btn btn-primary" ng-model="addressPanel" btn-radio="1">Conocidas</label>
+        <label class="btn btn-primary" ng-model="addressPanel" btn-radio="2">Nueva</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div ng-show="addressPanel == 1" class="col-md-8 col-md-offset-2">
+        <div class="form-group">
+          <label class="col-md-2 control-label">Dirección</label>
+
+          <div class="col-md-8">
+            <select class="form-control"
+              ng-model="selectedAddress"
+              ng-options="address.name for address in addresses">
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="addressPanel == 2" class="col-md-8 col-md-offset-2">
+        <div class="form-group">
+          <label class="col-md-2 control-label">Dirección</label>
+
+          <div class="col-md-6">
+            <input type="text" class="form-control" placeholder="Nueva dirección" ng-model="newAddress">
+          </div>
+
+          <button class="col-md-2 btn-primary" ng-click="addAddress(newAddress)">Añadir</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+  </form>
+
+  <form class="form-horizontal card">
+    <div class="selector row">
+      <div class="btn-group" ng-init="cardPanel = 1">
+        <label class="btn btn-primary" ng-model="cardPanel" btn-radio="1">Conocidas</label>
+        <label class="btn btn-primary" ng-model="cardPanel" btn-radio="2">Nueva</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div ng-show="cardPanel == 1" class="col-md-8 col-md-offset-2">
+        <div class="form-group">
+          <label class="col-md-2 control-label">Tarjeta</label>
+
+          <div class="col-md-8">
+            <select class="form-control"
+              ng-model="selectedCard"
+              ng-options="formatCreditCard(card) for card in cards">
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div ng-show="cardPanel == 2" class="col-md-8 col-md-offset-2">
+        <div class="row">
+          <div class="form-group">
+            <label class="col-md-2 control-label">Tarjeta</label>
+
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Número" ng-model="newCardNumber">
+            </div>
+
+            <button class="col-md-2 btn-primary" ng-click="addCard(newCardNumber, newCardCode, newCardMonth, newCardYear)">Añadir</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group">
+            <div class="col-md-2 col-md-offset-2">
+              <input type="text" class="form-control" placeholder="Código" ng-model="newCardCode">
+            </div>
+
+            <div class="col-md-2">
+              <select class="form-control"
+                ng-model="newCardMonth"
+                ng-options="month for month in months">
+                <option value=''>Mes</option>
+              </select>
+            </div>
+
+            <div class="col-md-2">
+              <select class="form-control"
+                ng-model="newCardYear"
+                ng-options="year for year in years">
+                <option value=''>Año</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+  </form>
+
+  <h1 class="col-md-offset-1">Resumen</h1>
+  <div order-view order="order" compact="true" editable="false"></div>
+
+  <div class="row">
+    <button class="btn-lg btn-success col-md-offset-9" ng-click="checkout()">Confirmar</button>
+  </div>
+
+</div>
