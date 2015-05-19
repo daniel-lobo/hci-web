@@ -50,8 +50,8 @@ app.controller('CheckoutCtrl', function($scope, $location, api, session, cart) {
   }
 
   $scope.checkout = function() {
-    cart.checkout($scope.selectedAddress, $scope.selectedCard).then(function(
-      $location.path('#/profile');
-    ));
+    cart.checkout($scope.selectedAddress, $scope.selectedCard).then(function() {
+      $location.path('/profile');
+    });
   }
 });

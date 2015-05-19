@@ -60,7 +60,11 @@
 
           <td ng-if="editable === 'false'" class="quantity"><span class="label label-default">{{ item.quantity }}</span></td>
           <td ng-if="editable === 'true'">
-            <select ng-options="i for i in [1,2,3,4,5,6,7,8,9,10]" ng-model="order.items[$index].quantity" ng-change="updateQuantity(item)"></select>
+            <select class="form-control"
+              ng-options="i for i in [1,2,3,4,5,6,7,8,9,10]"
+              ng-model="order.items[$index].quantity"
+              ng-change="updateQuantity(item)">
+            </select>
           </td>
 
           <td class="total">
