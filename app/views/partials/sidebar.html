@@ -1,10 +1,10 @@
 <div class="row" style="position:fixed;">
   <div class="col-sm-4 col-md-12 sidebar col-md-offset-2">
     <div class="list-group">
-      <span class="list-group-item">
+      <span ng-if="filter.category" class="list-group-item">
         <h5>Categoría</h5>
         <div class="">
-          Hola
+          <span class="btn btn-default" ng-click="removeCategory()"><i class="glyphicon glyphicon-remove"></i> {{categoryName.name}}</span>
         </div>
       </span>
       <span class="list-group-item">
