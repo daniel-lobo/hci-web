@@ -69,7 +69,14 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   filter.color = '';
   filter.brand = '';
 
-  api.product.find(filter).thenSet($scope, 'products');
+  filter.page_size = 12;
+  filter.page = 1;
+
+  api.product.find(filter).thenSet($scope, 'products').then(function(products){
+    if (products.length < filter.page_size) {
+      fetchMoreItems.status = 2;
+    }
+  });;
 
   // START: FILTER SELECTION
 
@@ -107,13 +114,25 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
 
   $scope.attributeChanged = function() {
     filter.page = 1;
-    api.product.find(filter).thenSet($scope, 'products');
+    $scope.fetchMoreItems.status = 0;
+    api.product.find(filter).thenSet($scope, 'products').then(function(products){
+      if (products.length < filter.page_size) {
+        fetchMoreItems.status = 2;
+      }
+    });
+  }
+
+  $scope.removeCategory = function () {
+    filter.category = '';
+    $scope.attributeChanged();
+  }
+
+  if(filter.category != ''){
+    api.category.get(filter.category.id).thenSet($scope,'categoryName').then(function(){
+    });
   }
 
   /// END: FILTER SELECTION
-
-  filter.page_size = 12;
-  filter.page = 1;
 
   $scope.fetchMoreItems = {
     status: 0,
