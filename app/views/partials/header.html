@@ -1,7 +1,7 @@
 <nav class="navbar navbar-default navbar-fixed-top" id="header">
-  <div class="container">
+  <div class="container-navbar" style="margin-left:10px;margin-right:20px">
     <div class="navbar-header">
-      <a class="navbar-brand" ng-href="#/">Neon</a>
+      <a class="navbar-brand" ng-href="#/">NEON</a>
     </div>
 
     <ul class="nav navbar-nav categories">
@@ -27,10 +27,11 @@
     <ul class="nav navbar-nav navbar-right buttons">
       <li>
         <a ng-href="#/profile">
-          <span ng-if="session.is_logged_in()">{{ session.profile.firstName }}</span>
           <i class="glyphicon glyphicon-user"></i>
+          <span ng-if="session.is_logged_in()">{{ session.profile.firstName }}</span>
         </a>
       </li>
+      <li><a ng-href="#/faq"><i class="glyphicon glyphicon-question-sign"></i></a></li>
       <li><a ng-href="#/liked"><i class="glyphicon glyphicon-heart"></i></a></li>
 
       <li class="cart">
@@ -41,7 +42,7 @@
 
       <li class="cart-menu dropdown" dropdown ng-if="session.is_logged_in()">
         <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false" ng-disabled="cart.items.length == 0">
-          <span class="badge">{{ cart.items.length }}</span>
+          <span class="badge" style="margin-top:-5px; vertical-align:middle;">{{ cart.items.length }}</span>
           <span class="caret"></span>
         </a>
 
@@ -81,7 +82,6 @@
         </ul>
       </li>
 
-      <li><a ng-href="#/faq"><i class="glyphicon glyphicon-question-sign"></i></a></li>
     </ul>
   </div><!-- /.container-fluid -->
 </nav>

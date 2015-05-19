@@ -8,7 +8,14 @@ app.controller('ProfileCtrl', function($scope, $location, session, api) {
     return orders.filter(function(order) {
       return order.status != 'created';
     })
-  }).thenSet($scope, 'orders');
+  }).then(function(orders){
+    orders.forEach(function(order) {
+    if(order.status != 'unconfirmed'){
+      $scope.orders.push(order);
+    }
+    });
+  });
+  //.thenSet($scope, 'orders');
 
   $scope.update = function() {
     $scope.loading = true;
