@@ -7113,6 +7113,11 @@ form.login {
 #order .details span.label {
   font-size: 100%;
 }
+#order .items .remove {
+  float: right;
+  margin-right: -60px;
+  padding: 10px 15px;
+}
 #order .items img {
   height: 120px;
 }
