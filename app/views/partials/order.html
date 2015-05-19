@@ -1,0 +1,84 @@
+<div id="order" class="container">
+  <div ng-if="! order">
+    Cargando...
+  </div>
+
+  <div ng-if="order">
+    <div ng-if="! compact">
+      <h1>Orden #{{ order.id }}</h1>
+
+      <table class="table details">
+        <tr>
+          <td>Estado</td>
+          <td ng-switch="order.status" class="status">
+            <span ng-switch-when="unconfirmed" class="label label-info">No confirmada</span>
+            <span ng-switch-when="confirmed" class="label label-info">Confirmada</span>
+            <span ng-switch-when="sent" class="label label-info">Enviada</span>
+            <span ng-switch-when="received" class="label label-info">Recibida</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Productos</td>
+          <td>{{ order | orderCount }}</td>
+        </tr>
+
+        <tr>
+          <td>Total</td>
+          <td><span class="label label-success">${{ order | orderTotal }}</span></td>
+        </tr>
+
+        <tr ng-if="order.processedDate">
+          <td>Fecha de Confirmación</td> <td>{{ order.processedDate }}</td>
+        </tr>
+        <tr ng-if="order.deliveredDate">
+          <td>Fecha de Envío</td> <td>{{ order.deliveredDate }}</td>
+        </tr>
+        <tr ng-if="order.shippedDate">
+          <td>Fecha de Recepción</td> <td>{{ order.shippedDate }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <table class="table items">
+      <thead>
+        <th colspan="2" class="name">Producto</th>
+        <th>Unidad</th>
+        <th>Cantidad</th>
+        <th>Total</th>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="item in order.items | orderBy: '-product.name'" class="item">
+          <td>
+            <img ng-src="{{ item.product.images[0] }}" alt="item.product.name">
+          </td>
+          <td class="name">
+            {{ item.product.name }}
+          </td>
+          <td class="price"><span class="label label-default">${{ item.product.price }}</span></td>
+
+          <td ng-if="! editable" class="quantity"><span class="label label-default">{{ item.quantity }}</span></td>
+          <td ng-if="editable">
+            <select ng-options="i for i in [1,2,3,4,5,6,7,8,9,10]" ng-model="order.items[$index].quantity" ng-change="updateQuantity(item)"></select>
+          </td>
+
+          <td class="total">
+            <button class="btn btn-danger remove" ng-click="removeItem(item)">
+              <i class="glyphicon glyphicon-remove"></i>
+            </button>
+
+            <span class="label label-success">${{ item.product.price * item.quantity }}</span>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2"></td>
+          <td><h2>Total</h2></td>
+          <td class="grand-count"><span class="label label-default">{{ order | orderCount }}</span></td>
+          <td class="grand-total"><span class="label label-success">${{ order | orderTotal }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

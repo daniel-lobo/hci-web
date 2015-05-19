@@ -33,14 +33,19 @@
       </li>
       <li><a ng-href="#/liked"><i class="glyphicon glyphicon-heart"></i></a></li>
 
-      <li class="cart dropdown" dropdown ng-if="session.is_logged_in()">
-        <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">
+      <li class="cart">
+        <a ng-href="#/cart">
           <i class="glyphicon glyphicon-shopping-cart"></i>
+        </a>
+      </li>
+
+      <li class="cart-menu dropdown" dropdown ng-if="session.is_logged_in()">
+        <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false" ng-disabled="cart.items.length == 0">
           <span class="badge">{{ cart.items.length }}</span>
           <span class="caret"></span>
         </a>
 
-        <ul class="dropdown-menu drawer" role="menu">
+        <ul class="dropdown-menu menu" role="menu">
           <div ng-if="! cart.order_id">
             <button class="btn btn-lg btn-warning"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Cargando...</button>
           </div>
@@ -58,7 +63,7 @@
                 </div>
 
                 <div class="col-md-4">
-                  <h3>${{ item.product.price }}<h3>
+                  <h3 class="price">${{ item.product.price }}<h3>
                   <button class="btn btn-danger remove" ng-click="cart.remove(cart.items[$index])">Quitar</button>
                 </div>
             </li>
@@ -73,28 +78,10 @@
                 </div>
             </li>
           </ul>
-          <ul ng-if="cart.items==0">
-            <div style="width:85%">
-              <br/>
-              <alert>El carrito esta vacío.</alert>
-            </div>
-          </ul>
         </ul>
       </li>
 
       <li><a ng-href="#/faq"><i class="glyphicon glyphicon-question-sign"></i></a></li>
-
-      <li class="dropdown" dropdown>
-        <!-- <a>Items in cart: {{ cart.items.length }}</a> -->
-        <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">
-          Cajón Mágico <span class="caret"></span>
-        </a>
-
-        <ul class="dropdown-menu" role="menu" style="width: 500px">
-          {{ magicDrawer }}
-        </div>
-        </ul>
-      </li>
     </ul>
   </div><!-- /.container-fluid -->
 </nav>

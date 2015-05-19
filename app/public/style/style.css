@@ -6659,42 +6659,45 @@ html {
 #header .buttons i {
   font-size: 20px;
 }
-#header .cart button {
+#header .buttons .cart a {
+  padding-right: 0;
+}
+#header .cart-menu button {
   display: block;
   width: 100%;
 }
-#header .cart .drawer,
-#header .cart .row {
+#header .cart-menu .menu,
+#header .cart-menu .row {
   width: 400px;
   margin: 0;
 }
-#header .cart .image {
+#header .cart-menu .image {
   color: red;
 }
-#header .cart .items {
+#header .cart-menu .items {
   padding: 2px;
   list-style: none;
 }
-#header .cart .items .item {
+#header .cart-menu .items .item {
   padding: 0;
 }
-#header .cart .items .item {
+#header .cart-menu .items .item {
   border-bottom: 1px solid #ddd;
   margin-bottom: 5px;
   padding-bottom: 5px;
 }
-#header .cart .items .image {
+#header .cart-menu .items .image {
   padding: 0;
 }
-#header .cart .items .image img {
+#header .cart-menu .items .image img {
   width: 100px;
 }
-#header .cart .items .desc {
+#header .cart-menu .items .desc {
   font-size: 140%;
   margin-top: 10px;
   padding-left: 10px;
 }
-#header .cart .items .price {
+#header .cart-menu .items .price {
   font-size: 150%;
   text-align: center;
   margin-top: 10px;
