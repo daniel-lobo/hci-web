@@ -6806,7 +6806,8 @@ article.product-mini .caption .desc {
   padding-bottom: 5px;
   padding-right: 10px;
 }
-#sidebar {
+
+/*#sidebar {
   position: relative;
   min-height: 1px;
   padding-left: 15px;
@@ -6905,7 +6906,7 @@ article.product-mini .caption .desc {
   margin-bottom: -15px;
   height: 150px !important;
   overflow: scroll;
-}
+}*/
 #user .loginbox {
   margin-top: 60px;
   margin-bottom: 60px;

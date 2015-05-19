@@ -65,20 +65,50 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
   filter.page_size = 12;
   filter.page = 1;
 
+  $scope.fetchMoreItems = {
+    status: 0,
+    message: 'Ver más'
+  }
+
+  var fetchMoreItems = $scope.fetchMoreItems;
+
   api.product.find(filter).thenSet($scope, 'products');
 
-  $scope.onClickFetchMoreItems = function() {
-
+  var fetchItems = function() {
     filter.page = filter.page + 1;
+
+    fetchMoreItems.status = 1;
+    fetchMoreItems.message = 'Cargando...';
+
+    console.log("Hola");
 
     api.product.find(filter).
     then(function(products) {
       products.forEach(function(product){
         $scope.products.push(product);
       });
+
+      fetchMoreItems.status = 0;
+      fetchMoreItems.message = 'Ver más';
+
+      if (products.length < filter.page_size){
+        fetchMoreItems.status = 2;
+      }
+
     }).catch(function(error) {
       console.log("Error");
     });
+  }
+
+  $scope.onClickFetchMoreItems = function() {
+    fetchItems();
+  }
+
+  $scope.moreItemsButtonDisabled = function() {
+      if(fetchMoreItems.status == 0)
+        return true;
+
+      return false;
   }
 
 });
@@ -217,30 +247,10 @@ app.controller('CheckoutCtrl', function($scope, api, session) {
 
 app.controller('CartController', function($scope, cart, session) {
 
-  $scope.variables = {
-    totalPrice: 0
-  }
-
   $scope.quantities = [1,2,3,4,5,6,7,8,9,10];
 
-  $scope.updateTotalPrice = function () {
-
-    $scope.variables.totalPrice = 0;
-
-    for(var i=0;i<cart.items.length;i++){
-        $scope.variables.totalPrice = $scope.variables.totalPrice + Number(cart.items[i].product.price * cart.items[i].quantity);
-    }
-    $scope.variables.totalPrice = '$' + $scope.variables.totalPrice.toFixed(2);
-  }
-
-  $scope.$watch('session', function() {
-    if (session.is_logged_in()) {
-      $scope.updateTotalPrice();
-    }
-  }, true);
-
   $scope.updateQuantity = function (item) {
-    cart.remove(item).then(cart.add(item.product,item.quantity).then($scope.updateTotalPrice()));
+    cart.remove(item).then(cart.add(item.product,item.quantity));
   }
 
   $scope.onClickRemove = function (item) {
