@@ -11,8 +11,8 @@ function attributesToObject(attributes) {
   return object;
 }
 
-
 function buildProduct(data) {
+
   if (! data.id)
     data = data.product;
 
@@ -119,6 +119,11 @@ function buildOrder(data) {
     4: 'received'
   }[data.status];
 
+  ['receivedDate', 'processedDate', 'shippedDate', 'deliveredDate'].map(function(attr) {
+    if (data[attr])
+      data[attr] = new Date(data[attr]);
+  })
+
   return data;
 }
 
@@ -136,6 +141,18 @@ function buildOrderItem(data) {
   data.product.images = [data.product.imageUrl];
   delete data.product.imageUrl;
   return data;
+}
+
+function buildAttribute(data){
+  return data.attribute;
+}
+
+function buildAttributesList(data) {
+  return data.attributes;
+}
+
+function buildAttribute(data) {
+  return data.attribute;
 }
 
 
@@ -192,6 +209,12 @@ app.factory('api', function($http, $rootScope, $q, session) {
 
   var e_products_by_category = endpoint({
     url     : '/Catalog.groovy?method=GetProductsByCategoryId',
+    after   : buildProductList,
+    defaults: { page_size: 1000 }
+  })
+
+  var e_products_by_name = endpoint({
+    url     : '/Catalog.groovy?method=GetProductsByName',
     after   : buildProductList,
     defaults: { page_size: 1000 }
   })
@@ -308,8 +331,30 @@ app.factory('api', function($http, $rootScope, $q, session) {
     auth: true
   })
 
+  var e_attributes = endpoint({
+    url : '/Common.groovy?method=GetAllAttributes',
+    auth: false,
+    after: buildAttributesList
+  })
+
+  var e_attribute = endpoint({
+    url : '/Common.groovy?method=GetAttributeById',
+    auth: false,
+    after: buildAttribute
+  })
+
   // Service object:
   var api = {};
+
+  api.attribute = {
+    all: function () {
+      return e_attributes().mapGet('id', 'name');
+    },
+
+    get: function(id) {
+      return e_attribute({ id: id });
+    },
+  }
 
   api.category = {
     all: function() {
@@ -356,6 +401,9 @@ app.factory('api', function($http, $rootScope, $q, session) {
       if (! criteria)
         return e_products();
 
+      if (criteria.category && criteria.name)
+        throw new Error("Can't search both by name and category");
+
       var filters = [];
 
       if (criteria.gender)
@@ -369,6 +417,9 @@ app.factory('api', function($http, $rootScope, $q, session) {
 
       if (criteria.brand)
         filters.push({ id: 9, value: criteria.brand });
+
+      if (criteria.ocation)
+        filters.push({ id: 3, value: criteria.ocation });
 
       if (criteria.is_new)
         filters.push({ id: 6, value: 'Nuevo' })
@@ -385,6 +436,10 @@ app.factory('api', function($http, $rootScope, $q, session) {
       if (criteria.category) {
         query.id = criteria.category.id;
         return e_products_by_category(query);
+
+      } else if (criteria.name) {
+        query.name = criteria.name
+        return e_products_by_name(query);
 
       } else
         return e_products(query);
@@ -434,11 +489,11 @@ app.factory('api', function($http, $rootScope, $q, session) {
     add: function(name) {
       address = {
         name       : name,
-        street     : "aaaaaaaaaa",
-        number     : "1111",
+        street     : "Av. Eduardo Madero",
+        number     : "399",
         province   : "C",
-        zipCode    : "z23123",
-        phoneNumber: "p123123"
+        zipCode    : "C1106ACD",
+        phoneNumber: "6393-ITBA",
       }
 
       return e_create_address({ address: address }).get('id', 'name');
@@ -494,9 +549,11 @@ app.factory('api', function($http, $rootScope, $q, session) {
 
     confirm: function(order, address, card) {
       return e_confirm_order({
-        id        : order.id,
-        address   : { id: address.id },
-        creditCard: { id: card.id }
+        order:{
+          id        : order.id,
+          address   : { id: address.id },
+          creditCard: { id: card.id }
+        }
       });
     }
   }

@@ -21,3 +21,22 @@ app.filter('orderTotal', function() {
     ;
   }
 })
+
+app.filter('formatCard', function() {
+  return function formatCard(card) {
+    return formatCreditCard({ number: card.number || card });
+  }
+})
+
+app.filter('formatDate', function($filter) {
+  var format = $filter('date');
+
+  return function formatDate(date) {
+    if (! date) return "";
+
+    if (date.getFullYear() == new Date().getFullYear())
+      return format(date, 'EEE d MMMM')
+    else
+      return format(date, 'EEE d MMM yyyy')
+  }
+})

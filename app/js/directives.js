@@ -36,7 +36,8 @@ app.directive('productList', function() {
         restrict: 'A',
         replace: true,
         templateUrl: '/views/partials/product_list.html',
-        scope: { products: '=' }
+        scope: { products: '='},
+        controller: 'ProductListController'
     };
 });
 

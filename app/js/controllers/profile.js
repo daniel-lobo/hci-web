@@ -3,10 +3,11 @@ app.controller('ProfileCtrl', function($scope, $location, session, api) {
     $location.path('/login');
 
   $scope.form = {};
+  $scope.formatCreditCard = formatCreditCard;
 
   api.order.all().then(function(orders) {
     return orders.filter(function(order) {
-      return order.status != 'created';
+      return order.status != 'unconfirmed';
     })
   }).thenSet($scope, 'orders');
 

@@ -55,6 +55,11 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
       ncyBreadcrumb: 'Category Detail'
     })
 
+    .when('/searched/:name', {
+      templateUrl: 'views/partials/category.html',
+      controller : 'CategoryCtrl'
+    })
+
     .when('/product/:productId', {
        templateUrl: 'views/partials/product.html',
        controller : 'ProductCtrl',
@@ -62,9 +67,8 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
      })
 
     .when('/checkout', {
-      templateUrl: 'views/partials/checkout.html',
-      controller : 'CheckoutCtrl',
-      ncyBreadcrumb: 'Checkout'
+      templateUrl: 'views/checkout.html',
+      controller : 'CheckoutCtrl'
     })
 
     .otherwise({ redirectTo: '/' });

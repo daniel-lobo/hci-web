@@ -1,8 +1,7 @@
 <div class="container" id="profile">
 
+  <h1>Perfil</h1>
   <form class="form-horizontal update">
-    <h1>Perfil</h1>
-
     <div form-input label="'Nombre'" model="form.firstName"></div>
     <div form-input data-label="'Número Mágico'" model="form.identityCard"></div>
     <div form-input label="'E-mail'" model="form.email"></div>
@@ -19,12 +18,41 @@
 
   <div class="history">
     <h1>Historial</h1>
+
     <div ng-if="! orders.length">
       <div class="alert alert-info">No has comprado nada hasta el momento</div>
     </div>
 
     <div ng-if="orders.length">
-      {{ orders }}
+      <table class="table orders">
+        <thead>
+          <th>Orden</th>
+          <th>Estado</th>
+          <th>Confirmada</th>
+          <th>Enviada</th>
+          <th>Recibida</th>
+        </thead>
+
+        <tbody>
+          <tr ng-repeat="order in orders">
+            <td class="order">
+              <p class="id">
+                # {{ order.id }}
+              </p>
+              <p class="card"><span>Tarjeta: </span>{{ order.creditCard | formatCard }}</p>
+              <p class="address"><span>Dirección: </span>{{ order.address.name }}</p>
+            </td>
+            <td ng-switch="order.status" class="status">
+              <span ng-switch-when="confirmed" class="label label-info">Confirmada</span>
+              <span ng-switch-when="sent" class="label label-info">Enviada</span>
+              <span ng-switch-when="received" class="label label-info">Recibida</span>
+            </td>
+            <td>{{  order.processedDate | formatDate }}</td>
+            <td>{{  order.shippedDate | formatDate }}</td>
+            <td>{{  order.deliveredDate | formatDate }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

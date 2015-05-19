@@ -5,16 +5,22 @@
 input    { .form-control; }
 fieldset { .form-group; }
 button   { .btn; }
+html {padding-top: 70px;}
 
 #header {
-  .buttons i {
-    font-size: 20px;
+  .category .name {
+    text-transform: capitalize;
   }
 
-  .cart {
+  .buttons {
+    //i { font-size: 20px; }
+    .cart a { padding-right: 0; }
+  }
+
+  .cart-menu {
     button { display: block; width: 100% }
 
-    .drawer, .row {
+    .menu, .row {
       width : 400px;
       margin: 0;
     }
@@ -163,7 +169,7 @@ article.product-mini {
 
 }
 
-#sidebar {
+/*#sidebar {
   .make-md-column(3);
 
   .filters {
@@ -208,7 +214,7 @@ article.product-mini {
     }
 
   }
-}
+}*/
 
 #user {
     .loginbox {
@@ -430,11 +436,22 @@ article.product-mini {
 }
 
 #profile {
-  width: 700px;
+  width: 900px;
   margin: auto;
 
   form {
+    width: 700px;
+    margin: auto;
     margin-bottom: 20px
+  }
+
+  .orders {
+    th:not(:first-child) { text-align: center };
+    td:not(:first-child) { text-align: center };
+
+    td.status .label {
+      font-size: 100%;
+    }
   }
 }
 
@@ -457,6 +474,12 @@ form {
   }
 
   .items {
+    .remove {
+      float: right;
+      margin-right: -60px; // haha!
+      padding: 10px 15px;
+    }
+
     img { height: 120px; }
 
     td {
@@ -470,9 +493,17 @@ form {
 
       &.name {
         text-align: left;
-        font-size: 180%;
+        font-size: 150%;
       }
     }
 
+  }
+}
+
+
+#checkout {
+  .selector {
+    text-align: center;
+    margin-bottom: 10px;
   }
 }
