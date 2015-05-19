@@ -6,7 +6,6 @@ html {
 }
 body {
   margin: 0;
-  padding-top: 70px;
 }
 article,
 aside,
@@ -6651,6 +6650,12 @@ fieldset[disabled] button {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+html {
+  padding-top: 70px;
+}
+#header .category .name {
+  text-transform: capitalize;
+}
 #header .buttons i {
   font-size: 20px;
 }
@@ -7121,5 +7126,5 @@ form.login {
 }
 #order .items td.name {
   text-align: left;
-  font-size: 180%;
+  font-size: 150%;
 }

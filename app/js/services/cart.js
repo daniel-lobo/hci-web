@@ -4,6 +4,7 @@ app.factory('cart', function($rootScope, $q, api, session) {
       var whenAdded = getOrderId().then(function(order_id) {
         return api.order.addProduct({ id: order_id }, product, quantity).then(function(item) {
           cart.items.push(item);
+          $rootScope.$broadcast('cart.change');
         });
       });
 
@@ -15,6 +16,7 @@ app.factory('cart', function($rootScope, $q, api, session) {
         return api.order.removeItem(item).then(function() {
           var index = cart.items.map(function(i) { return i.id }).indexOf(item.id);
           cart.items.splice(index, 1);
+          $rootScope.$broadcast('cart.change');
         });
       });
 
@@ -44,6 +46,7 @@ app.factory('cart', function($rootScope, $q, api, session) {
       return api.order.get(session.cart_order_id).then(function(order) {
         cart.order_id = order.id;
         cart.items    = order.items;
+        $rootScope.$broadcast('cart.change');
       })
 
     else
@@ -52,6 +55,7 @@ app.factory('cart', function($rootScope, $q, api, session) {
         cart.items            = []
         session.cart_order_id = order.id; // session is persistent
 
+        $rootScope.$broadcast('cart.change');
         return order.id;
       });
   }

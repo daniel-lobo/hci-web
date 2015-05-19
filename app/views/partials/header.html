@@ -5,8 +5,8 @@
     </div>
 
     <ul class="nav navbar-nav categories">
-      <li ng-repeat="filter in ['hombres', 'mujeres', 'chicos', 'chicas']" class="dropdown" dropdown>
-        <a class="dropdown-toggle" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">{{filter}}<span class="caret"></span></a>
+      <li ng-repeat="filter in ['hombres', 'mujeres', 'chicos', 'chicas']" class="category dropdown" dropdown>
+        <a class="dropdown-toggle name" dropdown-toggle data-toggle="dropdown" role="button" aria-expanded="false">{{filter}}<span class="caret"></span></a>
 
         <ul class="dropdown-menu" role="menu">
           <li ng-repeat="category in categories">

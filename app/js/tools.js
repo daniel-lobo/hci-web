@@ -8,6 +8,12 @@ Array.prototype.sum = function() {
   return total;
 }
 
+angular.defaults = function(object, defaults) {
+  for (var key in defaults)
+    if (! Object.hasOwnProperty(object, key))
+      object[key] = defaults[key];
+}
+
 function raise(message) {
   if (typeof message === 'string') {
     error = new Error(message);
@@ -75,6 +81,7 @@ angular.module('promises', [])
 
     prototype.spread = function(f) {
       return this.then(function() {
+        console.log('spread', arguments)
         f.apply(null, arguments);
       })
     }
