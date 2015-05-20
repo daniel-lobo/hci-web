@@ -6656,8 +6656,6 @@ html {
 }
 #main {
   min-height: 100%;
-  padding: 0;
-  margin: 0;
   margin-bottom: -51px;
 }
 #main [ng-view] .container {
@@ -6709,13 +6707,29 @@ html {
   text-align: center;
   margin-top: 10px;
 }
+#push {
+  height: 51px;
+}
 #footer {
   height: 51px;
   background-color: #f8f8f8;
   border-top: 1px solid #e7e7e7;
+  line-height: 51px;
 }
-#footer img {
+#footer i {
+  font-size: 110%;
+}
+#footer .contact {
+  text-align: center;
+}
+#footer .credit-cards {
+  text-align: right;
+  color: transparent;
+}
+#footer .credit-cards img {
   display: inline;
+  width: 235;
+  height: 35;
 }
 button.btn btn-lg btn-warning .glyphicon-refresh-animate {
   -animation: spin .7s infinite linear;
@@ -7000,12 +7014,9 @@ article.product-mini .caption .desc {
   }
 }
 #profile {
-  width: 900px;
   margin: auto;
 }
 #profile form {
-  width: 700px;
-  margin: auto;
   margin-bottom: 20px;
 }
 #profile .orders th:not(:first-child) {
