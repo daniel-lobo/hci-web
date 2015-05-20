@@ -6650,7 +6650,17 @@ fieldset[disabled] button {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+body,
 html {
+  height: 100%;
+}
+#main {
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+  margin-bottom: -51px;
+}
+#main [ng-view] .container {
   padding-top: 70px;
 }
 #header .category .name {
@@ -6676,12 +6686,12 @@ html {
   list-style: none;
 }
 #header .cart-menu .items .item {
-  padding: 0;
-}
-#header .cart-menu .items .item {
   border-bottom: 1px solid #ddd;
   margin-bottom: 5px;
   padding-bottom: 5px;
+}
+#header .cart-menu .items .item .item {
+  padding: 0;
 }
 #header .cart-menu .items .image {
   padding: 0;
@@ -6698,6 +6708,14 @@ html {
   font-size: 150%;
   text-align: center;
   margin-top: 10px;
+}
+#footer {
+  height: 51px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #e7e7e7;
+}
+#footer img {
+  display: inline;
 }
 button.btn btn-lg btn-warning .glyphicon-refresh-animate {
   -animation: spin .7s infinite linear;
@@ -6757,64 +6775,6 @@ article.product-mini .caption {
 article.product-mini .caption .desc {
   text-transform: uppercase;
   font-size: 110%;
-}
-#footer {
-  background-color: #f8f8f8;
-  color: #222222;
-  margin-top: 30px;
-}
-#footer a:link {
-  color: #222222;
-}
-#footer a:hover {
-  color: #C9C9C8;
-}
-#footer a:active {
-  color: #337ab7;
-}
-#footer .container_fluid {
-  color: #222222;
-}
-#footer .footer-column {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-align: center;
-  font-size: 110%;
-}
-#footer .footer_title {
-  font-size: 110%;
-  text-transform: uppercase;
-  font-weight: bold;
-  padding-bottom: 10px;
-}
-#footer .form-group {
-  padding-top: 10px;
-}
-#footer #contacto {
-  border-top: 2px solid #222222;
-  border-right: 2px solid #222222;
-}
-#footer div#faq {
-  border-top: 2px solid #222222;
-  border-right: 2px solid #222222;
-  height: 185px;
-}
-#footer div#newsletter {
-  border-top: 2px solid #222222;
-}
-#footer #upper_footer {
-  border-bottom: 2px solid #222222;
-}
-#footer #footer_below {
-  padding-top: 10px;
-}
-#footer #footer_below div.col-md-1 {
-  width: 15.333333%;
-  padding-left: 24px;
-}
-#footer #footer_below img {
-  padding-bottom: 5px;
-  padding-right: 10px;
 }
 /*#sidebar {
   .make-md-column(3);
