@@ -45,7 +45,7 @@
 
     <div class="pull-right">
       <button type="submit" class="btn btn-danger" ng-click="logout()" ng-disabled="loading">Cerrar Sesión</button>
-      <button type="submit" class="btn btn-info" ng-click="undo()" ng-disabled="! hasChanges() || loading">Deshacer cambios</button>
+      <button type="submit" class="btn btn-primary" ng-click="undo()" ng-disabled="! hasChanges() || loading">Deshacer cambios</button>
       <button type="submit" class="btn btn-success" ng-click="update()" ng-disabled="! isValid()">Guardar cambios</button>
     </div>
     <span ng-if="update_form_loading">CARGANDO</span>
