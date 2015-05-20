@@ -56,53 +56,13 @@
   <div ng-if="! product">
     <a class="btn btn-lg btn-warning glyphicon glyphicon-refresh glyphicon-refresh-animate" style="width:100%"> Cargando..</a>
   </div>
-</div>
-<!-- <div class="container">
-  <div id="related" class="row">
-    <div class="row">
-      <h1 class="col-md-offset-2">Relacionados</h1>
-    </div>
-    <div class="col-md-2"></div>
-    <article class="product-mini">
-      <div class="thumbnail">
-        <a href="product{{ id }}.html">
-          <img src="img/product_{{ id }}.jpg" alt="{{ desc }}" />
-        </a>
-        <div class="caption">
-          <a href="product{{ id }}.html" class="desc">{{ desc }}</a>
-          <a href="product{{ id }}.html" class="price">${{ price }}</a>
-        </div>
-      </div>
-    </article> <article class="product-mini">
-    <div class="thumbnail">
-      <a href="product{{ id }}.html">
-        <img src="img/product_{{ id }}.jpg" alt="{{ desc }}" />
-      </a>
-      <div class="caption">
-        <a href="product{{ id }}.html" class="desc">{{ desc }}</a>
-        <a href="product{{ id }}.html" class="price">${{ price }}</a>
-      </div>
-    </div>
-  </article> <article class="product-mini">
-  <div class="thumbnail">
-    <a href="product{{ id }}.html">
-      <img src="img/product_{{ id }}.jpg" alt="{{ desc }}" />
-    </a>
-    <div class="caption">
-      <a href="product{{ id }}.html" class="desc">{{ desc }}</a>
-      <a href="product{{ id }}.html" class="price">${{ price }}</a>
-    </div>
+  <div class="clearfix"></div>
+  <div class="row">
+  <div class="col-md-4 col-md-offset-2" style="margin-top:40px">
+    <h2>Productos sugeridos</h2>
   </div>
-</article> <article class="product-mini">
-<div class="thumbnail">
-  <a href="product{{ id }}.html">
-    <img src="img/product_{{ id }}.jpg" alt="{{ desc }}" />
-  </a>
-  <div class="caption">
-    <a href="product{{ id }}.html" class="desc">{{ desc }}</a>
-    <a href="product{{ id }}.html" class="price">${{ price }}</a>
+  <div class="col-md-8 col-md-offset-2" style="margin-top:20px">
+    <div product-list products="products"></div>
   </div>
 </div>
-</article>
-</div> -->
 </div>
