@@ -1,20 +1,67 @@
 <div class="container">
-  <form class="form-horizontal signup" novalidate>
-    <div class="alert alert-danger" ng-if="error.code">
-      {{ error.message }}
+  <form class="form-horizontal signup">
+    <div class="col-md-offset-2 alert alert-danger" ng-if="error">
+      {{ error }}
     </div>
 
-    <div form-input label="'E-mail'" model="form.email" placeholder="'tu@email.com'"></div>
-    <div form-input label="'Nombre'" model="form.name" placeholder="'Juan Pérez'"></div>
-    <div form-input label="'Número mágico'" model="form.number" ng-maxlength=10 placeholder="'Hasta 10 dígitos'"></div>
-    <div form-input label="'Contraseña'" model="form.password" type="'password'"></div>
-    <div form-input label="'Repetirla'" model="form.password2" type="'password'"></div>
+    <div class="form-group {{ status.name === 'very invalid' ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">Nombre</label>
+
+      <div class="col-md-10">
+        <input type="text" class="form-control"
+          placeholder="Juan Pérez"
+          ng-model="form.name"
+          ng-change="validate()">
+      </div>
+    </div>
+
+    <div class="form-group {{ status.email === 'very invalid' ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">E-mail</label>
+
+      <div class="col-md-10">
+        <input type="text" class="form-control"
+          placeholder="tu@email.com"
+          ng-model="form.email"
+          ng-change="validate()">
+      </div>
+    </div>
+
+    <div class="form-group {{ status.dni === 'very invalid' ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">DNI</label>
+
+      <div class="col-md-10">
+        <input type="text" class="form-control"
+          placeholder="31.433.114"
+          ng-model="form.dni"
+          ng-change="validate()">
+      </div>
+    </div>
+
+    <div class="form-group {{ status.password === 'very invalid' ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">Contraseña</label>
+
+      <div class="col-md-10">
+        <input type="password" class="form-control"
+          ng-model="form.password"
+          ng-change="validate()">
+      </div>
+    </div>
+
+    <div class="form-group {{ status.password2 === 'very invalid' ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">Repetirla</label>
+
+      <div class="col-md-10">
+        <input type="password" class="form-control"
+          ng-model="form.password2"
+          ng-change="validate()">
+      </div>
+    </div>
 
     <div ng-if="loading">LOADING</div>
 
     <div class="pull-right">
       <a type="submit" class="btn btn-info" ng-href="#/login">Ya tengo cuenta</a>
-      <button type="submit" class="btn btn-success" ng-click="submit()">Crear cuenta</button>
+      <button type="submit" class="btn btn-success" ng-click="submit()" ng-disabled="! isValid() || loading">Crear cuenta</button>
     </div>
   </form>
 </div>
