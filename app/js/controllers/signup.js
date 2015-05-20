@@ -17,6 +17,12 @@ app.controller('SignupCtrl', function($scope, api, messages, validate) {
 
   $scope.loading = false;
 
+  $scope.isValid = function() {
+    return Object.keys($scope.status).every(function(field) {
+      return $scope.status[field] === 'valid';
+    });
+  }
+
   $scope.validate = function() {
     $scope.status.name      = validate.name($scope.form.name);
     $scope.status.email     = validate.email($scope.form.email)
@@ -36,7 +42,7 @@ app.controller('SignupCtrl', function($scope, api, messages, validate) {
       firstName   : $scope.form.name,
       lastName    : "Von Blitzcrank",
       gender      : 'F',
-      identityCard: $scope.form.number,
+      identityCard: $scope.form.dni.replace(/[^0-9]/g, ''),
       email       : $scope.form.email,
       birthDate   : "1970-01-02"
     }
