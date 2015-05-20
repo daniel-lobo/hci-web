@@ -20,11 +20,9 @@
           <td>{{ product.brand }}</td>
         </tr>
         <tr ng-if="product.sizes">
-          <td>Talle</td>
+          <td>Talles</td>
           <td>
-            <select class="form-control" ng-model="productSelections.size" ng-options="s for s in product.sizes" ng-init="productSelections.size=product.sizes[0]">
-              <option></option>
-            </select>
+            <select class="form-control" ng-model="productSelections.size" ng-options="s for s in product.sizes" ng-init="productSelections.size=product.sizes[0]"></select>
           </td>
         </tr>
         <tr ng-if="product.color">
