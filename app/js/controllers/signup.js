@@ -1,6 +1,10 @@
-app.controller('SignupCtrl', function($scope, api) {
+app.controller('SignupCtrl', function($scope, api, messages, validate) {
   $scope.form    = {};
   $scope.loading = false;
+
+  $scope.validate = function() {
+    return validate.join();
+  }
 
   $scope.submit = function() {
     $scope.loading = true;
@@ -18,8 +22,13 @@ app.controller('SignupCtrl', function($scope, api) {
 
     api.user.signup(profile)
       .then(function() { delete $scope.error; })
-      .catchSet($scope, 'error')
-      .finally(function(){ $scope.loading = false })
+
+      .catch(function(error) {
+        if (error.meta.code) {
+          $scope.error = messages.fromApi(error.meta.code);
+        }
+
+      }).finally(function() { $scope.loading = false })
     ;
   }
 });

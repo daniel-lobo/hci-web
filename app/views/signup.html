@@ -1,14 +1,64 @@
 <div class="container">
   <form class="form-horizontal signup">
-    <div class="alert alert-danger" ng-if="error.code">
-      {{ error.message }}
+    <div class="col-md-offset-2 alert alert-danger" ng-if="error">
+      {{ error }}
     </div>
 
-    <div form-input label="'E-mail'" model="form.email" placeholder="'tu@email.com'"></div>
+    <div class="form-group {{ form.showNameError ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">Nombre</label>
+
+      <div class="col-md-10">
+        <input type="text" class="form-control"
+          placeholder="Juan Pérez"
+          ng-model="form.name"
+          ng-change="validate()">
+      </div>
+    </div>
+
+    <div class="form-group {{ form.showEmailError ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">E-mail</label>
+
+      <div class="col-md-10">
+        <input type="text" class="form-control"
+          placeholder="tu@email.com"
+          ng-model="form.email"
+          ng-change="validate()">
+      </div>
+    </div>
+
+    <div class="form-group {{ form.showEmailError ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">DNI</label>
+
+      <div class="col-md-10">
+        <input type="text" class="form-control"
+          ng-model="form.dni"
+          ng-change="validate()">
+      </div>
+    </div>
+
+    <div class="form-group {{ form.showPasswordError ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">Contraseña</label>
+
+      <div class="col-md-10">
+        <input type="password" class="form-control"
+          ng-model="form.password"
+          ng-change="validate()">
+      </div>
+    </div>
+
+    <div class="form-group {{ form.showPassword2Error ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">Repetirla</label>
+
+      <div class="col-md-10">
+        <input type="password" class="form-control"
+          ng-model="form.password2"
+          ng-change="validate()">
+      </div>
+    </div>
+
+
     <div form-input label="'Nombre'" model="form.name" placeholder="'Juan Pérez'"></div>
-    <div form-input label="'Número mágico'" model="form.number" placeholder="'Hasta 10 dígitos'"></div>
-    <div form-input label="'Contraseña'" model="form.password" type="'password'"></div>
-    <div form-input label="'Repetirla'" model="form.password2" type="'password'"></div>
+    <div form-input label="'DNI'" model="form.number" placeholder="'Hasta 10 dígitos'"></div>
 
     <div ng-if="loading">LOADING</div>
 
