@@ -16,16 +16,24 @@
         <caption>Detalles del Producto</caption>
 
         <tr ng-if="product.brand">
-          <td>Marca</td> <td>{{ product.brand }}</td>
+          <td>Marca</td>
+          <td>{{ product.brand }}</td>
         </tr>
         <tr ng-if="product.sizes">
-          <td>Talles</td> <td>{{ product.sizes | join: ', ' }}</td>
+          <td>Talle</td>
+          <td>
+            <select class="form-control" ng-model="productSelections.size" ng-options="s for s in product.sizes" ng-init="productSelections.size=product.sizes[0]">
+              <option></option>
+            </select>
+          </td>
         </tr>
         <tr ng-if="product.color">
-          <td>Color</td> <td>{{ product.color }}</td>
+          <td>Color</td>
+          <td>{{ product.color }}</td>
         </tr>
         <tr ng-if="product.material">
-          <td>Material</td> <td>{{ product.material }}</td>
+          <td>Material</td>
+          <td>{{ product.material }}</td>
         </tr>
       </table>
 
@@ -34,7 +42,12 @@
           <h2 class="price">${{ product.price }}</h2>
         </div>
         <div class="col-md-6">
-          <a ng-click="addToCart()" class="buy btn btn-success" ng-disabled="loading">Añadir al Carrito</a>
+          <a ng-click="addToCart()" class="buy btn btn-success" ng-disabled="loading || !session.is_logged_in()">Añadir al Carrito</a>
+        </div>
+        <div ng-if="!session.is_logged_in()">
+          <div class="col-md-12" style="margin-top:10px;">
+            <alert>Se necesita estar logueado para poder añadir productos al carrito.</alert>
+          </div>
         </div>
       </div>
     </div>

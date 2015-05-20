@@ -430,7 +430,9 @@ app.factory('api', function($http, $rootScope, $q, session) {
       var query = {
         filters: JSON.stringify(filters),
         page_size: criteria.page_size,
-        page: criteria.page
+        page: criteria.page,
+        sort_key: criteria.sort_key,
+        sort_order: criteria.sort_order
       }
 
       if (criteria.category) {

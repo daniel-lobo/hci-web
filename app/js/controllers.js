@@ -152,6 +152,16 @@ app.controller('CategoryCtrl', function($scope, $routeParams, api) {
     });
   }
 
+  $scope.priceOrder = [
+    { title: 'Menor precio' , sort_order:'asc' },
+    { title: 'Mayor precio' , sort_order:'desc' }
+  ];
+
+  $scope.orderActivated = function () {
+    filter.sort_key = 'precio',
+    $scope.attributeChanged()
+  }
+
   if ($routeParams.categoryId != null) {
     $scope.removeCategory = function() {
       filter.category = '';
