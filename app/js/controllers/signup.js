@@ -1,9 +1,30 @@
 app.controller('SignupCtrl', function($scope, api, messages, validate) {
-  $scope.form    = {};
+  $scope.form = {
+    name     : null,
+    email    : null,
+    dni      : null,
+    password : null,
+    password2: null,
+  };
+
+  $scope.status = {
+    name     : 'invalid',
+    email    : 'invalid',
+    dni      : 'invalid',
+    password : 'invalid',
+    password2: 'invalid',
+  }
+
   $scope.loading = false;
 
   $scope.validate = function() {
-    return validate.join();
+    $scope.status.name      = validate.name($scope.form.name);
+    $scope.status.email     = validate.email($scope.form.email)
+    $scope.status.dni       = validate.dni($scope.form.dni);
+    $scope.status.password  = validate.password($scope.form.password);
+    $scope.status.password2 = validate.password2($scope.form.password2, $scope.form.password);
+
+    console.log($scope.status);
   }
 
   $scope.submit = function() {

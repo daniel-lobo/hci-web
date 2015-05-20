@@ -1,6 +1,26 @@
 app.factory('validate', function() {
   var validate = {};
 
+  validate.name = function(name) {
+    if (! name) return 'invalid';
+    if (name.length > 80) return 'very invalid';
+    return 'valid';
+  }
+
+  validate.dni = function(dni) {
+    if (! dni) return 'invalid';
+
+    if ((/[^0-9.]/).test(dni))
+      return 'very invalid';
+
+    dni = dni.replace(/[^0-9]/g, '');
+
+    if (dni.length > 8) return 'very invalid';
+    if (dni.length < 8) return 'invalid';
+
+    return 'valid';
+  }
+
   validate.password = function(password) {
     password = password || '';
 
@@ -14,6 +34,12 @@ app.factory('validate', function() {
       return 'invalid';
     else
       return 'valid';
+  }
+
+  validate.password2 = function(password2, password) {
+    if (! password2) return 'invalid';
+    if (password2 !== password) return 'very invalid';
+    return validate.password(password2);
   }
 
   validate.email = function(email) {
