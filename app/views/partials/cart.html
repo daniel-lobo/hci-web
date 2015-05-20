@@ -1,7 +1,4 @@
 <div class="container">
-  <div ng-if="!session.is_logged_in()">
-    <alert type="">Se necesita estar logueado.</alert>
-  </div>
   <div ng-if="session.is_logged_in()">
     <div ng-if="cart.items.length == 0">
       <div class="row">

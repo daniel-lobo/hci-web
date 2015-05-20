@@ -1,16 +1,52 @@
 <div class="container" id="profile">
 
   <h1 class="col-md-offset-3">Perfil</h1>
+
+  <div ng-if="!!error" class="alert alert-danger col-md-5 col-md-offset-4">
+    {{ error }}
+  </div>
+
   <form class="form-horizontal update col-md-6 col-md-offset-3">
-    <div form-input label="'Nombre'" model="form.firstName"></div>
-    <div form-input data-label="'Número Mágico'" model="form.identityCard"></div>
-    <div form-input label="'E-mail'" model="form.email"></div>
+
+    <div class="form-group {{ status.name !== 'valid' ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">Nombre</label>
+
+      <div class="col-md-10">
+        <input type="text"
+          class="form-control"
+          placeholder="{{ session.profile.firstName }}"
+          ng-model="form.name"
+          ng-change="validate()">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-2 control-label">DNI</label>
+
+      <div class="col-md-10">
+        <input type="text"
+          class="form-control"
+          disabled
+          ng-model="session.profile.identityCard">
+      </div>
+    </div>
+
+    <div class="form-group {{ status.email !== 'valid' ? 'has-error' : '' }}">
+      <label class="col-md-2 control-label">E-mail</label>
+
+      <div class="col-md-10">
+        <input type="email"
+          class="form-control"
+          placeholder="{{ session.profile.email }}"
+          ng-change="validate()"
+          ng-model="form.email">
+      </div>
+    </div>
 
     <div class="pull-right">
-      <button type="submit" class="btn btn-danger" ng-click="logout()">Cerrar Sesión</button>
-      <button type="submit" class="btn btn-success" ng-click="update()" ng-disabled="loading">
-          Guardar cambios
-      </button>
+      <button type="submit" class="btn btn-danger" ng-click="logout()" ng-disabled="loading">Cerrar Sesión</button>
+      <button type="submit" class="btn btn-info" ng-click="undo()" ng-disabled="! hasChanges() || loading">Deshacer cambios</button>
+      <button type="submit" class="btn btn-success" ng-click="update()" ng-disabled="! isValid()">Guardar cambios</button>
     </div>
     <span ng-if="update_form_loading">CARGANDO</span>
   </form>

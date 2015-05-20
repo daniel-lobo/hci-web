@@ -34,9 +34,8 @@ app.controller('LoginCtrl', function($scope, api, messages, validate) {
       .then(function() { delete $scope.error; })
 
       .catch(function(error) {
-        if (error.meta.code) {
+        if (error.meta.code)
           $scope.error = messages.fromApi(error.meta.code);
-        }
 
       }).finally(function(){ $scope.loading = false })
     ;
