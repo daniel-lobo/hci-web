@@ -32,8 +32,14 @@ body, html {
   .cart-menu {
     button { display: block; width: 100% }
 
-    .menu, .row {
-      width : 400px;
+    .menu {
+      width : 500px;
+      margin: 0;
+      max-height: 350px;
+      overflow-y: scroll;
+    }
+
+    .row {
       margin: 0;
     }
 
@@ -69,9 +75,10 @@ body, html {
 
 #footer{
   height: 51px;
-  background-color: #f8f8f8;
   border-top: 1px solid #e7e7e7;
   line-height: 51px;
+
+  background-color: #f8f8f8;
 
   i {
     font-size: 110%;

@@ -6671,9 +6671,13 @@ html {
   display: block;
   width: 100%;
 }
-#header .cart-menu .menu,
+#header .cart-menu .menu {
+  width: 500px;
+  margin: 0;
+  max-height: 350px;
+  overflow-y: scroll;
+}
 #header .cart-menu .row {
-  width: 400px;
   margin: 0;
 }
 #header .cart-menu .image {
@@ -6712,9 +6716,9 @@ html {
 }
 #footer {
   height: 51px;
-  background-color: #f8f8f8;
   border-top: 1px solid #e7e7e7;
   line-height: 51px;
+  background-color: #f8f8f8;
 }
 #footer i {
   font-size: 110%;
