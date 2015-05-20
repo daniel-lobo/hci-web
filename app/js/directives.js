@@ -78,3 +78,13 @@ app.directive('formInput', function() {
     templateUrl: '/views/partials/form_input.html'
   }
 })
+
+app.directive('passwordForm', function() {
+  return {
+    restrict   : 'A',
+    replace    : true,
+    scope      : true,
+    templateUrl: '/views/partials/change_password.html',
+    controller : 'ChangePasswordCtrl',
+  }
+})

@@ -1,4 +1,4 @@
-app.controller('SignupCtrl', function($scope, api, messages, validate) {
+app.controller('SignupCtrl', function($scope, $location, api, messages, validate) {
   $scope.form = {
     name     : null,
     email    : null,
@@ -48,9 +48,11 @@ app.controller('SignupCtrl', function($scope, api, messages, validate) {
     }
 
     api.user.signup(profile)
-      .then(function() { delete $scope.error; })
+      .then(function() {
+        delete $scope.error;
+        $location.path('/');
 
-      .catch(function(error) {
+      }).catch(function(error) {
         if (error.meta.code) {
           $scope.error = messages.fromApi(error.meta.code);
         }

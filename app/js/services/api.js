@@ -235,6 +235,11 @@ app.factory('api', function($http, $rootScope, $q, session) {
     after: buildSession
   })
 
+  var e_change_password = endpoint({
+    url : '/Account.groovy?method=ChangePassword',
+    auth: true
+  })
+
   var e_logout = endpoint({
     url : '/Account.groovy?method=SignOut',
     auth: true
@@ -450,7 +455,9 @@ app.factory('api', function($http, $rootScope, $q, session) {
 
   api.user = {
     login: function(credentials) {
-      return e_login(credentials).thenExtend(session);
+      return e_login(credentials).thenExtend(session)
+        .thenSet(session, 'password', credentials.password)
+      ;
     },
 
     logout: function() {
@@ -470,6 +477,13 @@ app.factory('api', function($http, $rootScope, $q, session) {
       var profile = angular.merge({}, session.profile, changes);
       return e_update({ account: profile }).thenExtend(session.profile, profile);
     },
+
+    changePassword: function(new_password) {
+      return e_change_password({
+        password    : session.password,
+        new_password: new_password
+      })
+    }
   };
 
   api.preferences = {

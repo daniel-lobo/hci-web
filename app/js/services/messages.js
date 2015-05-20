@@ -8,6 +8,7 @@ app.factory('messages', function() {
     rejected_login   : "Las credenciales ingresadas son incorrectas",
     repeated_email   : "Ese e-mail ya está registrado",
     repeated_dni     : "Ese DNI ya está registrado",
+    changed_password : "Ha cambiado su contraseña exitosamente",
   }
 
   var byCode = {

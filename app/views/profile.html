@@ -35,7 +35,7 @@
       <label class="col-md-2 control-label">E-mail</label>
 
       <div class="col-md-10">
-        <input type="email"
+        <input type="text"
           class="form-control"
           placeholder="{{ session.profile.email }}"
           ng-change="validate()"
@@ -50,6 +50,11 @@
     </div>
     <span ng-if="update_form_loading">CARGANDO</span>
   </form>
+
+  <div class="clearfix"></div>
+
+  <h2 class="col-md-offset-3">Cambiar contraseña</h2>
+  <div password-form class="col-md-6 col-md-offset-3"></div>
 
   <div class="clearfix"></div>
 

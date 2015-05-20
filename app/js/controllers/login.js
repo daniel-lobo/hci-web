@@ -1,4 +1,7 @@
-app.controller('LoginCtrl', function($scope, api, messages, validate) {
+app.controller('LoginCtrl', function($scope, $location, session, api, messages, validate) {
+  if (session.is_logged_in())
+    return $location.path('/profile');
+
   $scope.form = {
     email   : null,
     password: null,
@@ -31,9 +34,12 @@ app.controller('LoginCtrl', function($scope, api, messages, validate) {
     }
 
     api.user.login(credentials)
-      .then(function() { delete $scope.error; })
+      .then(function() {
+        delete $scope.error;
+        $location.path('/');
+        console.log('here')
 
-      .catch(function(error) {
+      }).catch(function(error) {
         if (error.meta.code)
           $scope.error = messages.fromApi(error.meta.code);
 
