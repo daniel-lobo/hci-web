@@ -13,7 +13,6 @@ app.controller('LoginCtrl', function($scope, api, messages, validate) {
   $scope.loading = false;
 
   $scope.isValid = function() {
-    console.log($scope.status)
     return $scope.status.email === 'valid' && $scope.status.password === 'valid';
   }
 
