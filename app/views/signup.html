@@ -57,11 +57,15 @@
       </div>
     </div>
 
-    <div ng-if="loading">LOADING</div>
-
     <div class="pull-right">
       <a type="submit" class="btn btn-primary" ng-href="#/login">Ya tengo cuenta</a>
-      <button type="submit" class="btn btn-success" ng-click="submit()" ng-disabled="! isValid() || loading">Crear cuenta</button>
+      <button type="submit"
+        class="btn btn-success {{ loading ? 'has-spinner' : '' }}"
+        ng-click="submit()"
+        ng-disabled="! isValid() || loading">
+        <i class="spinner glyphicon glyphicon-refresh"></i>
+        Crear cuenta
+      </button>
     </div>
   </form>
 </div>

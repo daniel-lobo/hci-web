@@ -25,15 +25,14 @@
       </div>
     </div>
 
-    <div ng-if="loading">LOADING</div>
-
     <div class="pull-right">
       <a type="submit" class="btn btn-primary" ng-href="#/signup">No tengo cuenta</a>
-
+      <i class="icon-refresh"></i>
       <button type="submit"
-        class="btn btn-success"
+        class="btn btn-success {{ loading ? 'has-spinner' : '' }}"
         ng-click="submit()"
         ng-disabled="! isValid() || loading">
+          <i class="spinner glyphicon glyphicon-refresh"></i>
           Iniciar Sesión
       </button>
     </div>

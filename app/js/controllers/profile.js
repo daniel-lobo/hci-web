@@ -19,6 +19,7 @@ app.controller('ProfileCtrl', function($scope, $location, session, api, validate
   }
 
   $scope.reset();
+  $scope.loading = false;
 
   $scope.hasChanges = function() {
     if (! session.is_logged_in())

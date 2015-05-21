@@ -16,7 +16,7 @@ app.factory('validate', function() {
     dni = dni.replace(/[^0-9]/g, '');
 
     if (dni.length > 8) return 'very invalid';
-    if (dni.length < 8) return 'invalid';
+    if (dni.length < 8) return 'very invalid';
 
     return 'valid';
   }
