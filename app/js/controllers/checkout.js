@@ -1,7 +1,7 @@
 app.controller('CheckoutCtrl', function($scope, $location, api, session, cart) {
   var now = new Date();
 
-  $scope.months = range(now.getMonth(), 13);
+  $scope.months = range(1, 13);
   $scope.years  = range(now.getFullYear(), now.getFullYear() + 15);
 
   function reloadOrder() {
@@ -29,6 +29,7 @@ app.controller('CheckoutCtrl', function($scope, $location, api, session, cart) {
 
   $scope.addAddress = function(name) {
     api.address.add(name).then(function(address) {
+      console.log(address);
       $scope.addressPanel = 1;
       $scope.addresses.push(address);
       $scope.selectedAddress = address;
