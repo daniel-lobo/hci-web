@@ -47,30 +47,34 @@
         </a>
 
         <ul class="dropdown-menu menu" role="menu">
-          <div ng-if="! cart.order_id" class="has-spinner-block">
+          <div ng-if="cart.order_id == null" class="has-spinner-block">
             <i class="spinner glyphicon glyphicon-refresh"></i> Cargando
           </div>
 
-          <ul ng-if="cart.items && cart.items.length>0" class="items">
-            <li ng-repeat="item in cart.items" class="item row">
-                <div class="image col-md-3">
+          <ul ng-if="cart.items && cart.items.length>0" class="menu-list">
+            <div class="items">
+              <li ng-repeat="item in cart.items" class="item row">
+                <div class="image col-md-2">
                   <a href="#/product/{{ item.product.id }}">
                     <img ng-src="{{ item.product.images[0] }}" alt="{{ item.product.name }}" />
                   </a>
                 </div>
 
                 <div class="desc col-md-5">
-                  <a href="#/product/{{ item.product.id }}" class="text-primary"><h4>{{ item.product.name }}</h4></a>
+                  <a ng-href="#/product/{{ item.product.id }}" class="text-primary"><span>{{ item.product.name }}</span></a>
                 </div>
 
-                <div class="col-md-4">
-                  <h3 class="price">${{ item.product.price }}<h3>
+                <div class="col-md-2">
+                  <a ng-href="#/product/{{ item.product.id }}" class="btn btn-success price">${{ item.product.price }}</a>
+                </div>
+                <div class="col-md-3">
                   <button class="btn btn-danger remove" ng-click="cart.remove(cart.items[$index])">Quitar</button>
                 </div>
-            </li>
-            <li>
-              <div style="text-align:center"><h5>Total: ${{ cart.total() }} en {{ cart.items.length }} productos</h5></div>
-            </li>
+              </li>
+              <li>
+                <div style="text-align:center"><h5>Total: ${{ cart.total() }} en {{ cart.items.length }} productos</h5></div>
+              </li>
+            </div>
             <li class="divider"></li>
             <li>
               <div>

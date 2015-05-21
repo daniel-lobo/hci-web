@@ -35,9 +35,12 @@ body, html {
     .menu {
       width : 500px;
       margin: 0;
-      max-height: 350px;
-      overflow-y: scroll;
-      padding-top: 10px;
+
+      .items {
+        padding-top: 10px;
+        overflow-y: scroll;
+        max-height: 350px;
+      }
     }
 
     .row {
@@ -48,8 +51,11 @@ body, html {
       color: red;
     }
 
+    .menu-list {
+      padding: 0 10px;
+    }
+
     .items {
-      padding: 2px;
       list-style: none;
 
       .item {
@@ -61,11 +67,8 @@ body, html {
 
       .image {
         padding: 0;
-        img { width: 100px; }
+        img { width: 50px; }
       }
-
-      .desc { font-size: 140%; margin-top: 10px; padding-left: 10px }
-      .price { font-size: 150%; text-align: center; margin-top: 10px }
     }
   }
 }

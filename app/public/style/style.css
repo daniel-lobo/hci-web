@@ -6674,9 +6674,11 @@ html {
 #header .cart-menu .menu {
   width: 500px;
   margin: 0;
-  max-height: 350px;
-  overflow-y: scroll;
+}
+#header .cart-menu .menu .items {
   padding-top: 10px;
+  overflow-y: scroll;
+  max-height: 350px;
 }
 #header .cart-menu .row {
   margin: 0;
@@ -6684,8 +6686,10 @@ html {
 #header .cart-menu .image {
   color: red;
 }
+#header .cart-menu .menu-list {
+  padding: 0 10px;
+}
 #header .cart-menu .items {
-  padding: 2px;
   list-style: none;
 }
 #header .cart-menu .items .item {
@@ -6700,17 +6704,7 @@ html {
   padding: 0;
 }
 #header .cart-menu .items .image img {
-  width: 100px;
-}
-#header .cart-menu .items .desc {
-  font-size: 140%;
-  margin-top: 10px;
-  padding-left: 10px;
-}
-#header .cart-menu .items .price {
-  font-size: 150%;
-  text-align: center;
-  margin-top: 10px;
+  width: 50px;
 }
 #push {
   height: 51px;
