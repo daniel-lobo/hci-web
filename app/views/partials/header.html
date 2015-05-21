@@ -71,11 +71,11 @@
                   <button class="btn btn-danger remove" ng-click="cart.remove(cart.items[$index])">Quitar</button>
                 </div>
               </li>
-              <li>
-                <div style="text-align:center"><h5>Total: ${{ cart.total() }} en {{ cart.items.length }} productos</h5></div>
-              </li>
             </div>
             <li class="divider"></li>
+            <li>
+              <div style="text-align:center"><h5>Total: ${{ cart.total() }} en {{ cart.items.length }} productos</h5></div>
+            </li>
             <li>
               <div>
                 <a class="btn btn-default checkout" style="width: 50%" href="#cart">Ver carrito</a>
