@@ -20,22 +20,22 @@ app.config(['$routeProvider', function ($routeProvider/*, $locationProvider*/) {
     })
 
     .when('/profile', {
-      templateUrl: '/views/profile.html',
+      templateUrl: 'views/profile.html',
       controller: 'ProfileCtrl'
     })
 
     .when('/signup', {
-      templateUrl: '/views/signup.html',
+      templateUrl: 'views/signup.html',
       controller : 'SignupCtrl'
     })
 
     .when('/login', {
-      templateUrl: '/views/login.html',
+      templateUrl: 'views/login.html',
       controller : 'LoginCtrl'
     })
 
     .when('/order/:orderId', {
-      templateUrl: '/views/partials/order.html',
+      templateUrl: 'views/partials/order.html',
       controller : 'OrderCtrl'
     })
 

@@ -17,7 +17,7 @@ app.directive('orderView', function() {
   return {
     restrict   : 'A',
     replace    : true,
-    templateUrl: '/views/partials/order.html',
+    templateUrl: 'views/partials/order.html',
     controller : 'OrderCtrl',
     scope      : { order: '=', compact: '@', editable: '@', onEdit: '&', onRemove: '&' }
   };

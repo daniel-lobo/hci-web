@@ -2,7 +2,7 @@ app.directive('head', function(){
     return {
         restrict: 'A', // This means that it will be used as an attribute and NOT as an element.
         replace: true,
-        templateUrl: '/views/partials/head.html',
+        templateUrl: 'views/partials/head.html',
         controller: ['$scope', '$filter', function ($scope, $filter) {
             // Your behaviour goes here :)
         }]
@@ -14,7 +14,7 @@ app.directive('footer', function () {
     return {
         restrict: 'A', // This means that it will be used as an attribute and NOT as an element.
         replace: true,
-        templateUrl: '/views/partials/footer.html',
+        templateUrl: 'views/partials/footer.html',
         controller: ['$scope', '$filter', function ($scope, $filter) {
             // Your behaviour goes here :)
         }]
@@ -26,7 +26,7 @@ app.directive('header', function () {
         restrict: 'A',
         replace: true,
         scope: true,
-        templateUrl: '/views/partials/header.html',
+        templateUrl: 'views/partials/header.html',
         controller: 'HeaderCtrl',
     }
 });
@@ -35,7 +35,7 @@ app.directive('productList', function() {
     return {
         restrict: 'A',
         replace: true,
-        templateUrl: '/views/partials/product_list.html',
+        templateUrl: 'views/partials/product_list.html',
         scope: { products: '='},
         controller: 'ProductListController'
     };
@@ -46,7 +46,7 @@ app.directive('sidebar', function(){
     return {
         restrict: 'A',
         replace: true,
-        templateUrl: '/views/partials/sidebar.html',
+        templateUrl: 'views/partials/sidebar.html',
     };
 });
 
@@ -55,7 +55,7 @@ app.directive('cartproductlist', function(){
     return {
         restrict: 'A',
         replace: true,
-        templateUrl: '/views/partials/cart_product_list.html',
+        templateUrl: 'views/partials/cart_product_list.html',
         controller: 'CartController'
     };
 });
@@ -65,7 +65,7 @@ app.directive('breadcrumbs', function(){
     return {
         restrict: 'A',
         replace: true,
-        templateUrl: '/views/partials/breadcrumbs.html',
+        templateUrl: 'views/partials/breadcrumbs.html',
     };
 });
 
@@ -75,7 +75,7 @@ app.directive('formInput', function() {
     restrict   : 'A',
     replace    : true,
     scope      : { label: '=', placeholder: '=', model: '=', type: '=' },
-    templateUrl: '/views/partials/form_input.html'
+    templateUrl: 'views/partials/form_input.html'
   }
 })
 
@@ -84,7 +84,7 @@ app.directive('passwordForm', function() {
     restrict   : 'A',
     replace    : true,
     scope      : true,
-    templateUrl: '/views/partials/change_password.html',
+    templateUrl: 'views/partials/change_password.html',
     controller : 'ChangePasswordCtrl',
   }
 })
